@@ -53,7 +53,8 @@ export default function AccountContent() {
     }
   }
 
-  if (authLoading || subLoading) {
+  // Only show loading for auth, not subscription (subscription might fail if tables don't exist)
+  if (authLoading) {
     return (
       <Box 
         display="flex" 

@@ -82,6 +82,14 @@ export function useSubscription(): SubscriptionData {
       setLoading(true)
       setError(null)
 
+      // Set a timeout to ensure loading completes
+      const timeout = setTimeout(() => {
+        if (loading) {
+          console.log('Subscription fetch timeout - using defaults')
+          setLoading(false)
+        }
+      }, 2000) // 2 second timeout
+
       try {
         const supabase = createClient()
 
@@ -129,6 +137,7 @@ export function useSubscription(): SubscriptionData {
         console.error('Error fetching subscription data:', err)
         setError(err instanceof Error ? err.message : 'Unknown error occurred')
       } finally {
+        clearTimeout(timeout)
         setLoading(false)
       }
     }
