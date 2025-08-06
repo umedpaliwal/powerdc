@@ -292,7 +292,7 @@ export default function AccountContent() {
               {(!subscription || subscription.plan_type === 'explorer') && (
                 <Button 
                   variant="contained" 
-                  onClick={() => router.push('/pricing')}
+                  onClick={() => router.push('/checkout?plan=professional')}
                   sx={{ 
                     mt: 3,
                     background: 'linear-gradient(45deg, #00E5FF 30%, #0090EA 90%)',
@@ -301,7 +301,7 @@ export default function AccountContent() {
                     }
                   }}
                 >
-                  Upgrade Plan
+                  Upgrade to Professional
                 </Button>
               )}
             </Paper>

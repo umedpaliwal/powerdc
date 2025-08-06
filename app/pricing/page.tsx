@@ -140,10 +140,10 @@ export default function PricingPage() {
       return;
     }
     
-    // If user is logged in, redirect to account page for upgrade/downgrade
+    // If user is logged in, redirect to checkout or account page
     if (user) {
       if (planName === "Professional") {
-        router.push("/account?upgrade=true&plan=professional");
+        router.push("/checkout?plan=professional");
       } else if (planName === "Enterprise") {
         router.push("/contact?plan=enterprise");
       } else if (planName === "Explorer") {
