@@ -19,7 +19,7 @@ import { styled } from "@mui/system";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import * as d3 from "d3";
-import { Plant } from "@/types/plant";
+import { Plant } from "@/app/types/plant";
 
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN || "";
 
@@ -98,7 +98,9 @@ export default function Dashboard({
   const averageCapacity = totalCapacity / filteredPlants.length || 0;
 
   useEffect(() => {
-    const filteredPlants = plants.filter((plant) => filters[plant.Category]);
+    const filteredPlants = plants.filter((plant) => {
+      return plant.Category ? filters[plant.Category] : true;
+    });
     setFilteredPlants(filteredPlants);
   }, [filters, setFilteredPlants]);
 
