@@ -12,10 +12,11 @@ import {
 export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname
 
-  // TEMPORARILY BYPASS AUTH FOR DEMO
-  if (pathname.includes('/thermal/dashboard') || pathname === '/dashboard' || pathname === '/account') {
-    return NextResponse.next()
-  }
+  // Remove the temporary bypass - dashboard and account now require authentication
+  // Only keeping thermal/dashboard bypass if needed for specific demo
+  // if (pathname.includes('/thermal/dashboard')) {
+  //   return NextResponse.next()
+  // }
 
   // Skip auth check for public routes and assets
   if (isPublicRoute(pathname) || shouldBypassAuth(pathname)) {
