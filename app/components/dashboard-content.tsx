@@ -43,7 +43,7 @@ interface UnitProperties {
   wind_crossover_year?: string;
 }
 
-export default function DashboardContent({ plantsData }) {
+export default function DashboardContent({ plantsData }: { plantsData: any }) {
   const LAYER_ID = "1000gw-final-results-8t1vqs";
   const SOURCE_LAYER = "1000GW_final_results-8t1vqs";
 
@@ -177,7 +177,7 @@ export default function DashboardContent({ plantsData }) {
     if (!mapLoaded || !map.current) return;
 
     const loadAllFeatures = () => {
-      const plants = plantsData.map((plant) => ({
+      const plants = plantsData.map((plant: any) => ({
         ...plant.properties,
         geometry: plant.geometry,
       }));
@@ -217,7 +217,7 @@ export default function DashboardContent({ plantsData }) {
   useEffect(() => {
     if (!mapLoaded || !map.current || !mapboxgl || popupEventAdded) return;
 
-    map.current.on("click", LAYER_ID, (e) => {
+    map.current.on("click", LAYER_ID, (e: any) => {
       if (!e.features?.length) return;
 
       const clickedFeature = e.features[0];
@@ -309,7 +309,7 @@ export default function DashboardContent({ plantsData }) {
             <div class="info-grid">
               ${Object.entries(unitsByTechnology)
                 .map(
-                  ([tech, units]: [string, UnitProperties[]]) => `
+                  ([tech, units]: [string, any]) => `
                 <div class="unit-section">
                   <strong style="color: #4fc3f7; display: block; margin: 10px 0;">${
                     tech === "gas_ct"

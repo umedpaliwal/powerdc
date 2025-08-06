@@ -175,7 +175,7 @@ export default function SubscriptionManager() {
           {subscription.cancel_at_period_end && (
             <Alert severity="info" sx={{ mb: 3 }}>
               Your subscription will be canceled at the end of the current billing period (
-              {new Date(subscription.current_period_end).toLocaleDateString()}
+              {subscription.current_period_end ? new Date(subscription.current_period_end).toLocaleDateString() : 'N/A'}
               ).
             </Alert>
           )}

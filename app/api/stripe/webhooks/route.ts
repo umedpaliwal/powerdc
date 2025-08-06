@@ -2,19 +2,14 @@ import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
 import { createServiceRoleClient } from '@/lib/supabase/server'
 
-if (!process.env.STRIPE_SECRET_KEY) {
-  throw new Error('STRIPE_SECRET_KEY is not set')
-}
-
-if (!process.env.STRIPE_WEBHOOK_SECRET) {
-  throw new Error('STRIPE_WEBHOOK_SECRET is not set')
-}
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-  apiVersion: '2024-12-18.acacia',
-})
+const stripe = process.env.STRIPE_SECRET_KEY ? new Stripe(process.env.STRIPE_SECRET_KEY, {
+  apiVersion: '2025-07-30.basil',
+}) : null
 
 export async function POST(request: NextRequest) {
+  if (!stripe || !process.env.STRIPE_WEBHOOK_SECRET) {
+    return NextResponse.json({ error: 'Stripe is not configured' }, { status: 500 })
+  }
   const body = await request.text()
   const sig = request.headers.get('stripe-signature')!
 
@@ -104,9 +99,10 @@ export async function POST(request: NextRequest) {
       }
 
       case 'invoice.payment_succeeded': {
-        const invoice = event.data.object as Stripe.Invoice
+        const invoice = event.data.object as any
+        const subscriptionId = typeof invoice.subscription === 'string' ? invoice.subscription : invoice.subscription?.id
         
-        if (invoice.subscription) {
+        if (subscriptionId) {
           // Update subscription status to active
           await supabase
             .from('user_subscriptions')
@@ -114,17 +110,18 @@ export async function POST(request: NextRequest) {
               status: 'active',
               updated_at: new Date().toISOString(),
             })
-            .eq('stripe_subscription_id', invoice.subscription)
+            .eq('stripe_subscription_id', subscriptionId)
 
-          console.log(`Payment succeeded for subscription:`, invoice.subscription)
+          console.log(`Payment succeeded for subscription:`, subscriptionId)
         }
         break
       }
 
       case 'invoice.payment_failed': {
-        const invoice = event.data.object as Stripe.Invoice
+        const invoice = event.data.object as any
+        const subscriptionId = typeof invoice.subscription === 'string' ? invoice.subscription : invoice.subscription?.id
         
-        if (invoice.subscription) {
+        if (subscriptionId) {
           // Update subscription status to past_due
           await supabase
             .from('user_subscriptions')
@@ -132,9 +129,9 @@ export async function POST(request: NextRequest) {
               status: 'past_due',
               updated_at: new Date().toISOString(),
             })
-            .eq('stripe_subscription_id', invoice.subscription)
+            .eq('stripe_subscription_id', subscriptionId)
 
-          console.log(`Payment failed for subscription:`, invoice.subscription)
+          console.log(`Payment failed for subscription:`, subscriptionId)
         }
         break
       }

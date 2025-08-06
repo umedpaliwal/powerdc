@@ -7,7 +7,11 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import { useEffect, useRef, useState } from "react";
 import ReDashboardSidebar from "./ReDashboardSidebar";
 import ReStatCards from "./ReStatCards";
-import { Plant } from "@/app/types/plant";
+interface Plant {
+  properties: any;
+  geometry: any;
+  [key: string]: any;
+}
 
 const mapboxToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN || "";
 // Don't throw error, just log warning

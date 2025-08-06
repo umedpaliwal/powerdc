@@ -1,7 +1,11 @@
 "use client";
 
 import plantsData from "@/app/data/plants.json";
-import { Plant } from "@/app/types/plant";
+interface Plant {
+  properties: any;
+  geometry: any;
+  [key: string]: any;
+}
 import { Box, Button, Typography } from "@mui/material";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
@@ -314,7 +318,7 @@ export default function ThermalDashboardContent({}) {
             <div class="info-grid">
               ${Object.entries(unitsByTechnology)
                 .map(
-                  ([tech, units]: [string, UnitProperties[]]) => `
+                  ([tech, units]: [string, any]) => `
                 <div class="unit-section">
                   <strong style="color: #4fc3f7; display: block; margin: 10px 0;">${
                     tech === "gas_ct"

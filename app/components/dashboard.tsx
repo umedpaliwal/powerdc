@@ -19,7 +19,12 @@ import { styled } from "@mui/system";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import * as d3 from "d3";
-import { Plant } from "@/app/types/plant";
+interface Plant {
+  properties: any;
+  geometry: any;
+  Category?: string;
+  [key: string]: any;
+}
 
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN || "";
 
@@ -117,7 +122,7 @@ export default function Dashboard({
 
         el.style.width = `${size}px`;
         el.style.height = `${size}px`;
-        el.style.backgroundColor = getCategoryColor(plant.Category);
+        el.style.backgroundColor = getCategoryColor(plant.Category || '');
         el.style.borderRadius = "50%";
 
         const marker = new mapboxgl.Marker(el)
