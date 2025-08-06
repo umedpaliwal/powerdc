@@ -121,3 +121,15 @@ html, body, #__next {
   margin-right: 5px;
   border-radius: 50%;
 }
+
+/* Fade-in animation for sections */
+.fade-in-section {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.fade-in-section.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}

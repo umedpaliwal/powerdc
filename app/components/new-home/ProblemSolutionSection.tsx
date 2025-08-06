@@ -8,6 +8,7 @@ import SpeedIcon from "@mui/icons-material/Speed";
 import WarningAmberIcon from "@mui/icons-material/WarningAmber";
 import {
   Box,
+  Button,
   Card,
   CardContent,
   Container,
@@ -438,6 +439,60 @@ export default function ProblemSolutionSection() {
             </Card>
           </Grid>
         </Grid>
+
+        {/* Call to Action for How It Works */}
+        <Box
+          sx={{
+            textAlign: "center",
+            mt: 8,
+          }}
+        >
+          <Typography
+            variant="h5"
+            className="fade-in-section"
+            sx={{
+              fontWeight: 600,
+              mb: 3,
+              color: "white",
+              fontSize: "1.4rem",
+            }}
+          >
+            Want to see how this works in practice?
+          </Typography>
+          <Button
+            variant="contained"
+            size="large"
+            href="#how-it-works"
+            className="fade-in-section"
+            sx={{
+              py: 2,
+              px: 4,
+              fontSize: "1.1rem",
+              fontWeight: 600,
+              borderRadius: "8px",
+              backgroundColor: "#8ecae6",
+              color: "#001220",
+              "&:hover": {
+                backgroundColor: "#6bb6c7",
+                transform: "translateY(-2px)",
+              },
+              boxShadow: "0 4px 14px rgba(142,202,230,0.4)",
+              transition: "all 0.3s ease",
+            }}
+            onClick={(e) => {
+              e.preventDefault();
+              const element = document.getElementById("how-it-works");
+              if (element) {
+                element.scrollIntoView({
+                  behavior: "smooth",
+                  block: "start",
+                });
+              }
+            }}
+          >
+            Explore Behind-the-Meter Solutions
+          </Button>
+        </Box>
       </Container>
     </Box>
   );
