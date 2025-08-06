@@ -19,6 +19,7 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import ElectricBoltIcon from '@mui/icons-material/ElectricBolt';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import CloseIcon from '@mui/icons-material/Close';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth';
 
@@ -52,6 +53,11 @@ export default function BurgerMenu() {
       text: 'Surplus Interconnection', 
       icon: <ElectricBoltIcon />, 
       path: '/surplus-interconnection' 
+    },
+    { 
+      text: 'Pricing', 
+      icon: <AttachMoneyIcon />, 
+      path: '/pricing' 
     },
     { 
       text: 'Account', 

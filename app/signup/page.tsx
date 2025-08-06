@@ -16,7 +16,8 @@ export default function SignUpPage() {
   const router = useRouter()
 
   const handleSignUpSuccess = () => {
-    router.push('/signup/verify-email')
+    // Redirect to dashboard after successful signup
+    router.push('/dashboard')
   }
 
   return (

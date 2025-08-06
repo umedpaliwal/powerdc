@@ -18,7 +18,6 @@ import {
 } from '@mui/material'
 import GoogleIcon from '@mui/icons-material/Google'
 import { useAuth } from '@/contexts/AuthContext'
-import { PlanSelector, PlanType } from './PlanSelector'
 
 interface SignUpFormProps {
   onSuccess?: () => void
@@ -31,7 +30,6 @@ interface FormData {
   companyName: string
   industryType: 'datacenter' | 'utility' | 'developer' | 'other' | ''
   phone: string
-  selectedPlan: PlanType
   agreeToTerms: boolean
 }
 
@@ -54,7 +52,6 @@ export function SignUpForm({ onSuccess }: SignUpFormProps) {
     companyName: '',
     industryType: '',
     phone: '',
-    selectedPlan: 'explorer',
     agreeToTerms: false,
   })
 
@@ -136,7 +133,7 @@ export function SignUpForm({ onSuccess }: SignUpFormProps) {
         company_name: formData.companyName,
         industry_type: formData.industryType,
         phone: formData.phone,
-        selected_plan: formData.selectedPlan,
+        selected_plan: 'explorer', // Default to free plan
       })
       
       onSuccess?.()
@@ -196,14 +193,8 @@ export function SignUpForm({ onSuccess }: SignUpFormProps) {
         </Divider>
       </Box>
 
-      {/* Plan Selection */}
-      <PlanSelector 
-        selectedPlan={formData.selectedPlan}
-        onPlanSelect={(plan) => setFormData(prev => ({ ...prev, selectedPlan: plan }))}
-      />
-
       {/* Form Fields */}
-      <Box sx={{ mt: 3 }}>
+      <Box>
         <TextField
           fullWidth
           label="Email Address"

@@ -1,7 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useAuth } from '@/hooks/useAuth';
+import { useSubscription } from '@/hooks/useSubscription';
 import {
   Box,
   Container,
@@ -56,7 +58,12 @@ interface PricingPlan {
 
 export default function PricingPage() {
   const router = useRouter();
+  const { user } = useAuth();
+  const { subscription } = useSubscription();
   const [billingPeriod, setBillingPeriod] = useState<'monthly' | 'annual'>('monthly');
+  
+  // Determine current plan
+  const currentPlan = subscription?.plan_type || (user ? 'explorer' : null);
 
   const plans: PricingPlan[] = [
     {
@@ -76,8 +83,9 @@ export default function PricingPage() {
         { text: "Priority support", included: false },
         { text: "White-label options", included: false }
       ],
-      buttonText: "Start Free",
-      buttonVariant: "outlined"
+      buttonText: currentPlan === 'explorer' ? "Current Plan" : (user ? "Downgrade" : "Start Free"),
+      buttonVariant: "outlined",
+      tag: currentPlan === 'explorer' ? "Current Plan" : undefined
     },
     {
       name: "Professional",
@@ -96,10 +104,12 @@ export default function PricingPage() {
         { text: "Dedicated account manager", included: false },
         { text: "White-label options", included: false }
       ],
-      highlighted: true,
-      buttonText: "Start 14-Day Trial",
+      highlighted: currentPlan === 'explorer' || !currentPlan,
+      buttonText: currentPlan === 'professional' ? "Current Plan" : 
+                  currentPlan === 'enterprise' ? "Downgrade" : "Upgrade to Pro",
       buttonVariant: "contained",
-      tag: "Most Popular"
+      tag: currentPlan === 'professional' ? "Current Plan" : 
+           currentPlan === 'explorer' ? "Recommended" : "Most Popular"
     },
     {
       name: "Enterprise",
@@ -118,18 +128,36 @@ export default function PricingPage() {
         { text: "Dedicated account manager", included: true },
         { text: "White-label options", included: true }
       ],
-      buttonText: "Contact Sales",
-      buttonVariant: "outlined"
+      buttonText: currentPlan === 'enterprise' ? "Current Plan" : "Contact Sales",
+      buttonVariant: "outlined",
+      tag: currentPlan === 'enterprise' ? "Current Plan" : undefined
     }
   ];
 
   const handlePlanSelect = (planName: string) => {
-    if (planName === "Explorer") {
-      router.push("/signup");
-    } else if (planName === "Professional") {
-      router.push("/signup?plan=professional");
+    // If user is on this plan already, do nothing
+    if (currentPlan === planName.toLowerCase()) {
+      return;
+    }
+    
+    // If user is logged in, redirect to account page for upgrade/downgrade
+    if (user) {
+      if (planName === "Professional") {
+        router.push("/account?upgrade=true&plan=professional");
+      } else if (planName === "Enterprise") {
+        router.push("/contact?plan=enterprise");
+      } else if (planName === "Explorer") {
+        router.push("/account?downgrade=true&plan=explorer");
+      }
     } else {
-      router.push("/contact");
+      // Not logged in - redirect to signup
+      if (planName === "Explorer") {
+        router.push("/signup");
+      } else if (planName === "Professional") {
+        router.push("/signup");
+      } else {
+        router.push("/contact");
+      }
     }
   };
 
@@ -140,11 +168,17 @@ export default function PricingPage() {
       {/* Header */}
       <Box sx={{ textAlign: 'center', mb: 6 }}>
         <Typography variant="h3" fontWeight="bold" gutterBottom>
-          Choose Your Plan
+          {currentPlan ? 'Upgrade Your Plan' : 'Choose Your Plan'}
         </Typography>
-        <Typography variant="h6" color="text.secondary" sx={{ mb: 4 }}>
+        <Typography variant="h6" color="text.secondary" sx={{ mb: 2 }}>
           Access the largest database of surplus interconnection opportunities
         </Typography>
+        {currentPlan && (
+          <Alert severity="info" sx={{ maxWidth: 600, mx: 'auto', mt: 2 }}>
+            You're currently on the <strong>{currentPlan.charAt(0).toUpperCase() + currentPlan.slice(1)}</strong> plan.
+            {currentPlan === 'explorer' && ' Upgrade to Professional to unlock advanced features!'}
+          </Alert>
+        )}
 
         {/* Billing Toggle */}
         <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', mb: 4 }}>
@@ -261,9 +295,20 @@ export default function PricingPage() {
                   variant={plan.buttonVariant}
                   size="large"
                   onClick={() => handlePlanSelect(plan.name)}
+                  disabled={currentPlan === plan.name.toLowerCase()}
                   sx={{
                     py: 1.5,
-                    fontWeight: 'bold'
+                    fontWeight: 'bold',
+                    ...(currentPlan === plan.name.toLowerCase() && {
+                      backgroundColor: 'action.disabledBackground',
+                      color: 'text.primary',
+                      borderColor: 'primary.main',
+                      '&.Mui-disabled': {
+                        backgroundColor: 'rgba(0, 229, 255, 0.1)',
+                        color: 'primary.main',
+                        borderColor: 'primary.main',
+                      }
+                    })
                   }}
                 >
                   {plan.buttonText}
