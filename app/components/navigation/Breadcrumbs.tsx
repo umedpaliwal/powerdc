@@ -47,7 +47,7 @@ const pathLabelMap: { [key: string]: string } = {
   '': 'Home',
   'dashboard': 'Dashboard',
   'surplus-interconnection': 'Surplus Interconnection',
-  'pricing': 'Pricing',
+  'pricing': 'Plans',
   'account': 'Account',
   'api-docs': 'API Documentation',
   're': 'Renewable Energy',

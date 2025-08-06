@@ -50,7 +50,7 @@ export default function NavigationHeader() {
     { label: 'Home', path: '/' },
     { label: 'Dashboard', path: '/dashboard', requiresAuth: true },
     { label: 'Surplus Interconnection', path: '/surplus-interconnection' },
-    { label: 'Pricing', path: '/pricing' },
+    { label: 'Plans', path: '/pricing' },
     { label: 'API Docs', path: '/api-docs' },
   ];
 

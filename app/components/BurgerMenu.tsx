@@ -55,7 +55,7 @@ export default function BurgerMenu() {
       path: '/surplus-interconnection' 
     },
     { 
-      text: 'Pricing', 
+      text: 'Plans', 
       icon: <AttachMoneyIcon />, 
       path: '/pricing' 
     },

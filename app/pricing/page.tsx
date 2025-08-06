@@ -99,7 +99,7 @@ export default function PricingPage() {
                   currentPlan === 'enterprise' ? "Downgrade" : "Upgrade to Pro",
       buttonVariant: "contained",
       tag: currentPlan === 'professional' ? "Current Plan" : 
-           currentPlan === 'explorer' ? "Recommended" : "Most Popular"
+           currentPlan === 'explorer' ? "Upgrade to Pro" : "Most Popular"
     },
     {
       name: "Enterprise",
@@ -205,8 +205,8 @@ export default function PricingPage() {
           <Grid item xs={12} md={4} key={plan.name}>
             <Card 
               sx={{ 
-                minHeight: '600px',
-                maxHeight: '700px',
+                minHeight: '480px',
+                maxHeight: '560px',
                 display: 'flex',
                 flexDirection: 'column',
                 position: 'relative',
@@ -225,7 +225,9 @@ export default function PricingPage() {
                     position: 'absolute',
                     top: -12,
                     right: 24,
-                    fontWeight: 'bold'
+                    fontWeight: 'bold',
+                    border: '1px solid',
+                    borderColor: 'primary.main'
                   }}
                 />
               )}
@@ -252,11 +254,11 @@ export default function PricingPage() {
                   )}
                 </Box>
 
-                <Typography variant="body2" sx={{ color: 'rgba(255, 255, 255, 0.7)', mb: 3 }}>
+                <Typography variant="body2" sx={{ color: 'rgba(255, 255, 255, 0.7)', mb: 2 }}>
                   {plan.description}
                 </Typography>
 
-                <Divider sx={{ my: 2 }} />
+                <Divider sx={{ my: 1 }} />
 
                 <List dense>
                   {plan.features.map((feature, index) => (
@@ -311,55 +313,20 @@ export default function PricingPage() {
       </Grid>
 
 
-      {/* Trust Signals */}
-      <Box sx={{ mt: 6, p: 4, bgcolor: 'background.paper', borderRadius: 2 }}>
-        <Grid container spacing={4} alignItems="center">
-          <Grid item xs={12} md={3}>
-            <Box sx={{ textAlign: 'center' }}>
-              <Typography variant="h4" fontWeight="bold" color="primary">
-                500+
-              </Typography>
-              <Typography variant="body2" sx={{ color: 'rgba(255, 255, 255, 0.7)' }}>
-                Sites Analyzed
-              </Typography>
-            </Box>
-          </Grid>
-          <Grid item xs={12} md={3}>
-            <Box sx={{ textAlign: 'center' }}>
-              <Typography variant="h4" fontWeight="bold" color="primary">
-                50+
-              </Typography>
-              <Typography variant="body2" sx={{ color: 'rgba(255, 255, 255, 0.7)' }}>
-                Data Centers Served
-              </Typography>
-            </Box>
-          </Grid>
-          <Grid item xs={12} md={3}>
-            <Box sx={{ textAlign: 'center' }}>
-              <Typography variant="h4" fontWeight="bold" color="primary">
-                95%
-              </Typography>
-              <Typography variant="body2" sx={{ color: 'rgba(255, 255, 255, 0.7)' }}>
-                Clean Energy Mix
-              </Typography>
-            </Box>
-          </Grid>
-          <Grid item xs={12} md={3}>
-            <Box sx={{ textAlign: 'center' }}>
-              <Typography variant="h4" fontWeight="bold" color="primary">
-                24/7
-              </Typography>
-              <Typography variant="body2" sx={{ color: 'rgba(255, 255, 255, 0.7)' }}>
-                Support Available
-              </Typography>
-            </Box>
-          </Grid>
-        </Grid>
-      </Box>
 
       {/* FAQ Alert */}
-      <Alert severity="info" sx={{ mt: 4 }}>
-        <Typography variant="body2" sx={{ color: 'white' }}>
+      <Alert 
+        severity="info" 
+        sx={{ 
+          mt: 4,
+          backgroundColor: 'rgba(58, 134, 255, 0.1)',
+          border: '1px solid rgba(58, 134, 255, 0.3)',
+          '& .MuiAlert-icon': {
+            color: '#3a86ff'
+          }
+        }}
+      >
+        <Typography variant="body2" sx={{ color: 'rgba(255, 255, 255, 0.9)' }}>
           <strong>Questions?</strong> Check out our FAQ or contact our sales team at sales@wattcanvas.com
         </Typography>
       </Alert>
