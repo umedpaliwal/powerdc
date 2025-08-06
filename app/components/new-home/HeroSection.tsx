@@ -72,28 +72,20 @@ export default function HeroSection() {
                 variant="h1"
                 sx={{
                   fontSize: {
-                    xs: "2.8rem",
-                    sm: "3.8rem",
-                    md: "4.5rem",
-                    lg: "5rem",
+                    xs: "2.5rem",
+                    sm: "3.2rem",
+                    md: "3.8rem",
+                    lg: "4.2rem",
                   },
                   fontWeight: 800,
                   color: "#fff",
                   mb: 3,
                   letterSpacing: "-0.5px",
-                  lineHeight: 1,
+                  lineHeight: 1.1,
                   textShadow: "0 2px 10px rgba(0,0,0,0.3)",
-                  display: "flex",
-                  flexDirection: "column",
-                  "& > span": {
-                    display: "block",
-                    mb: 1,
-                  },
                 }}
               >
-                <span>Scarcity</span>
-                <span>to</span>
-                <span>Surplus</span>
+                Deploy Your Data Center in 18 Months, Not 5 Years
               </Typography>
             </Box>
 
@@ -106,114 +98,132 @@ export default function HeroSection() {
               <Typography
                 variant="h2"
                 sx={{
-                  fontSize: { xs: "1.5rem", sm: "1.75rem", md: "2.2rem" },
+                  fontSize: { xs: "1.3rem", sm: "1.5rem", md: "1.8rem" },
                   fontWeight: 500,
                   color: "#D1F0FF",
-                  mb: 5,
-                  letterSpacing: "-0.5px",
+                  mb: 4,
+                  letterSpacing: "-0.3px",
                   textShadow: "0 2px 8px rgba(0,0,0,0.3)",
                   lineHeight: 1.4,
                 }}
               >
-                Leveraging Existing Infrastructure for Rapid Electricity
-                Deployment
+                Access 1,000 GW of ready grid capacity. Skip the 5-year interconnection queue with surplus interconnection.
               </Typography>
             </Box>
 
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                gap: 2,
-                mb: 2,
-              }}
-            >
-              <Typography
-                sx={{
-                  fontSize: "1.2rem",
-                  fontWeight: 600,
-                  color: "#fff",
-                  textAlign: "center",
-                  // textTransform: "uppercase",
-                }}
-              >
-                Technical Reports
-              </Typography>
-              <Button
-                variant="outlined"
-                size="large"
-                target="_blank"
-                href="https://gspp.berkeley.edu/assets/uploads/page/Surplus_Interconnection.pdf"
-                endIcon={<LaunchIcon />}
-                sx={{
-                  fontSize: "1rem",
-                  fontWeight: 600,
-                  borderRadius: "8px",
-                  color: "#fff",
-                  borderColor: "#fff",
-                  "&:hover": {
-                    borderColor: "#D1F0FF",
-                    color: "#D1F0FF",
-                  },
-                }}
-              >
-                Thermal
-              </Button>
-
-              <Button
-                variant="outlined"
-                size="large"
-                target="_blank"
-                href="https://gspp.berkeley.edu/assets/uploads/page/Existing_RE_-_Surplus_Interconnection.pdf"
-                endIcon={<LaunchIcon />}
-                sx={{
-                  fontSize: "1rem",
-                  fontWeight: 600,
-                  borderRadius: "8px",
-                  color: "#fff",
-                  borderColor: "#fff",
-                  "&:hover": {
-                    borderColor: "#D1F0FF",
-                    color: "#D1F0FF",
-                  },
-                }}
-              >
-                Renewable
-              </Button>
-            </Box>
-
+            {/* Prominent Dashboard Button */}
             <Box
               sx={{
                 textAlign: {
                   xs: "center",
                   md: "left",
                 },
+                mb: 4,
               }}
             >
               <Button
                 variant="contained"
                 size="large"
-                href="/re/dashboard"
-                target="_blank"
+                href="/dashboard"
                 endIcon={<LaunchIcon />}
                 sx={{
-                  mt: 2,
-                  mb: 10,
-                  py: 2,
-                  px: 4,
-                  fontSize: "1.2rem",
-                  fontWeight: 600,
-                  borderRadius: "8px",
+                  py: 2.5,
+                  px: 5,
+                  fontSize: "1.3rem",
+                  fontWeight: 700,
+                  borderRadius: "12px",
                   backgroundColor: "#0090EA",
                   "&:hover": {
                     backgroundColor: "#0078C8",
+                    transform: "translateY(-2px)",
                   },
-                  boxShadow: "0 4px 14px rgba(0, 144, 234, 0.4)",
+                  boxShadow: "0 6px 20px rgba(0, 144, 234, 0.5)",
+                  transition: "all 0.3s ease",
                   display: "inline-block",
                 }}
               >
-                Explore Dashboard
+                Explore Live Dashboard
               </Button>
+            </Box>
+
+            {/* CTA Buttons */}
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: { xs: "column", sm: "row" },
+                alignItems: { xs: "center", sm: "flex-start" },
+                gap: 2,
+                mb: 3,
+              }}
+            >
+              <Button
+                variant="contained"
+                size="large"
+                href="/signup"
+                sx={{
+                  py: 1.5,
+                  px: 4,
+                  fontSize: "1.1rem",
+                  fontWeight: 600,
+                  borderRadius: "8px",
+                  backgroundColor: "#00C853",
+                  "&:hover": {
+                    backgroundColor: "#00A047",
+                  },
+                  boxShadow: "0 4px 14px rgba(0, 200, 83, 0.4)",
+                  minWidth: "160px",
+                }}
+              >
+                Start Free Trial
+              </Button>
+
+              <Button
+                variant="outlined"
+                size="large"
+                href="#demo"
+                sx={{
+                  py: 1.5,
+                  px: 4,
+                  fontSize: "1.1rem",
+                  fontWeight: 600,
+                  borderRadius: "8px",
+                  color: "#fff",
+                  borderColor: "#fff",
+                  minWidth: "160px",
+                  "&:hover": {
+                    borderColor: "#D1F0FF",
+                    color: "#D1F0FF",
+                    backgroundColor: "rgba(209, 240, 255, 0.05)",
+                  },
+                }}
+              >
+                View Demo
+              </Button>
+            </Box>
+
+            {/* Trust Signals */}
+            <Box
+              sx={{
+                textAlign: {
+                  xs: "center",
+                  md: "left",
+                },
+                mt: 4,
+                mb: 10,
+              }}
+            >
+              <Typography
+                sx={{
+                  fontSize: "0.95rem",
+                  fontWeight: 500,
+                  color: "#B3D9FF",
+                  opacity: 0.9,
+                  letterSpacing: "0.5px",
+                  textTransform: "uppercase",
+                }}
+              >
+                Powered by EIA & NREL Data
+              </Typography>
             </Box>
           </Grid>
         </Grid>
