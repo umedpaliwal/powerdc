@@ -13,7 +13,7 @@ export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname
 
   // TEMPORARILY BYPASS AUTH FOR DEMO
-  if (pathname.includes('/thermal/dashboard') || pathname === '/dashboard') {
+  if (pathname.includes('/thermal/dashboard') || pathname === '/dashboard' || pathname === '/account') {
     return NextResponse.next()
   }
 

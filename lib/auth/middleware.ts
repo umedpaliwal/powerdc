@@ -26,6 +26,8 @@ const PUBLIC_ROUTES = [
   '/auth/callback',
   '/thermal',
   '/re',
+  '/surplus-interconnection',
+  '/pricing',
 ] as const
 
 export function isProtectedRoute(pathname: string): boolean {
