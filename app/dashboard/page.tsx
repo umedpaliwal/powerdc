@@ -12,33 +12,35 @@ export default function Dashboard() {
   const { user, loading } = useAuth();
   const router = useRouter();
 
-  // Temporarily disabled for demo
-  // useEffect(() => {
-  //   if (!loading && !user) {
-  //     router.push('/signin?redirectTo=/dashboard');
-  //   }
-  // }, [user, loading, router]);
+  // Enforce authentication
+  useEffect(() => {
+    if (!loading && !user) {
+      router.push('/signin?redirectTo=/dashboard');
+    }
+  }, [user, loading, router]);
 
-  // Temporarily show dashboard for demo
-  // if (loading) {
-  //   return (
-  //     <Box 
-  //       display="flex" 
-  //       justifyContent="center" 
-  //       alignItems="center" 
-  //       minHeight="100vh"
-  //       flexDirection="column"
-  //       gap={2}
-  //     >
-  //       <CircularProgress />
-  //       <Typography>Loading dashboard...</Typography>
-  //     </Box>
-  //   );
-  // }
+  // Show loading while checking auth
+  if (loading) {
+    return (
+      <Box 
+        display="flex" 
+        justifyContent="center" 
+        alignItems="center" 
+        minHeight="100vh"
+        flexDirection="column"
+        gap={2}
+        sx={{ background: "linear-gradient(135deg, #0F2027 0%, #203A43 50%, #2C5364 100%)" }}
+      >
+        <CircularProgress sx={{ color: '#00E5FF' }} />
+        <Typography sx={{ color: 'white' }}>Loading dashboard...</Typography>
+      </Box>
+    );
+  }
 
-  // if (!user) {
-  //   return null;
-  // }
+  // Redirect if not authenticated
+  if (!user) {
+    return null;
+  }
 
   return (
     <Box sx={{ height: "100vh", width: "100vw", position: "relative" }}>

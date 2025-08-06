@@ -85,34 +85,46 @@ export function useSubscription(): SubscriptionData {
       try {
         const supabase = createClient()
 
-        // Fetch subscription
-        const { data: subData, error: subError } = await supabase
-          .from('subscriptions')
-          .select('*')
-          .eq('user_id', user.id)
-          .eq('status', 'active')
-          .single()
+        // Try to fetch subscription - handle table not existing gracefully
+        try {
+          const { data: subData, error: subError } = await supabase
+            .from('subscriptions')
+            .select('*')
+            .eq('user_id', user.id)
+            .eq('status', 'active')
+            .single()
 
-        if (subError && subError.code !== 'PGRST116') { // PGRST116 is "no rows returned"
-          throw subError
+          if (subError && subError.code !== 'PGRST116') { // PGRST116 is "no rows returned"
+            // Only log error, don't throw - table might not exist
+            console.log('Subscription fetch error (table may not exist):', subError)
+          } else {
+            setSubscription(subData)
+          }
+        } catch (subErr) {
+          // Table doesn't exist - use default
+          console.log('Subscriptions table not found, using defaults')
         }
 
-        setSubscription(subData)
+        // Try to fetch current month usage - handle table not existing gracefully
+        try {
+          const currentMonth = new Date().toISOString().slice(0, 7) // YYYY-MM format
+          const { data: usageData, error: usageError } = await supabase
+            .from('usage_tracking')
+            .select('*')
+            .eq('user_id', user.id)
+            .eq('month', currentMonth)
+            .single()
 
-        // Fetch current month usage
-        const currentMonth = new Date().toISOString().slice(0, 7) // YYYY-MM format
-        const { data: usageData, error: usageError } = await supabase
-          .from('usage_tracking')
-          .select('*')
-          .eq('user_id', user.id)
-          .eq('month', currentMonth)
-          .single()
-
-        if (usageError && usageError.code !== 'PGRST116') {
-          throw usageError
+          if (usageError && usageError.code !== 'PGRST116') {
+            // Only log error, don't throw - table might not exist
+            console.log('Usage fetch error (table may not exist):', usageError)
+          } else {
+            setUsage(usageData)
+          }
+        } catch (usageErr) {
+          // Table doesn't exist - use default
+          console.log('Usage tracking table not found, using defaults')
         }
-
-        setUsage(usageData)
       } catch (err) {
         console.error('Error fetching subscription data:', err)
         setError(err instanceof Error ? err.message : 'Unknown error occurred')
