@@ -1,0 +1,42 @@
+Data center electricity demand is projected to grow dramatically, largely driven by the increasing power
+requirements of AI. A recent study by Lawrence Berkeley National Laboratory (Shehabi et al. LBNL
+2024) estimates that this demand will grow to between 74 GW and 132 GW by 2028, up from the
+current level of approximately 40 GW. This annual energy use is projected to account for 6.7% to 12.0%
+of total U.S. electricity consumption by 2028. Other studies provide similar estimates for 2030:
+Goldman Sachs (8%), The Electric Power Research Institute (EPRI) high scenario (9.1%), and
+McKinsey (12%) of the nation’s power.
+Figure 1: Total U.S. data center electricity use from 2014 through 2028.
+Source: Shehabi et al. LBNL 2024
+Sam Altman, CEO of OpenAI, highlighted the immense energy demands of AI technologies, stating, “We
+still don’t appreciate the energy needs of this technology… there’s no way to get there without a
+breakthrough… we need fusion or radically cheaper solar plus storage, or something.” Mark Zuckerberg,
+CEO of Meta, shared similar concerns, noting that the company would expand its data centers if more
+electricity were available. Echoing these views, Elon Musk, CEO of Tesla and X.ai, predicted an
+escalating strain on resources, warning of “a silicon shortage today, a transformer shortage in about a year,
+and electricity shortages in about two years.
+Current strategies, which often involve reallocating grid resources from existing consumers—such as
+using nuclear plants to power AI workloads—have severe scalability limitations and are already
+encountering challenges. Small modular nuclear reactors (SMRs), while promising for the long term, are
+unlikely to be deployed at scale before 2035.
+
+Our recent research (see Paliwal et al., 2024) shows that more than 80% of the 1,400+ coal and gas
+plants in the US have over five times the economical solar deployment capacity in their vicinity
+(within a 10 km by 10 km buffer zone) compared to their current capacity. This is primarily due to the
+recent dramatic decline in renewable energy (RE) costs, further amplified by incentives from the
+Inflation Reduction Act (IRA). The total local RE potential near these power plants, after applying
+several exclusion criteria, exceeds 15,000 GW.
+Additionally, we find that approximately 100 GW of gas power plant capacity is utilized less than 5%
+of the time (see Figure 5 below), making it a viable source of backup generation capacity for 24/7 solar +
+storage plants that could be deployed near these locations.
+
+Figure 5: More than 200 GW of fossil capacity has a capacity factor below 15% and faces operating
+costs higher than the cost of new RE. The supply curve shows the capacity factor versus the cumulative
+installed capacity of US fossil plants, overlaid with the plants’ operating costs from 2023 (composed of
+variable O&M plus fuel costs).
+Typically, power plants that generate electricity for only a small fraction of the year do so during periods
+of high power prices, which also indicate times when the grid most urgently needs them.
+Furthermore, as we demonstrate in Figure 6, at least in the case of ERCOT, the times when the project
+would require gas generation backup tend not to overlap with periods of high prices and power scarcity.
+In ERCOT, higher prices—and thus the use of expensive gas generators—are typically observed during
+summer afternoon and evening peaks, a period when the solar + storage hybrid plant does not require gas
+backup. However, this observation needs to be evaluated in more depth and across other markets.

@@ -27,14 +27,14 @@ export default function RootLayout({
   return (
     <html lang="en" className={inter.className}>
       <body className={inter.className}>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <AuthProvider>
+        <AuthProvider>
+          <ThemeProvider theme={theme}>
+            <CssBaseline />
             {children}
-          </AuthProvider>
-          <Analytics />
-          <SpeedInsights />
-        </ThemeProvider>
+            <Analytics />
+            <SpeedInsights />
+          </ThemeProvider>
+        </AuthProvider>
       </body>
     </html>
   );
