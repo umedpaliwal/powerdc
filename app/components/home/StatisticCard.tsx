@@ -77,29 +77,7 @@ export default function StatisticCard({
   };
 
   return (
-    <>
-      <style jsx global>{`
-        .stat-card {
-          opacity: 0;
-          transform: translateY(30px) scale(0.9);
-          transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        .stat-card.is-visible {
-          opacity: 1;
-          transform: translateY(0) scale(1);
-        }
-
-        .stat-value {
-          transition: all 0.3s ease;
-        }
-
-        .stat-card:hover .stat-value {
-          transform: scale(1.05);
-        }
-      `}</style>
-      
-      <Card
+    <Card
         id={`stat-card-${label.replace(/\s+/g, '-')}`}
         className="stat-card"
         sx={{
@@ -178,6 +156,5 @@ export default function StatisticCard({
           </Box>
         </CardContent>
       </Card>
-    </>
   );
 }

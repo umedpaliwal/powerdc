@@ -43,7 +43,7 @@ const industryOptions = [
 ]
 
 export function SignUpForm({ onSuccess }: SignUpFormProps) {
-  const { signUp, signInWithGoogle, signInWithMicrosoft } = useAuth()
+  const { signUp, signInWithGoogle } = useAuth()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   
@@ -158,16 +158,6 @@ export function SignUpForm({ onSuccess }: SignUpFormProps) {
     }
   }
 
-  const handleMicrosoftSignUp = async () => {
-    try {
-      setLoading(true)
-      await signInWithMicrosoft()
-    } catch (err: any) {
-      setError(err.message || 'An error occurred with Microsoft sign up')
-    } finally {
-      setLoading(false)
-    }
-  }
 
   return (
     <Box component="form" onSubmit={handleSubmit} sx={{ width: '100%' }}>
@@ -185,19 +175,18 @@ export function SignUpForm({ onSuccess }: SignUpFormProps) {
           startIcon={<GoogleIcon />}
           onClick={handleGoogleSignUp}
           disabled={loading}
-          sx={{ mb: 1.5 }}
+          sx={{ 
+            mb: 2,
+            py: 1.5,
+            borderColor: '#4285f4',
+            color: '#4285f4',
+            '&:hover': {
+              borderColor: '#357ae8',
+              backgroundColor: 'rgba(66, 133, 244, 0.04)'
+            }
+          }}
         >
           Sign up with Google
-        </Button>
-        
-        <Button
-          fullWidth
-          variant="outlined"
-          onClick={handleMicrosoftSignUp}
-          disabled={loading}
-          sx={{ mb: 2 }}
-        >
-          Sign up with Microsoft
         </Button>
 
         <Divider sx={{ my: 2 }}>

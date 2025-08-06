@@ -12,6 +12,11 @@ import {
 export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname
 
+  // TEMPORARILY BYPASS AUTH FOR DEMO
+  if (pathname.includes('/thermal/dashboard') || pathname === '/dashboard') {
+    return NextResponse.next()
+  }
+
   // Skip auth check for public routes and assets
   if (isPublicRoute(pathname) || shouldBypassAuth(pathname)) {
     return NextResponse.next()

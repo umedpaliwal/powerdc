@@ -103,34 +103,7 @@ export default function DataCenterCrisisSection() {
   ];
 
   return (
-    <>
-      <style jsx global>{`
-        .fade-in-section {
-          opacity: 0;
-          transform: translateY(30px);
-          transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        .fade-in-section.is-visible {
-          opacity: 1;
-          transform: translateY(0);
-        }
-
-        .crisis-glow {
-          animation: crisisGlow 4s ease-in-out infinite alternate;
-        }
-
-        @keyframes crisisGlow {
-          from {
-            text-shadow: 0 0 20px rgba(255,152,0,0.3);
-          }
-          to {
-            text-shadow: 0 0 30px rgba(255,152,0,0.5), 0 0 40px rgba(255,152,0,0.2);
-          }
-        }
-      `}</style>
-      
-      <Box
+    <Box
         id="data-center-crisis"
         ref={sectionRef}
         sx={{
@@ -284,14 +257,6 @@ export default function DataCenterCrisisSection() {
             </Box>
           </Box>
         </Container>
-
-        <style jsx global>{`
-          @keyframes pulse {
-            0%, 100% { opacity: 0.5; }
-            50% { opacity: 0.8; }
-          }
-        `}</style>
       </Box>
-    </>
   );
 }

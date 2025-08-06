@@ -1,7 +1,7 @@
 "use client";
 
-import DashboardIntroModal from "@/components/DashboardIntroModal";
-import ReDashboardContent from "@/components/re/ReDashboardContent";
+import DashboardIntroModal from "@/app/components/DashboardIntroModal";
+import ReDashboardContent from "@/app/components/re/ReDashboardContent";
 import { Box, Typography, CircularProgress } from "@mui/material";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";

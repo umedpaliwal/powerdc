@@ -18,6 +18,6 @@ export async function GET(request: Request) {
     return NextResponse.redirect(`${origin}/reset-password`)
   }
 
-  // Default redirect after sign in/sign up
-  return NextResponse.redirect(`${origin}/`)
+  // Default redirect after sign in/sign up to dashboard
+  return NextResponse.redirect(`${origin}/dashboard`)
 }

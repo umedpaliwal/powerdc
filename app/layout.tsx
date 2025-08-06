@@ -7,6 +7,7 @@ import theme from "./theme";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { AuthProvider } from "@/contexts/AuthContext";
+import BurgerMenu from "@/app/components/BurgerMenu";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -30,6 +31,7 @@ export default function RootLayout({
         <AuthProvider>
           <ThemeProvider theme={theme}>
             <CssBaseline />
+            <BurgerMenu />
             {children}
             <Analytics />
             <SpeedInsights />

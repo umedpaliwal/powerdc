@@ -1,17 +1,18 @@
 "use client";
 
-import plantsData from "@/data/re_plants.json";
+import plantsData from "@/app/data/re_plants.json";
 import { Box, Button, Tab, Tabs, Typography } from "@mui/material";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { useEffect, useRef, useState } from "react";
 import ReDashboardSidebar from "./ReDashboardSidebar";
 import ReStatCards from "./ReStatCards";
-import { Plant } from "@/types/plant";
+import { Plant } from "@/app/types/plant";
 
 const mapboxToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN || "";
-if (!mapboxToken) {
-  throw new Error("Mapbox access token is not defined");
+// Don't throw error, just log warning
+if (!mapboxToken && typeof window !== 'undefined') {
+  console.warn("Mapbox access token is not defined. Map features will be limited.");
 }
 
 interface FeatureProperties {

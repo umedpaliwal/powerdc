@@ -2,87 +2,134 @@
 
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import LaunchIcon from "@mui/icons-material/Launch";
-import { Box, Button, Container, Grid, Typography } from "@mui/material";
-import { useEffect, useRef } from "react";
+import { Box, Button, Container, Grid, Typography, Paper } from "@mui/material";
+import { useEffect, useState } from "react";
+import React from "react";
+import ElectricBoltIcon from '@mui/icons-material/ElectricBolt';
+import SpeedIcon from '@mui/icons-material/Speed';
+import DataCenterIcon from '@mui/icons-material/Storage';
+import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 
 export default function HeroSection() {
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.playbackRate = 0.75; // Slow down the video slightly
-      videoRef.current.play().catch((error) => {
-        console.error("Video playback failed:", error);
-      });
-    }
+    setMounted(true);
   }, []);
 
   return (
     <Box
       sx={{
         position: "relative",
-        minHeight: "120vh" /* Increased height */,
+        minHeight: "100vh",
         overflow: "hidden",
-        backgroundColor: "#001220",
+        background: "linear-gradient(135deg, #0F2027 0%, #203A43 50%, #2C5364 100%)",
       }}
     >
-      {/* Video background */}
+      {/* Animated background pattern */}
       <Box
-        sx={{ position: "absolute", width: "100%", height: "100%", zIndex: 0 }}
+        sx={{
+          position: "absolute",
+          width: "100%",
+          height: "100%",
+          opacity: 0.1,
+          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+          animation: "float 20s ease-in-out infinite",
+          "@keyframes float": {
+            "0%, 100%": { transform: "translateY(0)" },
+            "50%": { transform: "translateY(-20px)" },
+          },
+        }}
+      />
+
+      {/* Floating particles effect */}
+      <Box
+        sx={{
+          position: "absolute",
+          width: "100%",
+          height: "100%",
+          overflow: "hidden",
+          zIndex: 0,
+        }}
       >
-        <video
-          ref={videoRef}
-          autoPlay
-          loop
-          muted
-          playsInline
-          style={{
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-            opacity: 0.4,
-            filter: "brightness(0.7)",
-          }}
-        >
-          <source src="/assets/re/video_re_dashboard.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
+        {mounted && [...Array(20)].map((_, i) => (
+          <Box
+            key={i}
+            sx={{
+              position: "absolute",
+              width: "4px",
+              height: "4px",
+              backgroundColor: "#00E5FF",
+              borderRadius: "50%",
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              opacity: Math.random() * 0.5 + 0.3,
+              animation: `particle ${20 + Math.random() * 20}s linear infinite`,
+              "@keyframes particle": {
+                "0%": { transform: "translateY(0) translateX(0)" },
+                "100%": { transform: `translateY(-100vh) translateX(${Math.random() * 100 - 50}px)` },
+              },
+            }}
+          />
+        ))}
       </Box>
 
       {/* Content overlay */}
       <Container
         maxWidth="lg"
-        sx={{ position: "relative", zIndex: 1, pt: 20, pb: 12 }}
+        sx={{ position: "relative", zIndex: 1, pt: 15, pb: 8 }}
       >
-        <Grid container>
+        <Grid container spacing={4} alignItems="center">
           {/* Hero Text and CTA */}
           <Grid
             item
             xs={12}
-            md={7}
+            md={6}
             sx={{ textAlign: { xs: "center", md: "left" } }}
           >
             <Box
               sx={{
-                maxWidth: { xs: "100%", md: "90%" },
+                maxWidth: { xs: "100%", md: "100%" },
                 margin: { xs: "auto", md: "0" },
+                animation: mounted ? "slideInLeft 0.8s ease-out" : "none",
+                "@keyframes slideInLeft": {
+                  "0%": { opacity: 0, transform: "translateX(-50px)" },
+                  "100%": { opacity: 1, transform: "translateX(0)" },
+                },
               }}
             >
+              <Box sx={{ display: "flex", alignItems: "center", mb: 2, justifyContent: { xs: "center", md: "flex-start" } }}>
+                <ElectricBoltIcon sx={{ fontSize: 50, color: "#00E5FF", mr: 2 }} />
+                <Typography
+                  variant="overline"
+                  sx={{
+                    fontSize: "1rem",
+                    fontWeight: 600,
+                    color: "#00E5FF",
+                    letterSpacing: "2px",
+                  }}
+                >
+                  POWERDC PLATFORM
+                </Typography>
+              </Box>
               <Typography
                 variant="h1"
                 sx={{
                   fontSize: {
                     xs: "2.5rem",
-                    sm: "3.2rem",
-                    md: "3.8rem",
-                    lg: "4.2rem",
+                    sm: "3rem",
+                    md: "3.5rem",
+                    lg: "4rem",
                   },
                   fontWeight: 800,
                   color: "#fff",
                   mb: 3,
-                  letterSpacing: "-0.5px",
-                  lineHeight: 1.1,
-                  textShadow: "0 2px 10px rgba(0,0,0,0.3)",
+                  letterSpacing: "-1px",
+                  lineHeight: 1.2,
+                  background: "linear-gradient(45deg, #ffffff 30%, #00E5FF 90%)",
+                  backgroundClip: "text",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
                 }}
               >
                 Deploy Your Data Center in 18 Months, Not 5 Years
@@ -91,60 +138,52 @@ export default function HeroSection() {
 
             <Box
               sx={{
-                maxWidth: { xs: "100%", md: "90%" },
+                maxWidth: { xs: "100%", md: "100%" },
                 margin: { xs: "auto", md: "0" },
+                animation: mounted ? "slideInLeft 1s ease-out" : "none",
               }}
             >
               <Typography
                 variant="h2"
                 sx={{
-                  fontSize: { xs: "1.3rem", sm: "1.5rem", md: "1.8rem" },
-                  fontWeight: 500,
-                  color: "#D1F0FF",
+                  fontSize: { xs: "1.2rem", sm: "1.4rem", md: "1.6rem" },
+                  fontWeight: 400,
+                  color: "rgba(255, 255, 255, 0.9)",
                   mb: 4,
-                  letterSpacing: "-0.3px",
-                  textShadow: "0 2px 8px rgba(0,0,0,0.3)",
-                  lineHeight: 1.4,
+                  lineHeight: 1.6,
                 }}
               >
-                Access 1,000 GW of ready grid capacity. Skip the 5-year interconnection queue with surplus interconnection.
+                Access <Box component="span" sx={{ fontWeight: 700, color: "#00E5FF" }}>1,000 GW</Box> of ready grid capacity. Skip the 5-year interconnection queue with surplus interconnection.
               </Typography>
             </Box>
 
-            {/* Prominent Dashboard Button */}
-            <Box
-              sx={{
-                textAlign: {
-                  xs: "center",
-                  md: "left",
-                },
-                mb: 4,
-              }}
-            >
-              <Button
-                variant="contained"
-                size="large"
-                href="/dashboard"
-                endIcon={<LaunchIcon />}
-                sx={{
-                  py: 2.5,
-                  px: 5,
-                  fontSize: "1.3rem",
-                  fontWeight: 700,
-                  borderRadius: "12px",
-                  backgroundColor: "#0090EA",
-                  "&:hover": {
-                    backgroundColor: "#0078C8",
-                    transform: "translateY(-2px)",
-                  },
-                  boxShadow: "0 6px 20px rgba(0, 144, 234, 0.5)",
-                  transition: "all 0.3s ease",
-                  display: "inline-block",
-                }}
-              >
-                Explore Live Dashboard
-              </Button>
-            </Box>
+            {/* Stats Row */}
+            <Grid container spacing={3} sx={{ mb: 4, animation: mounted ? "fadeIn 1.2s ease-out" : "none", "@keyframes fadeIn": { "0%": { opacity: 0 }, "100%": { opacity: 1 } } }}>
+              <Grid item xs={6} sm={3}>
+                <Box>
+                  <Typography sx={{ fontSize: "2rem", fontWeight: 700, color: "#00E5FF" }}>200+</Typography>
+                  <Typography sx={{ fontSize: "0.9rem", color: "rgba(255,255,255,0.7)" }}>GW Available</Typography>
+                </Box>
+              </Grid>
+              <Grid item xs={6} sm={3}>
+                <Box>
+                  <Typography sx={{ fontSize: "2rem", fontWeight: 700, color: "#00E5FF" }}>75%</Typography>
+                  <Typography sx={{ fontSize: "0.9rem", color: "rgba(255,255,255,0.7)" }}>Cost Savings</Typography>
+                </Box>
+              </Grid>
+              <Grid item xs={6} sm={3}>
+                <Box>
+                  <Typography sx={{ fontSize: "2rem", fontWeight: 700, color: "#00E5FF" }}>18</Typography>
+                  <Typography sx={{ fontSize: "0.9rem", color: "rgba(255,255,255,0.7)" }}>Months Deploy</Typography>
+                </Box>
+              </Grid>
+              <Grid item xs={6} sm={3}>
+                <Box>
+                  <Typography sx={{ fontSize: "2rem", fontWeight: 700, color: "#00E5FF" }}>1000+</Typography>
+                  <Typography sx={{ fontSize: "0.9rem", color: "rgba(255,255,255,0.7)" }}>Sites Ready</Typography>
+                </Box>
+              </Grid>
+            </Grid>
 
             {/* CTA Buttons */}
             <Box
@@ -154,79 +193,175 @@ export default function HeroSection() {
                 alignItems: { xs: "center", sm: "flex-start" },
                 gap: 2,
                 mb: 3,
+                animation: mounted ? "slideInUp 1.4s ease-out" : "none",
+                "@keyframes slideInUp": {
+                  "0%": { opacity: 0, transform: "translateY(30px)" },
+                  "100%": { opacity: 1, transform: "translateY(0)" },
+                },
               }}
             >
               <Button
                 variant="contained"
                 size="large"
-                href="/signup"
+                href="/dashboard"
+                endIcon={<LaunchIcon />}
                 sx={{
-                  py: 1.5,
+                  py: 2,
                   px: 4,
-                  fontSize: "1.1rem",
+                  fontSize: "1.2rem",
                   fontWeight: 600,
-                  borderRadius: "8px",
-                  backgroundColor: "#00C853",
+                  borderRadius: "50px",
+                  background: "linear-gradient(45deg, #00E5FF 30%, #0090EA 90%)",
                   "&:hover": {
-                    backgroundColor: "#00A047",
+                    background: "linear-gradient(45deg, #00B8D4 30%, #0078C8 90%)",
+                    transform: "translateY(-2px)",
+                    boxShadow: "0 10px 30px rgba(0, 229, 255, 0.4)",
                   },
-                  boxShadow: "0 4px 14px rgba(0, 200, 83, 0.4)",
-                  minWidth: "160px",
+                  boxShadow: "0 6px 20px rgba(0, 229, 255, 0.3)",
+                  transition: "all 0.3s ease",
+                  minWidth: "200px",
                 }}
               >
-                Start Free Trial
+                Explore Dashboard
               </Button>
 
               <Button
                 variant="outlined"
                 size="large"
-                href="#demo"
+                href="/signup"
                 sx={{
-                  py: 1.5,
+                  py: 2,
                   px: 4,
-                  fontSize: "1.1rem",
+                  fontSize: "1.2rem",
                   fontWeight: 600,
-                  borderRadius: "8px",
+                  borderRadius: "50px",
                   color: "#fff",
-                  borderColor: "#fff",
-                  minWidth: "160px",
+                  borderColor: "rgba(255,255,255,0.5)",
+                  minWidth: "200px",
+                  backdropFilter: "blur(10px)",
+                  backgroundColor: "rgba(255,255,255,0.05)",
                   "&:hover": {
-                    borderColor: "#D1F0FF",
-                    color: "#D1F0FF",
-                    backgroundColor: "rgba(209, 240, 255, 0.05)",
+                    borderColor: "#00E5FF",
+                    color: "#00E5FF",
+                    backgroundColor: "rgba(0, 229, 255, 0.1)",
+                    transform: "translateY(-2px)",
                   },
+                  transition: "all 0.3s ease",
                 }}
               >
-                View Demo
+                Start Free Trial
               </Button>
             </Box>
+          </Grid>
 
-            {/* Trust Signals */}
+          {/* Right side - Interactive Visual */}
+          <Grid item xs={12} md={6}>
             <Box
               sx={{
-                textAlign: {
-                  xs: "center",
-                  md: "left",
+                position: "relative",
+                animation: mounted ? "slideInRight 1s ease-out" : "none",
+                "@keyframes slideInRight": {
+                  "0%": { opacity: 0, transform: "translateX(50px)" },
+                  "100%": { opacity: 1, transform: "translateX(0)" },
                 },
-                mt: 4,
-                mb: 10,
               }}
             >
-              <Typography
+              <Paper
+                elevation={0}
                 sx={{
-                  fontSize: "0.95rem",
-                  fontWeight: 500,
-                  color: "#B3D9FF",
-                  opacity: 0.9,
-                  letterSpacing: "0.5px",
-                  textTransform: "uppercase",
+                  p: 4,
+                  borderRadius: 4,
+                  background: "rgba(255,255,255,0.05)",
+                  backdropFilter: "blur(20px)",
+                  border: "1px solid rgba(255,255,255,0.1)",
+                  position: "relative",
+                  overflow: "hidden",
                 }}
               >
-                Powered by EIA & NREL Data
-              </Typography>
+                {/* Animated grid background */}
+                <Box
+                  sx={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    backgroundImage: `linear-gradient(rgba(0,229,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(0,229,255,0.1) 1px, transparent 1px)`,
+                    backgroundSize: "30px 30px",
+                    animation: "grid 10s linear infinite",
+                    "@keyframes grid": {
+                      "0%": { transform: "translate(0, 0)" },
+                      "100%": { transform: "translate(30px, 30px)" },
+                    },
+                  }}
+                />
+                
+                <Box sx={{ position: "relative", zIndex: 1 }}>
+                  <Typography variant="h5" sx={{ color: "#00E5FF", mb: 3, fontWeight: 600 }}>
+                    Real-Time Grid Intelligence
+                  </Typography>
+                  
+                  <Grid container spacing={2}>
+                    {[
+                      { icon: <SpeedIcon />, label: "Fast Track", value: "18 months" },
+                      { icon: <DataCenterIcon />, label: "Data Centers", value: "100+ MW" },
+                      { icon: <TrendingUpIcon />, label: "Efficiency", value: "99.9%" },
+                      { icon: <ElectricBoltIcon />, label: "Grid Ready", value: "1000 GW" },
+                    ].map((item, index) => (
+                      <Grid item xs={6} key={index}>
+                        <Box
+                          sx={{
+                            p: 2,
+                            borderRadius: 2,
+                            background: "rgba(0,229,255,0.1)",
+                            border: "1px solid rgba(0,229,255,0.3)",
+                            transition: "all 0.3s",
+                            cursor: "pointer",
+                            "&:hover": {
+                              background: "rgba(0,229,255,0.2)",
+                              transform: "scale(1.05)",
+                            },
+                          }}
+                        >
+                          <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
+                            {React.cloneElement(item.icon, { sx: { color: "#00E5FF", fontSize: 24, mr: 1 } })}
+                            <Typography sx={{ color: "rgba(255,255,255,0.7)", fontSize: "0.9rem" }}>
+                              {item.label}
+                            </Typography>
+                          </Box>
+                          <Typography sx={{ color: "#fff", fontWeight: 700, fontSize: "1.2rem" }}>
+                            {item.value}
+                          </Typography>
+                        </Box>
+                      </Grid>
+                    ))}
+                  </Grid>
+                </Box>
+              </Paper>
             </Box>
           </Grid>
         </Grid>
+
+        {/* Trust Signals */}
+        <Box
+          sx={{
+            textAlign: "center",
+            mt: 6,
+            animation: mounted ? "fadeIn 1.6s ease-out" : "none",
+          }}
+        >
+          <Typography
+            sx={{
+              fontSize: "0.95rem",
+              fontWeight: 500,
+              color: "rgba(255,255,255,0.6)",
+              letterSpacing: "1px",
+              textTransform: "uppercase",
+            }}
+          >
+            Powered by EIA & NREL Data • FERC Order 845 Compliant
+          </Typography>
+        </Box>
 
         {/* Scroll indicator */}
         <Box
@@ -243,7 +378,7 @@ export default function HeroSection() {
           }}
         >
           <KeyboardArrowDownIcon
-            sx={{ fontSize: "3rem", color: "white", opacity: 0.8 }}
+            sx={{ fontSize: "2.5rem", color: "#00E5FF", opacity: 0.8 }}
           />
         </Box>
       </Container>

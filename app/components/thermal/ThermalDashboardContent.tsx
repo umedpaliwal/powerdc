@@ -1,7 +1,7 @@
 "use client";
 
-import plantsData from "@/data/plants.json";
-import { Plant } from "@/types/plant";
+import plantsData from "@/app/data/plants.json";
+import { Plant } from "@/app/types/plant";
 import { Box, Button, Typography } from "@mui/material";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
@@ -10,8 +10,9 @@ import ThermalDashboardSidebar from "./ThermalDashboardSidebar";
 import ThermalStatCards from "./ThermalStatCards";
 
 const mapboxToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN || "";
-if (!mapboxToken) {
-  throw new Error("Mapbox access token is not defined");
+// Don't throw error, just log warning
+if (!mapboxToken && typeof window !== 'undefined') {
+  console.warn("Mapbox access token is not defined. Map features will be limited.");
 }
 
 interface FeatureProperties {
