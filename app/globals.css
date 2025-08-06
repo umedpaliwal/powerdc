@@ -1,0 +1,123 @@
+/* @import 'mapbox-gl/dist/mapbox-gl.css'; */
+
+/* Your other global styles */
+
+html, body, #__next {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.dashboard-container {
+  height: 100%;
+  display: flex;
+}
+
+.map-container {
+  flex: 1;
+  min-height: 0; /* This is important for the flexbox to work correctly */
+}
+
+.marker {
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid white;
+  box-shadow: 0 0 2px rgba(0,0,0,0.5);
+}
+
+.state-label {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 50px;
+  position: absolute;
+  left: 8px;
+  top: -8px;
+}
+
+.mapboxgl-popup {
+  max-width: 400px !important;
+}
+
+.mapboxgl-popup-content {
+  background-color: rgba(30, 30, 30, 0.9) !important;
+  color: #ffffff !important;
+  border-radius: 8px !important;
+  padding: 16px !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+  font-size: 14px !important;
+  border: 1px solid rgba(79, 195, 247, 0.5) !important;
+  text-align: left !important; /* Ensure all text is left-aligned */
+}
+
+.mapboxgl-popup-tip {
+  display: none !important; /* Hide the popup tip */
+}
+
+.mapboxgl-popup-close-button {
+  color: #4fc3f7 !important; /* Light blue, matching the accent color */
+  font-size: 18px !important;
+  padding: 8px !important;
+  right: 8px !important;
+  top: 8px !important;
+}
+
+.mapboxgl-popup-close-button:hover {
+  background-color: rgba(79, 195, 247, 0.2) !important; /* Light blue background on hover */
+  border-radius: 4px !important;
+}
+
+/* Make popup content more compact */
+.mapboxgl-popup-content p {
+  margin: 6px 0;
+}
+
+.mapboxgl-popup-content strong {
+  font-size: 16px;
+  color: #4fc3f7; /* Light blue for titles */
+  display: block;
+  margin-bottom: 8px;
+}
+
+/* Style for each info line in the popup */
+.mapboxgl-popup-content .info-line {
+  display: flex;
+  justify-content: flex-start; /* Align content to the left */
+  margin-bottom: 4px;
+}
+
+.mapboxgl-popup-content .info-label {
+  color: #a0a0a0;
+  margin-right: 8px; /* Add some space between label and value */
+  min-width: 120px; /* Set a minimum width for labels to align values */
+}
+
+.mapboxgl-popup-content .info-value {
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.map-legend {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 10px;
+  border-radius: 4px;
+  color: white;
+  font-size: 14px;
+}
+
+.map-legend h4 {
+  margin: 0 0 10px;
+  font-size: 16px;
+  color: #4fc3f7;
+}
+
+.legend-key {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  margin-right: 5px;
+  border-radius: 50%;
+}

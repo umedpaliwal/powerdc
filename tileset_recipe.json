@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "layers": {
+    "power_plants": {
+      "source": "mapbox://tileset-source/energyai/1000gw_units_v2",
+      "minzoom": 2,
+      "maxzoom": 16
+    }
+  }
+}

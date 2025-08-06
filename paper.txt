@@ -1,0 +1,833 @@
+Existing fossil fuel plants sharing grid access with renewables can
+rapidly and cost-effectively double US generation capacity
+Working Paper
+November 2024
+Umed Paliwal1*
+, Emilia Chojkiewicz1,2
+, Nikit Abhyankar1
+, Amol Phadke1*
+Abstract: Timely grid access for the large volume of renewable energy (RE) projects awaiting in
+the queue has become a significant bottleneck for meeting growing electricity demand with
+low-cost clean energy. However, recent cost declines in renewables combined with incentives
+from the Inflation Reduction Act enable the siting of low-cost renewables near existing
+interconnection. Here, we utilize high-resolution satellite imagery to estimate the renewable
+energy (RE) potential within a 6x6 mile buffer zone around existing fossil power plants in the
+United States (US). We find that it is technically feasible and economically viable for existing
+fossil power plants to share their grid access with around 800 GW of renewable energy (RE)
+currently, and around 1,000 GW by 2030 as the economics of RE continue to improve, potentially
+nearly doubling the US generation capacity and significantly reducing the cost of electricity. We
+argue that a significant opportunity likely exists for large-scale RE and storage deployment by
+sharing grid access with about 250 GW of RE plants that currently utilize their grid connections
+less than 70% of the time, warranting further evaluation. By improving the utilization of existing
+infrastructure, this strategy bypasses traditional renewable integration challenges such as the
+interconnection queue backlog while also generating additional revenue for power plant owners
+and tax revenue for local communities. Despite limited commercial interest today, with
+appropriate policy and regulatory support, this can be a mainstream strategy for integrating
+clean electricity sources at speed and scale.
+Modeling results are available at: scarcitytosurplus.com/dashboard
+_____________________________________________________________________________
+1
+Goldman School of Public Policy, University of California, Berkeley; Berkeley, 94720, USA 2
+Energy and Resources Group, University of California, Berkeley; Berkeley, 94720, USA
+*Corresponding authors. Email: umed@berkeley.edu, aaphadke@berkeley.edu
+Working papers are circulated for discussion and comment purposes. They have not been peer-reviewed or been
+subject to review by any editorial board.
+©2024 by Umed Paliwal, Emilia Chojkiewicz, Nikit Abhyankar, Amol Phadke. All rights reserved.
+Introduction
+The power system has emerged as the major bottleneck to meeting growing electricity demand
+with low-cost clean energy. Demand for electricity - and in particular, clean electricity - has
+soared, driven by the electrification of various sectors, the rise of data centers for artificial
+intelligence (AI), and booming investment into clean tech manufacturing. Simultaneously, clean
+energy is increasingly economically viable due to dramatic declines in the costs of renewables
+and battery storage coupled with incentives from the Inflation Reduction Act (IRA): for example,
+the prices of utility-scale solar Power Purchase Agreements (PPAs) reached a record-low of
+$24/MWh for projects beginning commercial operation in 2023 while nearly half of the new
+PPAs signed in 2023 qualify for the energy community tax credit and have achieved similar
+prices (1). Yet in the United States (US) today, nearly 1,500 GW of solar and wind plus over
+1,000 GW of battery storage remain stalled in the interconnection queue, where projects
+seeking to connect to the grid wait while they undergo a series of system impact studies that
+analyze if, and which, network upgrades are needed before the project can be brought online
+(2). The active capacity in the queue has been growing, translating to increased interconnection
+wait times: while the typical duration from interconnection request to commercial operation
+averaged less than two years for projects built in 2000-2007, projects built in 2023 have a
+median wait of five years (2). Challenges associated with executing the transmission upgrades
+exacerbate the issue, with lead times for transformers recently surging to two to four years (3).
+These grid bottlenecks are translating to a lagging rate of renewable energy (RE) deployment,
+which needs to be accelerated if projected load growth is to be delivered at the lowest cost. At
+the national level as shown in Figure 1, even in the optimistic case in which the current average
+rate of 30 GW/year is doubled (e.g. through streamlined interconnection processes),
+maintaining this pace until 2035 will likely fall short by ~1000 GW compared to the least-cost
+projections by several major studies. Some predictions indicate that AI data centers alone could
+require up to 500 TWh of electricity by 2030, absorbing almost all new RE additions assuming
+deployment continues at its current pace (4). In the absence of cleaner alternatives, this
+generation shortfall would have to be met by fossil generation, with corresponding emissions
+and costs. In contrast, other global players like China are deploying RE at rates ten times higher
+than the US, reaping the benefits of low-cost energy for their consumers and industries. While
+2024 is projected to be a record-setting year with 45 GW of RE commencing commercial
+operation, additional efforts are required to fill the gap (5).
+PJM’s resource adequacy risk
+The Pennsylvania-New Jersey-Maryland (PJM) Interconnection, the largest grid operator in the US by
+customers served, faces significant challenges in maintaining resource adequacy. Load forecasts show
+demand growth averaging 1.4% per year for the PJM footprint and up to 7% for zones with data centers
+clusters, signifying unprecedented growth in electricity demand. Yet simultaneously, 40 GW of fossil
+generation capacity (21% of PJM’s currently installed capacity) may retire by 2030 and the rate of new
+capacity additions and in particular RE and battery storage has lagged (6). This asymmetrical pace in
+which resource retirements and load growth exceed the pace of new entry may translate into a potential
+capacity shortfall of nearly 4 GW by 2029, escalating to over 8 GW by 2034 if current trends hold. This
+underscores the urgent need for accelerating the integration of new resources and in particular RE and
+battery storage solutions to meet future demand and support grid reliability.
+Figure 1: The US is headed toward a significant shortfall in clean energy, projected to reach around 1,000 GW by
+2035 even with a doubling of the current deployment rate. Actual values for 2015-2023, projected values for
+2024, extrapolated values for 2024-2035, and modeled values for 2030 & 2035 from major studies (7-9).
+A promising strategy for accelerating renewable energy deployment is to leverage existing grid
+infrastructure through interconnection sharing. Also known as surplus interconnection,
+repowering, cable pooling, or hybridization, it would involve the expedited addition of RE
+and/or battery storage capacity at or in close proximity to existing power plants, allowing the RE
+capacity to share the existing grid access point without surpassing the original interconnection
+capacity limits - as shown in Figure 2. The strategy would maximize the utilization of existing
+grid assets and effectively bypass the lengthy conventional interconnection queue process.
+Policy paves the way forward for interconnection sharing at existing facilities under Order 845
+from the Federal Energy Regulatory Commission (FERC), which requires transmission providers
+to establish an expedited process for interconnection customers to utilize or transfer surplus
+interconnection service at existing facilities. While the subsequent analysis focuses on adding RE
+to operational fossil plants through surplus interconnection, the basic premise of leveraging
+existing grid infrastructure would likewise be valuable for retiring power plants through
+generator replacement, enabling new, low-cost renewable and/or battery storage capacity to be
+added at the site of retiring power plants. A prime candidate for this is the nearly 70 GW of
+coal-fired capacity that is scheduled for retirement between 2024 and 2030 (10).
+Figure 2: Schematic of renewables and/or storage sharing the interconnection with existing fossil power plants.
+The Growing Challenge of AI Infrastructure Energy Demand
+The rapid expansion of artificial intelligence infrastructure is creating unprecedented demands on the United
+States power grid. Morgan Stanley Research projects U.S. data center power consumption will escalate from 160
+terawatt-hours (TWh) in 2023 to 337 TWh by 2027, with AI-specific power demand growing at a 105% compound
+annual growth rate (4). By 2030, data center power consumption could reach 450 TWh, constituting 10.6% of
+total U.S. grid capacity. According to EPRI, U.S. data centers would increase from approximately 4% of total U.S.
+electricity consumption today to between 4.6% and 9% by 2030 (11).
+Major technology companies are pursuing strategic partnerships with nuclear facilities to secure reliable clean
+power. Microsoft is funding the restoration of decommissioned nuclear facilities, while Amazon has acquired a
+nuclear-powered data center near the currently operating Susquehanna Nuclear facility. However, when large
+technology companies secure substantial portions of existing clean energy capacity, it reduces availability for
+other grid users, potentially increasing reliance on fossil fuels elsewhere if clean energy development cannot
+match growing demand.
+Interconnection sharing offers a solution by enabling rapid integration of renewables through existing
+interconnection points. By reducing project deployment times from 4-5 years to 1-2 years, this approach enables
+faster expansion of cheap clean energy capacity rather than redistribution of existing resources—essential for
+maintaining U.S. technological leadership in artificial intelligence development.
+Clean energy cost declines and IRA incentives have substantially augmented the economic
+viability of the opportunity. Three factors in particular stand out in the IRA: generous Production
+Tax Credits (PTCs) for RE generation; an enhanced 10% bonus on PTC as well as an Investment
+Tax Credit (ITC) for RE projects located in energy communities; and an Energy Infrastructure
+Reinvestment (EIR) program that offers low-cost loans for communities to repower or repurpose
+existing energy infrastructure (12). These factors increase the likelihood that the levelized cost
+of RE near existing fossil power plants will be lower than the existing plants’ operating costs,
+enabling plant owners to - after considering operational constraints like ramp rates - back down
+their fossil plants and send out clean power during RE generation hours, reducing the all-in cost
+of delivering power at the point of interconnection. This is reinforced by Figure 3, which shows
+how both renewables’ Levelized Cost of Energy (LCOE) as well as Power Purchase Agreements
+(PPAs) prices have declined in recent years, reaching a generation-weighted $30.5/MWh with
+tax credits and $24/MWh for projects beginning commercial operation in 2023, respectively (1).
+This is either competitive or below the median variable costs of conventional generation
+sources - and renewable costs are projected to continue to decline.
+Figure 3: The costs of new solar and wind are falling below the costs of coal and gas plants, creating an
+opportunity to cost-effectively swap their generation with clean energy. Historical solar LCOE and PPA prices from
+(1), projected solar and wind LCOE from (13). Historical LCOE and PPA prices reflect the year in which commercial
+operation commenced.
+Although the idea of interconnection sharing has been discussed for years, it was perceived as a
+limited case-by-case opportunity that required the highest RE resource quality (14-18).
+However, the falling costs of RE combined with recent policy developments have sparked new
+commercial interest, particularly in integrating solar at existing fossil power plants; these
+projects indicate that interconnection sharing offers significant advantages with regards to
+faster deployment, avoided interconnection costs, improved infrastructure utilization, retaining
+tax revenue and jobs in host communities, new revenue streams through portfolio
+diversification for fossil asset owners, and lowering electricity costs and thus consumer bills.
+Overall, the strategy presents a promising, unifying pathway for accelerating clean energy
+deployment by engaging stakeholders who might otherwise resist the energy transition by
+aligning their economic interests with decarbonization efforts. Here, we build upon previous
+studies with the latest data to quantify the opportunity of interconnection sharing, which with
+appropriate policy and regulatory support, could be a mainstream strategy for integrating clean
+electricity sources at speed and scale.
+Finding #1: The total hyperlocal RE potential around US fossil power plants is over 15,400 GW
+To quantify the potential for leveraging the interconnection of existing fossil plants, we first
+estimate the total resource potential of solar and wind in close proximity to existing fossil power
+plants. While previous studies assessed the RE potential over a large radius, i.e. 45 km (18), in
+order to robustly make the case there is sufficient local RE that can share existing
+interconnection points, we use a considerably tighter i.e. 10x10 km (6x6 mile) square buffer
+zone around the existing power plant, reflective of commercial activity in the US today. In
+practice, this means the maximum spur line distance between the RE facility and the existing
+point of interconnection would be less than 10 km (6 miles), which also minimizes the
+complexity associated with the permitting of the spur line. Within each buffer zone, we assess
+the potential for RE development of each 30x30m (100x100 ft) parcel of land through
+high-resolution satellite imagery and applying several exclusion criteria (for more details, see
+Methods). We find that the total hyperlocal RE potential within the 10x10 km buffer zone near
+the 1400 existing fossil power plants in the contiguous US is over 15,400 GW.
+Estimating Deployable Hyper-Local Renewable Energy Potential by Considering Multiple Exclusions
+Renewable energy (RE) deployment is increasingly facing siting challenges. To arrive at a realistic estimate of
+deployable potential, we sought to replicate the criteria that RE project developers typically use to select
+suitable land for deployment considering these challenges. We applied 50+ exclusion criterias, grouped into four
+main categories:
+1. Physical Site Characteristics: We excluded areas based on incompatible land cover types (including
+urban development, water bodies, forests, and mangroves), excessive slope gradients, and elevation
+constraints that would preclude RE development.
+2. Protected Areas: All locations with environmental protection status or development restrictions were
+removed from consideration.
+3. Infrastructure Density: We eliminated sites where built infrastructure exceeded 30% of the land area
+within a 6-mile (10x10 km) buffer zone around existing power plants, recognizing that dense
+development patterns typically preclude cost-effective RE deployment.
+4. Regulatory Restrictions: Areas subject to local ordinances prohibiting wind development were excluded
+from wind potential calculations, reflecting current regulatory limitations.
+Out of a total of 1,404 power plants, 155 plants are entirely excluded due to having more than 30% built
+infrastructure within a six-mile buffer zone, affecting plants such as peaker plants in the Los Angeles Basin. We
+also excluded areas where local prohibitions prevent RE deployment, impacting approximately 5% of the plants
+in our analysis.
+After applying these exclusions, of the remaining 1220 plants, 1099 have renewable potential that exceeds their
+interconnection capacity by more than five times, indicating significant opportunities to maximize the utilization
+of interconnections through increased renewable deployment.
+From this total, we next evaluate the technical and economic viability to quantify the actionable
+RE integration potential as well as the RE needs for a least-cost power system, as shown in
+Figure 4.
+Figure 4: Summary of methods and results.
+Finding #2: For over 75% of existing fossil power plants, the RE LCOE is lower than the plants’
+variable costs today
+Despite this tremendous potential, the RE integration potential at existing interconnection is
+likely significantly lower as a result of several constraints which we subsequently apply. For one,
+for interconnection sharing to be economically viable, crossover must have occurred - that is,
+the LCOE of local RE must be lower than the variable cost (VC) of the existing fossil power
+plants, particularly those that operate at high capacity factors. To calculate the VC, we take the
+fuel cost (calculated based on the 7-year historical average of state-level costs for coal or gas,
+from the Energy Information Administration (EIA)) plus variable operation and maintenance
+(O&M) costs (from ReEDS) (for more details, see Methods). This analysis is performed on a unit
+level for the 4600 individual units at the 1400 existing fossil power plants in the US, recognizing
+that fuel type and prime mover may not necessarily be homogeneous across all units within the
+same plant.
+As shown in Figure 5a-b, we find that solar crossover has arrived for 75% of the 700 GW of
+existing fossil interconnection and wind crossover has arrived for 80% of the 700 GW of existing
+fossil interconnection in the US today. Crossover is projected to arrive by 2030 for nearly all
+existing fossil power plants as RE costs decline further, as shown in Figure 5c-d. The cumulative
+interconnection capacity of existing fossil power plants that has crossed over can be seen on an
+annual basis in Figure 5e-f, indicating that an average of 8 GW of wind and 30 GW of solar
+crosses over per year until 2030. This economic crossover leads to a fundamental shift in the
+conventional operational paradigm: once the local RE LCOE falls below the VC of fossil
+generation, renewable generation should be prioritized when available, accounting for the
+operational constraints of existing plants (i.e., ramp rates or minimum run rates). Under this
+paradigm, the fossil assets effectively become capacity resources which only operate when
+renewable generation is insufficient to meet demand or during extreme situations such as
+severe weather or contingency events, when grid reliability is paramount. Significant savings can
+also be realized by power plant owners through prioritizing renewable generation during solar
+and wind hours while maintaining fossil capacity for periods when renewables are not
+generating.
+Figure 5: RE cost crossover has arrived for over 75% of existing fossil interconnection in the US today. (a-d) Cost
+of local solar and wind compared to the variable cost (fuel cost plus variable O&M) of existing fossil power plants,
+both in 2024 and 2030. Crossover occurs when the local RE LCOE is lower than the unit-level variable cost of
+existing fossil power plants. (e-f) The cumulative interconnection capacity of existing fossil power plants that is
+crossed over as a function of year for both solar and wind.
+Finding #3: Around 1000 GW of solar and wind is economically viable by 2030 for integration
+into existing fossil interconnection
+We next optimize the capacity of solar and wind that is not only economically viable, but also
+technically viable for potential integration at each existing fossil plant. To do so, we take
+hyperlocal hourly annual solar and wind profiles at each existing fossil plant and maximize
+annual RE generation (solar + wind ) subject to constraints including an interconnection capacity
+limit (to ensure that instantaneous RE generation does not exceed the existing interconnection
+capacity) and an annual curtailment that is no higher than 5% (to maintain economic viability).
+We additionally exclude the plant if built-up area exceeds 30% of the area within the 10x10 km
+buffer zone around the plant, as this indicates significant cost implications and potential
+challenges in land acquisition for RE development. The local RE resource quality is
+benchmarked against actual projects under development in the vicinity; while solar resources
+are generally comparable, for wind we apply an exclusion criterion to only consider local wind
+potential with a minimum capacity factor of 30%. This ensures that integrating RE projects near
+existing fossil power plants would not compromise on quality nor cost compared to integrating
+RE with new grid interconnection. In addition to these technical and economic constraints, wind
+development is excluded in counties with existing wind development moratoriums.
+The RE potential that is simultaneously technically and economically viable comprises the 836
+GW of actionable RE potential near the interconnection of existing fossil power plants today,
+which increases to 977 GW by 2030 as the costs of new RE decline. If integrated, this actionable
+RE potential could nearly double the US generation capacity. The evolution of the actionable RE
+integration between 2024-2030 can be viewed by ISO/RTO in Figure 6, highlighting significant
+opportunity in PJM and MISO. The opportunity in PJM is particularly acute given their significant
+challenges in maintaining resource adequacy due to surging electricity demand that is
+indicating a growing risk of a multi-GW capacity shortfall over the next 5 to 10 years. This
+underscores the potential of interconnection sharing both with existing fossil assets as well as at
+the site of retiring facilities as well, to help accelerate the integration of new resources, meet
+projected load growth and support grid reliability.
+Figure 6: Substantial opportunity for integrating RE at existing interconnection exists in PJM and MISO, followed
+by ERCOT, SPP and FRCC.
+Deploying this actionable RE potential in its entirety would require an unprecedented effort that
+is currently hindered by many practical barriers - including the siting and permitting of RE
+projects, equipment procurement, the availability of labor for installation, financing, etc. - which
+require individual attention to substantially accelerate the RE deployment rate. Another
+outstanding question regarding realistic integration of the actionable RE potential pertains to
+the breakdown by type of RE, and specifically, the actionable capacity of solar versus wind.
+Within the past five years, the annual capacity addition of onshore wind has averaged 10
+GW/year, while solar has averaged nearly double that at 18 GW/year. Further, the magnitude of
+annual capacity additions have been trending downwards for onshore wind, while solar has
+been trending upwards, reflecting solar’s relatively lower complexity with regards to siting,
+permitting and installation logistics over wind.
+Given these deployment trends and the significant role of fuel prices in determining economic
+viability, we examine two key scenarios: one considering both solar and wind integration
+potential, and another focused solely on solar deployment. We analyze these scenarios across a
+range of state-specific fuel prices to understand how price volatility affects integration potential
+over time.
+Sensitivity Analysis
+To assess the robustness of our findings, we conducted sensitivity analyses using state-specific
+historical fuel price volatility. For each state, we established three scenarios based on 7-year fuel
+price data: a base case using the state's average price, and low and high cases set at one
+standard deviation below and above that state's mean. Natural gas prices in the base case
+ranged from $2.41 to $7.54/MMBtu (mean: $4.26/MMBtu), with the low scenario ranging from
+$1.02 to $6.75/MMBtu (mean: $2.40/MMBtu) and the high scenario from $3.74 to
+$10.00/MMBtu (mean: $6.11/MMBtu). Similarly for coal, base case prices varied from $1.25 to
+$8.07/MMBtu (mean: $2.56/MMBtu), with the low scenario ranging from $1.20 to
+$5.45/MMBtu (mean: $2.15/MMBtu) and the high scenario from $1.31 to $10.70/MMBtu
+(mean: $2.98/MMBtu).
+As shown in Figure 7, while state-level fuel price variations significantly influence the total RE
+integration potential, the opportunity remains substantial across all scenarios. In 2024, the
+integration potential ranges from 564 GW in the low fuel price case to 932 GW in the high fuel
+price case, with the base case at 837 GW. This range evolves to 681-979 GW by 2027, with base
+case at 921 GW and reaches 829-990 GW by 2030, with base case at 977 GW. Notably, the
+minimum potential grows consistently across years—from 564 GW to 829 GW—demonstrating
+that even in states with persistently low fuel prices, declining renewable costs drive increasing
+economic viability of RE integration.
+This state-level sensitivity analysis reinforces the fundamental strength of leveraging existing
+interconnection for renewable integration. Even in states with consistently low fuel prices, the
+potential for over 800 GW of RE capacity integration by 2030 represents a transformative
+opportunity. The convergence of integration potential across scenarios over time, illustrated in
+the Figure 7, underscores how declining renewable costs progressively reduce the impact of
+state-level fuel price volatility on the economic case for RE integration. The narrowing range
+between scenarios—from 368 GW in 2024 to 161 GW in 2030—further demonstrates the
+increasing robustness of the RE integration opportunity as technology costs decline.
+Figure 7: Total renewable energy integration potential across different fuel price scenarios (2024-2030). The
+range between high and low scenarios narrows from 368 GW in 2024 to 161 GW in 2030, demonstrating increasing
+resilience to fuel price variations.
+To more closely align with current renewable deployment trends, we conduct a Solar-Only
+Scenario (SOS) analysis, reflecting the generally lower siting and permitting barriers faced by
+solar projects compared to wind. As seen in Figure 8, in the SOS base case, the integration
+potential begins at 499 GW in 2024, grows to 614 GW by 2027, and reaches 693 GW by 2030.
+The potential shows significant sensitivity to fuel price variations, particularly in earlier years.
+Under high fuel prices (one standard deviation above state means), the potential increases to
+608 GW in 2024, 681 GW in 2027, and 700 GW in 2030. Conversely, with low fuel prices (one
+standard deviation below state means), the potential starts at 281 GW in 2024, rises to 384 GW
+by 2027, and reaches 567 GW by 2030.
+The impact of fuel price variations on solar integration potential demonstrates a clear pattern of
+convergence over time, as also shown in Figure 8. The potential range is widest in 2024,
+spanning 327 GW (from 281 GW to 608 GW), but narrows substantially to 297 GW by 2027
+(from 384 GW to 681 GW) and further contracts to 134 GW by 2030 (from 567 GW to 700 GW).
+This convergence pattern mirrors our findings from the combined solar and wind analysis,
+suggesting that while near-term solar deployment opportunities are significantly influenced by
+fuel price fluctuations, the long-term integration potential becomes increasingly robust as solar
+costs continue to decline. Even in the most conservative scenario with persistently low fuel
+prices, the potential for solar integration reaches 567 GW by 2030, representing a substantial
+opportunity for clean energy deployment.
+Figure 8: Solar-only integration potential across different fuel price scenarios (2024-2030). Similar to total RE, the
+range between scenarios contracts from 327 GW in 2024 to 134 GW in 2030, showing increasing economic viability
+over time.
+Interconnection Cost Savings
+Utilizing existing interconnection has the added benefit of avoiding much of the costs of
+interconnection, including network upgrades. These costs have grown substantially in recent
+years, ranging from $71-107/kW by ISO (19). This indicates that integrating the identified 1134
+GW of renewable capacity at existing interconnection by 2030 could avoid approximately $85
+billion in interconnection costs compared to developing these projects at new interconnection
+points. These savings stem from both minimizing direct interconnection infrastructure
+investments and avoiding network upgrades by leveraging the existing system, representing a
+significant reduction in system costs.
+Operational feasibility
+To assess the operational feasibility of integrating RE capacity at existing interconnection and
+account for operational constraints of existing plants (i.e., ramp rates or minimum run rates), we
+conduct a detailed hourly dispatch simulation for an exemplary CCGT, California's La Paloma
+Plant (1048 MW), with an additional 1048 MWAC of solar capacity at the same interconnection
+point. The combined solar and gas system was modeled to deliver flat block power daily, i.e. the
+most rigorous ramping and unit commitment scenario, requiring the CCGT plant to cycle each
+day within operational constraints that are aligned with CAISO’s model parameters. The analysis
+indicates that integrating solar capacity alongside the CCGT at the existing interconnection point
+is technically feasible and fully adheres to operational constraints - including ramping, technical
+minimum levels, and minimum up and down times - and maintains solar curtailment at only
+~5%. Further investigation is necessary to evaluate the long-term impacts of daily cycling on
+CCGT equipment durability.
+Finding #4: Leveraging existing interconnection can help deliver a least-cost power system in
+over 35 states
+Although around 1000 GW of actionable RE integration is assessed on a hyperlocal plant-level,
+from a broader system perspective, the RE required for a least-cost system is likely to differ. To
+evaluate this, we utilize a widely-used high-resolution transmission and generation capacity
+expansion model, the Regional Energy Deployment System (ReEDS) (20). The model optimizes
+the least-cost generation mix that meets the projected electricity demand for each of the
+model’s 134 zones in the contiguous US, accounting for current policy such as IRA incentives as
+well as future technology cost declines. We compare the resulting least-cost renewable capacity
+needs by 2030 with our estimated interconnection sharing potential at the state level in order
+to ensure our estimates align with least-cost system needs while simultaneously identifying
+states where interconnection sharing could significantly contribute to meeting renewable
+deployment targets. Where actionable RE through interconnection sharing exceeds the
+least-cost requirement for a state, we constrain it to that requirement; while in states where our
+estimated potential falls below the least-cost requirement, we maintain our original estimate as
+it represents the realistic ceiling for interconnection sharing in that region. After applying these
+adjustments across all states, our analysis indicates that by 2030, interconnection sharing could
+enable the economical integration of 775 GW of renewables, helping to deliver the majority of
+RE needs for a least-cost power system in 38 states as shown in Figure 9.
+Figure 9: Leveraging the interconnection of existing fossil power plants can help deliver a least-cost power
+system in a majority of states. (a) Percentage showing the proportion of interconnection sharing in meeting the
+state’s RE needs for a least-cost system in 2030. (b) State-by-state breakdown of actionable RE versus the RE needs.
+Finding #5: More than 200 GW of existing fossil capacity in the US is minimally utilized and
+has high operating costs
+The greatest immediate opportunity for interconnection sharing lies with existing fossil power
+plants that are either or both expensive to operate (with high variable costs) or minimally
+utilized (with low capacity factors). For instance, in 2023, over 200 GW of US fossil capacity did
+not use their interconnection for over 85% of hours in the year. The majority of this fossil
+capacity consists of peaker plants, run only to meet periods of peak residual demand. These
+peaker plants are typically natural gas-fired combustion turbines (CTs) as well as oil and gas
+steam turbines (STs) with higher heat rates and thus lower efficiencies compared to baseload
+fossil generation, namely natural gas-fired combined cycle gas turbines (CCGTs). Simultaneously,
+the vast majority of this minimally-utilized 200 GW of fossil capacity has operating costs that
+average approximately $20/MWh higher than intermediate and baseload fossil capacity that
+runs at higher capacity factors, as seen in Figure 10. On an aggregate level, the utilization of
+fossil power plants and their interconnection capacity would decrease as the RE penetration in
+the system grows.
+Figure 10: More than 200 GW of fossil capacity has a capacity factor below 15% and faces operating costs higher
+than the cost of new RE. The supply curve shows the capacity factor versus the cumulative installed capacity of US
+fossil plants, overlaid with the plants’ operating costs from 2023 (composed of variable O&M plus fuel costs).
+The high operating costs of these plants are in part due to, and further exacerbated by, their
+age. Coal-fired plants in the US average over 43 years, while oil-fired units average 42 years -
+which is likely beyond, or at least approaching, the lifespan of their original design specifications
+(21). This aging infrastructure not only contributes to operational inefficiencies at these plants,
+with older units requiring more fuel input per unit of electricity generated, but also
+monopolizes increasingly valuable interconnection points at a time when new renewable
+generators face significant challenges securing timely grid access. This presents an opportunity
+to improve the utilization of existing grid infrastructure through interconnection sharing,
+supporting the efficient integration of low-cost clean energy sources while maintaining the
+reliability services provided by existing generators.
+Discussion
+The technically feasible and economically viable opportunity for low-cost solar and wind to
+share interconnection with existing fossil plants totals around 1000 GW by 2030, with the
+potential to nearly double US generation capacity. This strategy benefits all stakeholders
+involved, as seen in Figure 11. First, it helps to rapidly deliver clean and low-cost electricity for
+consumers and the economy. From a power system perspective, integrating additional RE while
+retaining conventional fossil assets ensures the availability of sufficient generation capacity to
+serve rapid load growth, supporting grid reliability. The strategy diversifies the portfolios and
+revenue streams of power plant owners, creating net savings when lower-cost RE is used
+instead of conventional fossil generation during RE generation hours. RE developers meanwhile
+benefit from faster project realization, IRA incentives, and lower infrastructure costs due to
+avoided expenditure on interconnection equipment such as breakers and transformers. Further,
+it generates substantial investment and reduced pollution in energy communities, generating
+local tax revenue and providing employment opportunities to those who may otherwise
+experience a progressive decline as conventional fossil-fuel fired assets are scaled back.
+Figure 11: Interconnection sharing provides several benefits across various stakeholders.
+Policy recommendations to accelerate RE deployment at existing interconnection
+Although FERC Order 845 paves the way for capitalizing on the benefits of surplus
+interconnection, additional policy and regulatory support is required for this to become a
+mainstream strategy for integrating clean electricity sources at speed and scale. This is because
+surplus interconnection presents a significant opportunity, but also a significant deviation from
+the conventional interconnection process. While the interconnection process has notably been
+subject to substantial reform in recent years, the basic process involves an interconnection
+customer - i.e., a RE project developer - submitting a request for grid interconnection to the
+transmission provider, joining the queue of interested projects. These projects must undergo a
+series of system impact and facility studies that analyze if, and which, network upgrades are
+needed before the project can be brought online. The costs of these impact studies, as well as
+the identified network upgrades, are borne by the interconnection customer. In recent years,
+the number of projects in the queue has ballooned for a number of reasons: more distributed
+energy projects joining the queue, growing interest in developing RE with the support of tax
+credits, and an outdated process that has not kept pace with new requests. Yet if a project
+manages to successfully pass through, the interconnection customer signs an interconnection
+agreement with the transmission provider that stipulates terms of operation. In contrast, an
+interconnection customer interested in interconnection at an existing point of interconnection
+would follow a very different process.
+Background on FERC Order 845
+Issued April 2018, Section IV.C.3 of FERC Order 845 requires transmission providers to establish an
+expedited process for interconnection customers to utilize or transfer Surplus Interconnection Service
+(SIS) at existing generating facilities such that the total amount of interconnection service (and thus
+the combined generating output) at the Point of Interconnection (POI) remains the same and no
+network upgrades are required (22). While the existing interconnection customer or its affiliates has
+the priority to use SIS, it may be transferred to another interconnection customer. The required studies
+for SIS include reactive power, short circuit/fault duty, stability analyses, and potentially steady-state
+(thermal/voltage) analyses as necessary. Nearly all regions of the US comply with Order 845’s
+requirements with the exceptions of ERCOT (which is not under the jurisdiction of FERC) and NYISO
+(which sought and was granted an independent entity variation), albeit with varied implementation.
+Generally, the SIS process significantly shortens the interconnection timeline (versus the recent
+average of 4-5 years for projects requiring new interconnection). However, surplus interconnection is,
+by definition, tied to the continued existence of the original interconnection customer’s
+interconnection service; meanwhile, the process for adding new generation at retiring plant sites,
+referred to as the “generator replacement service,” varies widely by region.
+Today, there are 3 main barriers which hinder the full realization of this actionable potential: (1)
+limited awareness and/or motivation to capitalize on the large availability of economically viable
+RE potential near existing fossil power plants, particularly for the existing interconnection rights
+holders, (2) existing integrated resource and transmission planning processes do not consider
+RE deployment at existing interconnection, and (3) existing grid interconnection rules provide
+limited or insufficient support for interconnection sharing.
+To address these barriers, policy recommendations for key entities include:
+Federal Energy Regulatory Commission (FERC):
+● Streamline Surplus Interconnection Service: Ensure a consistent surplus interconnection
+service framework, removing overly restrictive study assumptions, improving process
+functionality and including a streamlined procedure for SIS customers to be able to
+permanently retain interconnection rights following the retirement of the original
+interconnection customer.
+● Harmonize Generator Replacement Rules: Ensure a consistent generator replacement
+framework across all regions that enables fast-tracking of new energy projects at the site
+of retiring facilities, for example based on MISO’s existing model.
+● Create Standardized Agreements: Consider requiring transmission operators to develop
+and implement pro-forma agreements (e.g., Monitoring and Consent, Conversion) to
+clarify and expedite interconnection transactions, reducing administrative complexities
+across RTOs.
+● Efficiently allocate existing interconnection rights to lower costs and protect consumer
+interests. Develop a regulatory pathway to fairly compensate current rights holders
+while establishing a system for efficient grid access allocation that promotes improved
+utilization, cost reduction, and competition.
+● Enhance Transparency: Introduce open processes to transfer interconnection rights and
+prevent capacity hoarding, considering the creation of a clearinghouse, addressing
+concerns over “capacity squatting” and enabling fair access to interconnection capacity.
+ISOs/RTOs:
+● Streamline Surplus Interconnection Service: Ensure a consistent surplus interconnection
+service framework, removing overly restrictive study assumptions, improving process
+functionality and including a streamlined procedure for SIS customers to be able to
+retain interconnection rights following the retirement of the original interconnection
+customer.
+● Enhance Generator Replacement Rules: Ensure a consistent generator replacement
+framework compatible with neighboring regions that enables fast-tracking of new
+energy projects at the site of retiring facilities, for example based on MISO’s existing
+model; ensure this is harmonized to allow for continuation of interconnection service for
+SIS customers following the retirement of the original interconnection customer.
+● Integrate SIS and generator replacement in long-term transmission planning: Consider
+renewable resources at existing interconnection points in the scenario planning under
+Order 1920.
+● Enhance Transparency: Establish data portals and/or perform studies that highlight
+surplus interconnection opportunities to guide developers and load-serving entities
+(LSEs) in project planning.
+● Facilitate Adoption: Consider developing a clearinghouse to enable market participants
+to offer surplus interconnection capacity to others, facilitating bilateral agreements.
+● Standardize Contractual Agreements with Interconnection Customers: Consider
+developing standardized contractual agreements to establish the terms of operation of
+shared interconnection, particularly with surplus interconnection customers.
+Public Utility Commissions (PUCs):
+● Integrate SIS in IRPs and RFPs: Require utilities to include surplus interconnection and
+generation replacement capacity options in Integrated Resource Planning (IRP) and
+Requests for Proposals (RFPs) to prioritize cost-effective renewable deployment that can
+leverage existing infrastructure.
+● Assess Existing Interconnection Potential: Direct utilities to study clean energy potential
+at existing fossil power plants, promoting rapid RE deployment and cost savings by
+avoiding additional interconnection and transmission expenses.
+State Legislators:
+● Mandate SIS and Generator Replacement in Planning: Pass legislation requiring that
+PUCs assess surplus interconnection and generation replacement capacity as part of
+generation planning processes, improving grid resilience and accelerating renewable
+deployment for consumer benefit.
+● Address Siting and Workforce Development: Allocate funding to communities with fossil
+infrastructure to conduct studies on local siting as well as the economic, environmental,
+and community benefits of utilizing existing interconnection, and support workforce
+reskilling programs to transition labor from retiring plants to new clean energy roles.
+Load-Serving Entities (LSEs):
+● Prioritize Existing Interconnection in Resource Planning: Assess surplus interconnection
+and generation replacement capacity opportunities in resource planning and RPS
+compliance, focusing on renewable development at existing interconnection points to
+minimize infrastructure costs and increase speed of interconnection.
+● Conduct Cost-Savings Studies: Analyze and communicate potential savings from
+integrating renewable energy at existing sites, demonstrating reduced costs through
+avoided interconnection and transmission needs.
+● Partner with Legacy Generators: Collaborate with legacy generators to co-develop
+renewable and storage projects at existing interconnection, using shared
+interconnection agreements to share benefits and meet clean energy goals effectively.
+Generators with Interconnection Rights:
+● Monetize Interconnection Capacity: Explore opportunities to monetize unused
+interconnection capacity, either through direct sale or auction, thereby creating new
+revenue streams and supporting renewable deployment.
+● Partner with Renewable Developers: Develop partnerships with renewable energy and
+storage developers to utilize surplus interconnection rights, providing access to existing
+infrastructure while supporting grid reliability and clean energy growth.
+Future work
+Exploring the Potential of an Integrated Renewable, Repower (Surplus Interconnection), and
+Reconductoring (RRR) Strategy for Rapid and Extensive Deployment of Low-Cost Electricity
+There can be several possible extensions of this work. First, evaluating the additional storage
+and renewable energy (RE) deployment potential by sharing grid access with existing RE plants,
+which currently have a capacity of about 250 GW. There is potential to add 4-6 hours of storage
+at a similar capacity (250 GW), thereby adding significant new firm capacity to the U.S. grid
+while creating opportunities for an additional 250-500 GW of RE deployment that can share the
+same interconnection. Several RE projects are already adopting such strategies.
+The US has one of the world's largest transmission networks, with over 600,000 miles of
+high-voltage transmission lines crisscrossing the country, and vast amounts of economical RE
+potential exist in the vicinity of these lines. However, in 2023, the country added only around 60
+miles of new high-voltage transmission lines, contributing to a five-year total of just 2,500-3,000
+miles. The grid primarily uses wires based on technology that is more than 100 years old. Our
+research has shown that the U.S. can double its transmission capacity and meet over 80% of its
+transmission needs by rewiring the grid with commercially available advanced conductors (i.e.,
+reconductoring), which can carry twice the amount of electricity. This upgrade can be
+completed much faster and more economically than building brand-new lines, bypassing the
+lengthy permitting processes required for new infrastructure.
+With reconductoring, which can potentially double grid capacity, the interconnection capacity of
+the existing power generation infrastructure (exceeding 1,000 GW) can be significantly
+increased (up to a doubling). This would enable more interconnections, leveraging existing
+infrastructure while reducing costs and timelines. Thus, combining a focus on renewables,
+re-powering (surplus interconnection), and a reconductoring strategy can pave the way for
+low-cost, clean energy abundance.
+Methods and Data Summary
+In order to estimate the technical feasible and economically viable RE integration potential by
+sharing grid access with existing fossil plants we used the following steps.
+First, we estimated the renewable energy resource availability within the vicinity (within a
+6-mile buffer zone around each power plant) that could share the existing grid access. In
+assessing RE availability, we considered over 50+ criterias to replicate the exclusion criteria
+typically used by developers, including physical constraints, environmental protections, local
+ordinances limiting RE deployment, and difficulty of deploying RE near urban areas. Even after
+applying these considerations, we found that over 80% of the fossil power plants have more
+than five times the renewable potential compared to their current interconnection capacity
+limits
+The second step was to evaluate the economic viability of RE sharing grid access with existing
+fossil plants. We identified plants where the LCOE of local renewables is lower than the
+operating costs (fuel costs and variable o&m costs) of fossil plants. In such cases, it would be
+economically beneficial for these plants to allow renewables to access the grid, as this would
+enable them to save costs by prioritizing renewable generation over fossil-based electricity
+when available. This analysis involved collecting detailed data on the operating costs of over
+1,400 power plants and estimating the local LCOE for renewables near each of these plants. We
+also considered all the applicable tax incentives and savings in interconnection costs that arise
+from using the same interconnection.
+The third step was to estimate for plants where the LCOE of local RE is lower than the operating
+costs of power plants, how much renewable energy can be integrated to maximize the use of
+existing interconnection while considering its current limit. For each of the plant locations, we
+estimated the optimal portfolio of solar wind which maximizes interconnection usage (solar +
+wind generation) while limiting the curtailment to below 5%. We conducted a dispatch
+simulation for a power plant using actual operating constraints and confirmed that technical
+operational limitations did not increase curtailment beyond the 5% threshold.
+The fourth step was to determine what share of the total renewable capacity needed in the
+future, based on a least-cost planning exercise, could be met through deployment at existing
+interconnections. To do this, we conducted a national generation capacity expansion study using
+NREL's ReEDS model, which simulates 134 sub-regions in the U.S., to identify the least-cost
+capacity mix of solar and wind. We then compared how much of this projected capacity could
+be met through deployment at existing interconnections.
+The following discussion offers more details on each of these steps.
+1. Estimating Local Renewable Resource Availability
+Estimating Local Renewable Energy Potential
+To assess the solar and wind potential near existing fossil power plants, we conduct a geospatial
+analysis integrating multiple high-resolution datasets. For each plant, we define a 6x6 mile
+(10x10 km) square buffer zone, representing the area within which RE projects could feasibly
+connect to existing interconnection infrastructure. We create a comprehensive exclusion
+dataset to exclude unsuitable areas for RE development, integrating land cover, protected areas,
+elevation, and slope data. Key data sources include:
+● Protected Areas: US Geological Survey's Protected Areas Database (PAD-US) to exclude
+national parks, wildlife refuges, and other conserved lands (23).
+● Elevation and Slope: Copernicus Digital Elevation Model (30 m resolution) to exclude
+areas with high slopes and elevation (24).
+● Land Cover: European Space Agency's WorldCover 10 m dataset to exclude urban areas,
+water bodies, wetlands, dense forests, etc. (25).
+For the remaining suitable areas within each buffer zone, we estimate potential solar and wind
+energy capacities using standard conversion factors: 50 MW per square kilometer for solar PV
+and 6 MW per square kilometer for wind. These factors reflect typical utility-scale installation
+densities and provide an estimate of the maximum buildable RE capacity near each fossil plant.
+2. Evaluating the Economic Viability of Renewable Energy Sharing Grid Access
+Estimating power plant operating costs
+We develop a detailed dataset of existing fossil power plants in the US using data from the US
+Energy Information Administration (EIA) Forms 860 and 923 for the year 2023 and 2022 (26,27).
+This dataset includes information on plant location, capacity, fuel type, operational
+characteristics, heat rates, and variable operating costs. To enhance accuracy, especially for heat
+rates, we incorporate cleaned data from the National Renewable Energy Laboratory's (NREL)
+Regional Energy Deployment System (ReEDS) database, which provides validated engineering
+assessments based on actual performance data (20). Fuel price data were collected from
+multiple EIA sources. For natural gas, we took the recent 7-year average incorporating
+state-level monthly natural gas prices for electric power (supplemented with monthly state-level
+citygate prices if not available) (28). As oil & gas steam turbines are either mostly gas-based or
+dual-use technologies, their fuel costs are similarly based on natural gas prices. For coal, we
+used the recent 7-year average incorporating quarterly prices based on coal shipments to the
+electric power sector by plant state (29). Ownership structures were established using the
+Environmental Protection Agency's Greenhouse Gas Reporting Program (GHGRP),
+supplemented by EIA Form 860 data (26,30).
+Estimate local LCOE of RE
+We estimate hourly solar and wind generation profiles at each plant location using
+high-resolution meteorological data and a custom software tool developed for this study.
+● Custom Simulation Tool: We developed a custom software tool that integrates
+established models (PySAM, PVWatts) with detailed system specifications to provide
+accurate hourly generation profiles for each site.
+● Solar Generation:
+○ Data Sources: We utilize the ERA5 dataset from the European Centre for
+Medium-Range Weather Forecasts (ECMWF), providing hourly data on solar
+irradiance, air temperature, pressure and wind speed at approximately 31 km
+resolution (31).
+○ Simulation: We calculated three key solar irradiance measurements (Global
+Horizontal, Direct Normal, and Diffuse Horizontal) to model solar power
+generation. Using these measurements, we simulated the hourly output of a 1
+MW solar farm equipped with single-axis tracking through the PVWatts model.
+To ensure accurate results, our simulation incorporated various technical
+parameters including the panels' tilt angles, directional orientation, system
+efficiency losses, and tracking system dynamics (32).
+● Wind Generation:
+○ Data Sources: We utilize NASA's MERRA-2 dataset for wind speed, direction,
+pressure and temperature at various altitudes (33).
+○ Simulation: We employ the Python-based System Advisor Model (PySAM) to
+simulate wind power generation (34). The wind farm model simulates a detailed
+layout of 8 rows by 4, totaling 32 turbines, and accounts for wake effects and
+turbine interactions. Wind speeds are extrapolated to turbine hub heights,
+adjusted for local terrain and atmospheric conditions using high spatial
+resolution data from Global Wind Atlas.
+These hourly generation profiles allowed us to estimate capacity factors for solar and wind at
+each plant location, accounting for temporal and spatial variations in resource quality.
+Using the estimated capacity factors and cost parameters, we estimate the LCOE for solar and
+wind projects near each existing fossil power plant. Our cost and financial data were sourced
+from reputable industry and governmental reports to ensure accuracy:
+● Cost Data:
+○ Capital Expenditures (CAPEX) and Operational Expenditures (OPEX) come from
+NREL's Annual Technology Baseline (ATB) 2024 (13).
+● Financial Parameters:
+○ Weighted Average Cost of Capital (WACC) is calculated based on typical industry
+debt-to-equity ratios and costs of capital, from NREL's ATB 2024 (13).
+○ Project Lifespan is assumed to be 30 years for both wind projects and solar PV
+projects, from NREL's ATB 2024 (13).
+● Regional Adjustments:
+○ Capital Cost Multipliers are applied to account for regional variations in
+installation costs, using data from the US EIA regional cost factors and NREL's
+ReEDS model (20).
+● Incentives:
+○ We account for federal and state incentives including the Investment Tax Credit
+(ITC) and Production Tax Credit (PTC) as outlined in the Inflation Reduction Act
+(IRA) of 2022 (12). These incentives were applied according to eligibility criteria
+and phase-out schedules.
+○ We incorporate energy community designations to account for additional
+incentives available under the IRA. Energy communities are areas that have been
+economically affected by the decline of fossil fuel industries and are eligible for
+bonus tax credits to encourage renewable energy development. We identify
+these areas using data from the National Energy Technology Laboratory's (NETL)
+Energy Communities interactive map and the Internal Revenue Service's (IRS)
+Notice 2023-29 (35,36). This information was integrated into our dataset to
+adjust the LCOEof solar and wind for plants located within these designated
+areas.
+We compare the estimated LCOE with the variable operating costs of individual units of the
+corresponding fossil plant, derived from fuel price data and heat rate metrics from EIA Forms
+860, 923 and ReEDS. If the LCOE was lower than the plant's variable costs, we considered the
+plant to have "crossed over," indicating a cost-effective opportunity for replacing fossil
+generation with renewable energy. This analysis was conducted annually from 2024 through
+2030 to capture changes in technology costs, fuel prices, and policy incentives over time.
+Interconnection Cost Savings
+To quantify potential cost savings from utilizing existing interconnection infrastructure, we
+analyze historical interconnection queue data from LBNL for completed projects from 2018
+onwards across four Independent System Operators (ISOs): ISO-NE, MISO, PJM, and SPP (19).
+For each ISO, we calculate capacity-weighted average interconnection costs using only projects
+that achieved commercial operation, finding costs ranged from $71/kW in SPP to $107/kW in
+ISO-NE, with PJM at $83/kW and MISO at $85/kW. For regions outside these ISOs, we applied
+the mean interconnection cost from analyzed regions as a representative value.
+The interconnection costs we analyze comprise two major components that could be largely
+avoided through co-location with existing fossil plants. The first component is Point of
+Interconnection (POI) costs - the direct expenses associated with physically connecting to the
+grid, including construction of interconnection substations and transmission line extensions
+(spurlines). The second component is network upgrade costs - the broader system-wide
+upgrades required to accommodate new generation, often involving reconstruction of
+transmission lines and substantial grid modifications.
+Our interconnection cost estimates were based on projects that successfully reached
+commercial operation, as these represent the most realistic cost benchmarks. We excluded
+withdrawn projects from cost calculations, though notably these projects often faced
+significantly higher projected interconnection costs - frequently 2-3 times higher than
+completed projects - which likely contributed to their withdrawal. This conservative approach of
+using only completed project costs provides a lower-bound estimate of potential savings.
+3. Estimating Renewable Energy Integration Potential to Maximize Use of Existing
+Interconnection Capacity
+To determine the realistic integration potential of RE at existing interconnection points, we
+develop optimization models that maximize interconnection utilization while limiting
+curtailment and adhering to interconnection capacity limits. The model is formulated as follows:
+Objective:
+With the following decision variables:
+● Installed solar capacity:
+● Installed wind capacity:
+Subject to the following constraints:
+● Interconnection Capacity Limit, ensures that generation does not exceed the plant's
+maximum interconnection capacity
+● Curtailment Limit, limiting annual curtailment to 5% of total potential generation to
+maintain economic viability:
+● Curtailment Calculation, where and are the hourly capacity factors for
+solar and wind, respectively:
+For plants where wind energy was viable (capacity factors above a threshold of 30%, consistent
+with current projects), we optimize both solar and wind capacities. For others, we optimize
+solar capacity alone. The optimization was performed using hourly data over a full year for each
+plant, processing in parallel batches to manage computational demands.
+Actionable RE integration potential
+The actionable RE integration was then estimated based on the RE potential that was both
+technically- and economically-viable: for each unit for which crossover has occurred, the
+plant-level technically-viable RE is adjusted by the proportion of the unit’s capacity to the plant’s
+total capacity.
+4. Determining the Share of Total Least-Cost Renewable Capacity that Can Be Met by
+Deployment at Existing Interconnections
+To align the actionable RE integration with actual power system needs, we conduct a
+comparative analysis using the National Renewable Energy Laboratory's (NREL) Regional Energy
+Deployment System (ReEDS) model (20). ReEDS is widely used by the US Department of Energy
+and is considered an industry standard for projecting the optimal mix of generation
+technologies required to meet future electricity demand. By running ReEDS up to 2030, we
+obtain projections of the new capacity needed by technology—such as solar, wind, and gas—to
+meet the 2030 load, considering current US policies and hourly load profiles. We aggregate the
+ReEDS-projected new capacity installations of RE (solar and wind) at the state-level and similarly
+aggregate our estimated actionable RE integration potential from installing solar and wind near
+existing interconnections. This comparison allows us to determine the percentage of the
+required renewable capacity in each state that could be met by integrating solar and wind near
+existing fossil plant interconnections. To ensure consistency with regional planning needs, we
+adjust the actionable integration by capping it at the ReEDS-projected least-cost capacity
+portfolio for each state. If our integration potential exceeded the ReEDS estimate for a state, we
+limited it to the ReEDS requirement; if it was lower, we retained our original estimate.
+References
+(1) J. Seel et al. “Utility-Scale Solar, 2024 Edition. Empirical Trends in Deployment, Technology, Cost, Performance,
+PPA Pricing, and Value in the United States”. Lawrence Berkeley National Laboratory (LBNL), 2024.
+https://emp.lbl.gov/sites/default/files/2024-10/Utility%20Scale%20Solar%202024%20Edition%20Slides.pdf
+(2) J. Rand et al. “Queued Up: 2024 Edition. Characteristics of Power Plants Seeking Transmission Interconnection
+As of the End of 2023”. Lawrence Berkeley National Laboratory (LBNL), 2024.
+https://emp.lbl.gov/sites/default/files/2024-04/Queued%20Up%202024%20Edition_R2.pdf
+(3) “Addressing the Critical Shortage of Power Transformers to Ensure Reliability of the US Grid”. The National
+Infrastructure Advisory Council (NIAC), 2024.
+https://www.cisa.gov/sites/default/files/2024-06/DRAFT_NIAC_Addressing%20the%20Critical%20Shortage%2
+0of%20Power%20Transformers%20to%20Ensure%20Reliability%20of%20the%20U.S.%20Grid_Report_06052
+024_508c.pdf
+(4) “Powering the AI Revolution”. Morgan Stanley, 2024.
+https://www.morganstanley.com/ideas/ai-energy-demand-infrastructure
+(5) “U.S. power grid added 20.2 GW of generating capacity in the first half of 2024”. Energy Information
+Administration (EIA), 2024. https://www.eia.gov/todayinenergy/detail.php?id=62864
+(6) “Energy Transition in PJM: Resource Retirements, Replacements, & Risks”. PJM, 2023.
+https://www.pjm.com/-/media/library/reports-notices/special-reports/2023/energy-transition-in-pjm-resourc
+e-retirements-replacements-and-risks.ashx
+(7) “Examining Supply-Side Options to Achieve 100% Clean Electricity by 2035”. National Renewable Energy
+Laboratory (NREL), 2022. https://www.nrel.gov/docs/fy22osti/81644.pdf
+(8) “2035 3.0 Offshore Wind Report: Abundant, Affordable Offshore Wind Can Accelerate Our Clean Electricity
+Future”. UC Berkeley, 2023.
+https://2035report.com/offshorewind/wp-content/uploads/2023/07/GridLab_2035-Offshore-Wind-Technical
+-Report.pdf
+(9) “Net Zero America”. Princeton, 2021. https://netzeroamerica.princeton.edu/the-report
+(10) “US on Track to Close Half of Coal Capacity by 2026”. Institute for Energy Economics and Financial Analysis
+(IEEFA), 2023.
+https://ieefa.org/sites/default/files/2023-03/US%20On%20Track%20to%20Close%20Half%20of%20Coal%20C
+apacity%20by%202026_April%202023.pdf
+(11) “EPRI Study: Data Centers Could Consume up to 9% of U.S. Electricity Generation by 2030”. EPRI, 2024.
+https://www.epri.com/about/media-resources/press-release/q5vU86fr8TKxATfX8IHf1U48Vw4r1DZF
+(12) “The Inflation Reduction Act of 2022”. Congress, 2022.
+https://www.congress.gov/bill/117th-congress/house-bill/5376/text
+(13) “Annual Technology Baseline 2024”. National Renewable Energy Laboratory (NREL), 2024.
+https://atb.nrel.gov/electricity/2024/data
+(14) S. Mills. “Combining solar power with coal-fired power plants, or cofiring natural gas”. Clean Energy, Volume 2,
+Issue 1, June 2018, Pages 1–9, https://doi.org/10.1093/ce/zky004
+(15) “Interconnection: Plugging RE-Powering Sites Into the Electric Grid”. US Environmental Protection Agency
+(EPA), 2019.
+https://www.epa.gov/sites/default/files/2019-10/documents/interconnection_plugging_re_powering_sites_i
+nto_the_electric_grid_oct2019_508.pdf
+(16) R. Lehr, M. O’Boyle. “Solar for Coal Swaps”. Energy Innovation, 2020.
+https://energyinnovation.org/wp-content/uploads/2020/07/Solar-for-Coal-Swaps-Brief_July-2020-1.pdf
+(17) C. Mattioda, S. Shenstone-Harris, S. Schadler, J. Smith. “No-Regrets Solutions for Accelerating Grid
+Interconnection”. Synapse Energy Economics, 2024.
+https://www.synapse-energy.com/sites/default/files/No-Regrets%20Solutions%20for%20Accelerating%20Gri
+d%20Interconnection_Final%20Synapse%20Report%208.19.24%2023-132.pdf
+(18) M. Castillo et al. “Clean Repowering: Connecting Clean Energy to the Grid Faster and Cheaper by Leveraging
+Existing Interconnection Sites and Inflation Reduction Act Incentives”. Rocky Mountain Institute (RMI), 2024.
+https://rmi.org/insight/clean-repowering/
+(19) J. Seel et al. “Generator Interconnection Costs to the Transmission System”. Lawrence Berkeley National
+Laboratory (LBNL), 2023.
+https://live-lbl-eta-publications.pantheonsite.io/sites/default/files/berkeley_lab_interconnection_cost_webin
+ar.pdf
+(20) J. Ho et al. “Regional Energy Deployment System (ReEDS) Model Documentation: Version 2020”. National
+Renewable Energy Laboratory (NREL), 2021.
+(21) “As power plant fleet age holds at 28, US nuclear fleet hits middle-age milestone”. S&P Global, 2022.
+https://www.spglobal.com/marketintelligence/en/news-insights/latest-news-headlines/as-power-plant-fleetage-holds-at-28-us-nuclear-fleet-hits-middle-age-milestone-72411273
+(22) “Order No. 845: Reform of Generator Interconnection Procedures and Agreements”. Federal Energy Regulatory
+Commission (FERC), 2018. https://www.ferc.gov/sites/default/files/2020-06/Order-845.pdf
+(23) “Protected Areas Database”. US Geological Survey (USGS), 2024.
+https://www.usgs.gov/programs/gap-analysis-project/science/protected-areas
+(24) “Copernicus Digital Elevation Model”. European Space Agency (ESA), 2024.
+https://spacedata.copernicus.eu/collections/copernicus-digital-elevation-model
+(25) “WorldCover”. European Space Agency (ESA), 2024. https://esa-worldcover.org/en
+(26) “Form EIA-860 detailed data with previous form data (EIA-860A/860B)”. Energy Information Administration
+(EIA), 2024. https://www.eia.gov/electricity/data/eia860/
+(27) “Form EIA-923 detailed data with previous form data (EIA-906/920)”. Energy Information Administration (EIA),
+2024. https://www.eia.gov/electricity/data/eia923/
+(28) “US Natural Gas Prices”. Energy Information Administration (EIA), 2024.
+https://www.eia.gov/dnav/ng/ng_pri_sum_dcu_nus_m.htm
+(29) “Coal shipments to the electric power sector: price, by plant state”.
+(30) “Greenhouse Gas Reporting Program (GHGRP)”. US Environmental Protection Agency (EPA), 2019.
+https://www.epa.gov/ghgreporting
+(31) “ERA5-Land”. European Centre for Medium-Range Weather Forecasts, 2024.
+https://www.ecmwf.int/en/era5-land
+(32) “PVWatts Calculator”. National Renewable Energy Laboratory (NREL), 2024. https://pvwatts.nrel.gov/
+(33) “MERRA-2”. National Aeronautics and Space Administration (NASA), 2022.
+https://gmao.gsfc.nasa.gov/reanalysis/merra-2/
+(34) “PySAM”. National Renewable Energy Laboratory (NREL), 2022.
+https://sam.nrel.gov/software-development-kit-sdk/pysam.html
+(35) “Interagency Working Group on Coal & Power Plant Communities & Economic Revitalization”. National Energy
+Technology Laboratory (NETL), 2024. https://energycommunities.gov/
+(36) “Notice 2023-29”. Internal Revenue Service (IRS), 2024. https://www.irs.gov/pub/irs-drop/n-23-29.pdf

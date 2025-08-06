@@ -1,0 +1,32 @@
+# Dependency directories
+node_modules/
+.pnp
+.pnp.js
+
+# Next.js build output
+.next/
+out/
+
+# Production build
+build/
+
+# Logs and environment files
+*.log
+.env*
+.env*.local
+
+# OS and IDE files
+.DS_Store
+.idea/
+.vscode/
+
+# Other files and directories to ignore
+coverage/
+*.pack
+*.node
+
+# Python scripts and related files
+scripts/*.py
+scripts/__pycache__/
+*.pyc
+
