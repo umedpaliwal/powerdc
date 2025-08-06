@@ -25,25 +25,34 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const supabase = createClient()
 
   useEffect(() => {
+    let mounted = true
+    
     // Check active sessions and sets the user
     const getSession = async () => {
       try {
         const { data: { session } } = await supabase.auth.getSession()
-        setUser(session?.user ?? null)
         
-        if (session?.user) {
-          await fetchUserProfile(session.user.id)
+        if (mounted) {
+          setUser(session?.user ?? null)
+          
+          if (session?.user) {
+            await fetchUserProfile(session.user.id)
+          }
         }
       } catch (error) {
-        setUser(null)
+        if (mounted) {
+          setUser(null)
+        }
       } finally {
-        setLoading(false)
+        if (mounted) {
+          setLoading(false)
+        }
       }
     }
 
     // Set a timeout to ensure loading eventually becomes false
     const timeout = setTimeout(() => {
-      if (loading) {
+      if (loading && mounted) {
         setLoading(false)
       }
     }, 3000) // 3 second timeout
@@ -52,20 +61,23 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     // Listen for changes on auth state
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
-      setUser(session?.user ?? null)
-      
-      if (session?.user) {
-        await fetchUserProfile(session.user.id)
-      } else {
-        setProfile(null)
+      if (mounted) {
+        setUser(session?.user ?? null)
+        
+        if (session?.user) {
+          await fetchUserProfile(session.user.id)
+        } else {
+          setProfile(null)
+        }
       }
     })
 
     return () => {
+      mounted = false
       subscription.unsubscribe()
       clearTimeout(timeout)
     }
-  }, [])
+  }, [supabase.auth])
 
   const fetchUserProfile = async (userId: string, retryCount = 0) => {
     try {

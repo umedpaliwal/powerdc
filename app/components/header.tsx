@@ -20,16 +20,8 @@ export default function Header() {
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
         <Box sx={{ position: 'relative', width: 160, height: 67 }}>
           <Image 
-            src="/gridlab_logo.png" 
-            alt="GridLab Logo" 
-            fill
-            style={{ objectFit: 'contain' }}
-          />
-        </Box>
-        <Box sx={{ position: 'relative', width: 160, height: 67 }}>
-          <Image 
-            src="/ucb_logo.png" 
-            alt="UCB Logo" 
+            src="/logo.png" 
+            alt="Company Logo" 
             fill
             style={{ objectFit: 'contain' }}
           />

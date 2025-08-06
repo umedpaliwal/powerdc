@@ -7,24 +7,20 @@ describe('Header Component', () => {
     render(<Header />)
   })
 
-  it('displays both logo images', () => {
+  it('displays company logo', () => {
     render(<Header />)
     
-    const gridLabLogo = screen.getByAltText('GridLab Logo')
-    const ucbLogo = screen.getByAltText('UCB Logo')
+    const companyLogo = screen.getByAltText('Company Logo')
     
-    expect(gridLabLogo).toBeInTheDocument()
-    expect(ucbLogo).toBeInTheDocument()
+    expect(companyLogo).toBeInTheDocument()
   })
 
-  it('has correct logo image sources', () => {
+  it('has correct logo image source', () => {
     render(<Header />)
     
-    const gridLabLogo = screen.getByAltText('GridLab Logo')
-    const ucbLogo = screen.getByAltText('UCB Logo')
+    const companyLogo = screen.getByAltText('Company Logo')
     
-    expect(gridLabLogo).toHaveAttribute('src', '/gridlab_logo.png')
-    expect(ucbLogo).toHaveAttribute('src', '/ucb_logo.png')
+    expect(companyLogo).toHaveAttribute('src', '/logo.png')
   })
 
   it('has proper positioning styles', () => {
@@ -41,8 +37,7 @@ describe('Header Component', () => {
   it('maintains responsive layout structure', () => {
     render(<Header />)
     
-    // Both logos should be present regardless of screen size
-    expect(screen.getByAltText('GridLab Logo')).toBeInTheDocument()
-    expect(screen.getByAltText('UCB Logo')).toBeInTheDocument()
+    // Company logo should be present regardless of screen size
+    expect(screen.getByAltText('Company Logo')).toBeInTheDocument()
   })
 })

@@ -9,7 +9,8 @@ const stripe = process.env.STRIPE_SECRET_KEY ? new Stripe(process.env.STRIPE_SEC
 
 export async function POST(request: NextRequest) {
   if (!stripe) {
-    return NextResponse.json({ error: 'Stripe is not configured' }, { status: 500 })
+    console.error('Stripe not configured - missing STRIPE_SECRET_KEY')
+    return NextResponse.json({ error: 'Stripe is not configured. Please contact support.' }, { status: 500 })
   }
   try {
     const supabase = createServerComponentClient({ cookies })
@@ -18,13 +19,28 @@ export async function POST(request: NextRequest) {
     const { data: { user }, error: authError } = await supabase.auth.getUser()
     
     if (authError || !user) {
+      console.error('Authentication error:', authError)
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
     const { priceId, successUrl, cancelUrl } = await request.json()
 
+    console.log('Checkout session request:', { priceId, userId: user.id, email: user.email })
+
     if (!priceId) {
+      console.error('Missing priceId in request')
       return NextResponse.json({ error: 'Price ID is required' }, { status: 400 })
+    }
+
+    // Validate that the price exists in Stripe
+    try {
+      await stripe.prices.retrieve(priceId)
+    } catch (priceError: any) {
+      console.error('Price validation failed:', priceError)
+      return NextResponse.json({ 
+        error: 'Invalid price ID. Please contact support.',
+        details: priceError.message 
+      }, { status: 400 })
     }
 
     // Get or create Stripe customer
@@ -84,11 +100,33 @@ export async function POST(request: NextRequest) {
       },
     })
 
+    console.log('Checkout session created successfully:', { 
+      sessionId: session.id, 
+      customerId, 
+      priceId,
+      userId: user.id 
+    })
+
     return NextResponse.json({ sessionId: session.id, url: session.url })
   } catch (error: any) {
-    console.error('Stripe checkout session creation failed:', error)
+    console.error('Stripe checkout session creation failed:', {
+      error: error.message,
+      stack: error.stack,
+      code: error.code,
+      type: error.type,
+      priceId,
+      userId: user?.id
+    })
+    
+    let errorMessage = 'Failed to create checkout session'
+    if (error.code === 'resource_missing') {
+      errorMessage = 'The selected plan is not available. Please contact support.'
+    } else if (error.type === 'invalid_request_error') {
+      errorMessage = `Invalid request: ${error.message}`
+    }
+    
     return NextResponse.json(
-      { error: 'Failed to create checkout session' },
+      { error: errorMessage, details: error.message },
       { status: 500 }
     )
   }

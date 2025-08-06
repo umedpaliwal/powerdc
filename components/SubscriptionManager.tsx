@@ -117,19 +117,22 @@ export default function SubscriptionManager() {
     )
   }
 
-  if (!subscription) {
+  // Check if user has a paid subscription (has stripe_subscription_id)
+  const hasPaidSubscription = subscription?.stripe_subscription_id
+
+  if (!subscription || !hasPaidSubscription) {
     return (
       <Card>
         <CardContent>
           <Typography variant="h6" gutterBottom>
-            No Active Subscription
+            {subscription?.plan_type === 'explorer' ? 'Explorer Plan' : 'No Active Subscription'}
           </Typography>
           <Typography variant="body2" color="text.secondary" gutterBottom>
             You're currently on the Explorer plan with limited features.
           </Typography>
           <Button
             variant="contained"
-            href="/checkout"
+            href="/pricing"
             sx={{ mt: 2 }}
           >
             Upgrade to Professional
@@ -187,7 +190,9 @@ export default function SubscriptionManager() {
             <List dense>
               <ListItem>
                 <ListItemIcon>
-                  <Check color={featureAccess.canExportData ? 'success' : 'disabled'} />
+                  <Check sx={{ 
+                    color: featureAccess.canExportData ? '#4caf50' : 'rgba(255,255,255,0.3)' 
+                  }} />
                 </ListItemIcon>
                 <ListItemText 
                   primary="Data Export"
@@ -196,7 +201,9 @@ export default function SubscriptionManager() {
               </ListItem>
               <ListItem>
                 <ListItemIcon>
-                  <Check color={featureAccess.hasApiAccess ? 'success' : 'disabled'} />
+                  <Check sx={{ 
+                    color: featureAccess.hasApiAccess ? '#4caf50' : 'rgba(255,255,255,0.3)' 
+                  }} />
                 </ListItemIcon>
                 <ListItemText 
                   primary="API Access"
@@ -205,7 +212,9 @@ export default function SubscriptionManager() {
               </ListItem>
               <ListItem>
                 <ListItemIcon>
-                  <Check color={featureAccess.canAccessApiDocs ? 'success' : 'disabled'} />
+                  <Check sx={{ 
+                    color: featureAccess.canAccessApiDocs ? '#4caf50' : 'rgba(255,255,255,0.3)' 
+                  }} />
                 </ListItemIcon>
                 <ListItemText 
                   primary="API Documentation"
@@ -260,42 +269,44 @@ export default function SubscriptionManager() {
         </CardContent>
       </Card>
 
-      {/* Cancel Confirmation Dialog */}
-      <Dialog
-        open={cancelDialogOpen}
-        onClose={() => setCancelDialogOpen(false)}
-        maxWidth="sm"
-        fullWidth
-      >
-        <DialogTitle>Cancel Subscription</DialogTitle>
-        <DialogContent>
-          <Typography variant="body1" gutterBottom>
-            Are you sure you want to cancel your subscription?
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Your subscription will remain active until the end of your current billing period (
-            {subscription?.current_period_end && new Date(subscription.current_period_end).toLocaleDateString()}
-            ). After that, you'll be downgraded to the Explorer plan.
-          </Typography>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setCancelDialogOpen(false)}>
-            Keep Subscription
-          </Button>
-          <Button
-            onClick={handleCancelSubscription}
-            color="error"
-            variant="contained"
-            disabled={actionLoading === 'cancel'}
-          >
-            {actionLoading === 'cancel' ? (
-              <CircularProgress size={20} />
-            ) : (
-              'Cancel Subscription'
-            )}
-          </Button>
-        </DialogActions>
-      </Dialog>
+      {/* Cancel Confirmation Dialog - only show for paid subscriptions */}
+      {hasPaidSubscription && (
+        <Dialog
+          open={cancelDialogOpen}
+          onClose={() => setCancelDialogOpen(false)}
+          maxWidth="sm"
+          fullWidth
+        >
+          <DialogTitle>Cancel Subscription</DialogTitle>
+          <DialogContent>
+            <Typography variant="body1" gutterBottom>
+              Are you sure you want to cancel your subscription?
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              Your subscription will remain active until the end of your current billing period (
+              {subscription?.current_period_end && new Date(subscription.current_period_end).toLocaleDateString()}
+              ). After that, you'll be downgraded to the Explorer plan.
+            </Typography>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => setCancelDialogOpen(false)}>
+              Keep Subscription
+            </Button>
+            <Button
+              onClick={handleCancelSubscription}
+              color="error"
+              variant="contained"
+              disabled={actionLoading === 'cancel'}
+            >
+              {actionLoading === 'cancel' ? (
+                <CircularProgress size={20} />
+              ) : (
+                'Cancel Subscription'
+              )}
+            </Button>
+          </DialogActions>
+        </Dialog>
+      )}
     </>
   )
 }

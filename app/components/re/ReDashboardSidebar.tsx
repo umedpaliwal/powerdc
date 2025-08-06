@@ -65,7 +65,7 @@ export default function ReDashboardSidebar({
       <Box
         sx={{
           display: "flex",
-          justifyContent: "space-between",
+          justifyContent: "center",
           mb: 2,
           width: "100%",
           height: "50px",
@@ -73,16 +73,8 @@ export default function ReDashboardSidebar({
       >
         <Box sx={{ width: "48%", position: "relative" }}>
           <Image
-            src="/gridlab_logo.png"
-            alt="GridLab Logo"
-            fill
-            style={{ objectFit: "contain" }}
-          />
-        </Box>
-        <Box sx={{ width: "48%", position: "relative" }}>
-          <Image
-            src="/ucb_logo.png"
-            alt="UCB Logo"
+            src="/logo.png"
+            alt="Company Logo"
             fill
             style={{ objectFit: "contain" }}
           />

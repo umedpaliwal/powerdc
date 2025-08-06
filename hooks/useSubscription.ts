@@ -82,7 +82,9 @@ export function useSubscription(): SubscriptionData {
       return
     }
 
+    let mounted = true
     const fetchSubscriptionData = async (retryCount = 0) => {
+      if (!mounted) return
       setLoading(true)
       setError(null)
 
@@ -117,7 +119,7 @@ export function useSubscription(): SubscriptionData {
         ])
 
         // Handle subscription response
-        if (subscriptionResponse.ok) {
+        if (mounted && subscriptionResponse.ok) {
           const subscriptionResult = await subscriptionResponse.json()
           setSubscription(subscriptionResult.subscription || null)
         } else {
@@ -130,7 +132,7 @@ export function useSubscription(): SubscriptionData {
         }
 
         // Handle usage response
-        if (usageResponse.ok) {
+        if (mounted && usageResponse.ok) {
           const usageResult = await usageResponse.json()
           setUsage(usageResult.usage || null)
         } else {
@@ -155,21 +157,27 @@ export function useSubscription(): SubscriptionData {
       } catch (err) {
         const errorMessage = err instanceof Error ? err.message : 'Network error occurred'
         
-        if (retryCount < 2) {
+        if (retryCount < 2 && mounted) {
           console.log('Subscription data fetch network error, retrying...', errorMessage)
           const delay = Math.pow(2, retryCount) * 1000
           setTimeout(() => fetchSubscriptionData(retryCount + 1), delay)
-        } else {
+        } else if (mounted) {
           setError(errorMessage)
         }
       } finally {
         clearTimeout(timeout)
-        setLoading(false)
+        if (mounted) {
+          setLoading(false)
+        }
       }
     }
 
     fetchSubscriptionData()
-  }, [user])
+    
+    return () => {
+      mounted = false
+    }
+  }, [user?.id])
 
   // Calculate feature access based on subscription plan
   const featureAccess: FeatureAccess = subscription?.plan_type 
@@ -178,8 +186,14 @@ export function useSubscription(): SubscriptionData {
 
   // Subscription management functions
   const manageSubscription = async () => {
-    if (!user || !subscription?.stripe_customer_id) {
-      throw new Error('No active subscription found')
+    if (!user) {
+      throw new Error('User not authenticated')
+    }
+    
+    // If user doesn't have a paid subscription, redirect to pricing
+    if (!subscription?.stripe_customer_id || !subscription?.stripe_subscription_id) {
+      window.location.href = '/pricing'
+      return
     }
 
     try {

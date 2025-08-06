@@ -27,17 +27,7 @@ import {
 } from "@mui/material";
 import {
   Check,
-  Close,
-  Star,
-  TrendingUp,
-  Speed,
-  Api,
-  Support,
-  CloudDownload,
-  Analytics,
-  Security,
-  Groups,
-  Timer
+  Close
 } from "@mui/icons-material";
 
 interface PricingPlan {
@@ -167,10 +157,10 @@ export default function PricingPage() {
     <Container maxWidth="lg" sx={{ py: 8 }}>
       {/* Header */}
       <Box sx={{ textAlign: 'center', mb: 6 }}>
-        <Typography variant="h3" fontWeight="bold" gutterBottom>
+        <Typography variant="h3" fontWeight="bold" gutterBottom color="white">
           {currentPlan ? 'Upgrade Your Plan' : 'Choose Your Plan'}
         </Typography>
-        <Typography variant="h6" color="text.secondary" sx={{ mb: 2 }}>
+        <Typography variant="h6" sx={{ color: 'rgba(255, 255, 255, 0.7)', mb: 2 }}>
           Access the largest database of surplus interconnection opportunities
         </Typography>
         {currentPlan && (
@@ -182,7 +172,7 @@ export default function PricingPage() {
 
         {/* Billing Toggle */}
         <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', mb: 4 }}>
-          <Typography variant="body1" sx={{ mr: 2 }}>
+          <Typography variant="body1" sx={{ mr: 2, color: 'white' }}>
             Monthly
           </Typography>
           <FormControlLabel
@@ -195,7 +185,7 @@ export default function PricingPage() {
             }
             label=""
           />
-          <Typography variant="body1" sx={{ ml: 1 }}>
+          <Typography variant="body1" sx={{ ml: 1, color: 'white' }}>
             Annual
           </Typography>
           {billingPeriod === 'annual' && (
@@ -215,7 +205,8 @@ export default function PricingPage() {
           <Grid item xs={12} md={4} key={plan.name}>
             <Card 
               sx={{ 
-                height: '100%',
+                minHeight: '600px',
+                maxHeight: '700px',
                 display: 'flex',
                 flexDirection: 'column',
                 position: 'relative',
@@ -240,28 +231,28 @@ export default function PricingPage() {
               )}
               
               <CardContent sx={{ flexGrow: 1, pt: plan.tag ? 4 : 3 }}>
-                <Typography variant="h5" fontWeight="bold" gutterBottom>
+                <Typography variant="h5" fontWeight="bold" gutterBottom color="white">
                   {plan.name}
                 </Typography>
                 
                 <Box sx={{ mb: 3 }}>
                   {plan.price === 0 && plan.period === "Custom" ? (
-                    <Typography variant="h3" fontWeight="bold">
+                    <Typography variant="h3" fontWeight="bold" color="white">
                       Custom
                     </Typography>
                   ) : (
                     <>
-                      <Typography variant="h3" component="span" fontWeight="bold">
+                      <Typography variant="h3" component="span" fontWeight="bold" color="white">
                         ${plan.price}
                       </Typography>
-                      <Typography variant="h6" component="span" color="text.secondary">
+                      <Typography variant="h6" component="span" sx={{ color: 'rgba(255, 255, 255, 0.7)' }}>
                         {plan.period}
                       </Typography>
                     </>
                   )}
                 </Box>
 
-                <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
+                <Typography variant="body2" sx={{ color: 'rgba(255, 255, 255, 0.7)', mb: 3 }}>
                   {plan.description}
                 </Typography>
 
@@ -281,7 +272,7 @@ export default function PricingPage() {
                         primary={feature.text}
                         primaryTypographyProps={{
                           variant: 'body2',
-                          color: feature.included ? 'text.primary' : 'text.disabled'
+                          color: feature.included ? 'white' : 'rgba(255, 255, 255, 0.5)'
                         }}
                       />
                     </ListItem>
@@ -300,12 +291,12 @@ export default function PricingPage() {
                     py: 1.5,
                     fontWeight: 'bold',
                     ...(currentPlan === plan.name.toLowerCase() && {
-                      backgroundColor: 'action.disabledBackground',
-                      color: 'text.primary',
+                      backgroundColor: 'rgba(58, 134, 255, 0.1)',
+                      color: '#3a86ff',
                       borderColor: 'primary.main',
                       '&.Mui-disabled': {
-                        backgroundColor: 'rgba(0, 229, 255, 0.1)',
-                        color: 'primary.main',
+                        backgroundColor: 'rgba(58, 134, 255, 0.1)',
+                        color: '#3a86ff',
                         borderColor: 'primary.main',
                       }
                     })
@@ -319,50 +310,6 @@ export default function PricingPage() {
         ))}
       </Grid>
 
-      {/* Features Comparison */}
-      <Box sx={{ mt: 8 }}>
-        <Typography variant="h4" fontWeight="bold" textAlign="center" gutterBottom>
-          Why Choose PowerDC?
-        </Typography>
-        
-        <Grid container spacing={3} sx={{ mt: 4 }}>
-          <Grid item xs={12} md={4}>
-            <Paper sx={{ p: 3, height: '100%' }}>
-              <Speed sx={{ fontSize: 40, color: 'primary.main', mb: 2 }} />
-              <Typography variant="h6" fontWeight="bold" gutterBottom>
-                18 Month Deployment
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                Skip the 5-6 year interconnection queue with our surplus interconnection approach
-              </Typography>
-            </Paper>
-          </Grid>
-          
-          <Grid item xs={12} md={4}>
-            <Paper sx={{ p: 3, height: '100%' }}>
-              <TrendingUp sx={{ fontSize: 40, color: 'primary.main', mb: 2 }} />
-              <Typography variant="h6" fontWeight="bold" gutterBottom>
-                1,000+ GW Capacity
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                Access the largest database of available surplus interconnection capacity
-              </Typography>
-            </Paper>
-          </Grid>
-          
-          <Grid item xs={12} md={4}>
-            <Paper sx={{ p: 3, height: '100%' }}>
-              <Analytics sx={{ fontSize: 40, color: 'primary.main', mb: 2 }} />
-              <Typography variant="h6" fontWeight="bold" gutterBottom>
-                Real-Time Analytics
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                Make data-driven decisions with our comprehensive site analysis tools
-              </Typography>
-            </Paper>
-          </Grid>
-        </Grid>
-      </Box>
 
       {/* Trust Signals */}
       <Box sx={{ mt: 6, p: 4, bgcolor: 'background.paper', borderRadius: 2 }}>
@@ -372,7 +319,7 @@ export default function PricingPage() {
               <Typography variant="h4" fontWeight="bold" color="primary">
                 500+
               </Typography>
-              <Typography variant="body2" color="text.secondary">
+              <Typography variant="body2" sx={{ color: 'rgba(255, 255, 255, 0.7)' }}>
                 Sites Analyzed
               </Typography>
             </Box>
@@ -382,7 +329,7 @@ export default function PricingPage() {
               <Typography variant="h4" fontWeight="bold" color="primary">
                 50+
               </Typography>
-              <Typography variant="body2" color="text.secondary">
+              <Typography variant="body2" sx={{ color: 'rgba(255, 255, 255, 0.7)' }}>
                 Data Centers Served
               </Typography>
             </Box>
@@ -392,7 +339,7 @@ export default function PricingPage() {
               <Typography variant="h4" fontWeight="bold" color="primary">
                 95%
               </Typography>
-              <Typography variant="body2" color="text.secondary">
+              <Typography variant="body2" sx={{ color: 'rgba(255, 255, 255, 0.7)' }}>
                 Clean Energy Mix
               </Typography>
             </Box>
@@ -402,7 +349,7 @@ export default function PricingPage() {
               <Typography variant="h4" fontWeight="bold" color="primary">
                 24/7
               </Typography>
-              <Typography variant="body2" color="text.secondary">
+              <Typography variant="body2" sx={{ color: 'rgba(255, 255, 255, 0.7)' }}>
                 Support Available
               </Typography>
             </Box>
@@ -412,7 +359,7 @@ export default function PricingPage() {
 
       {/* FAQ Alert */}
       <Alert severity="info" sx={{ mt: 4 }}>
-        <Typography variant="body2">
+        <Typography variant="body2" sx={{ color: 'white' }}>
           <strong>Questions?</strong> Check out our FAQ or contact our sales team at sales@wattcanvas.com
         </Typography>
       </Alert>

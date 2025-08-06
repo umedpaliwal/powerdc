@@ -62,20 +62,12 @@ export default function Footer() {
                 Exploring innovative solutions for renewable energy deployment and data center sustainability through advanced analytics and optimization.
               </Typography>
               
-              {/* Institution Logos */}
+              {/* Company Logo */}
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
                 <Box sx={{ position: 'relative', width: 100, height: 35 }}>
                   <Image 
-                    src="/gridlab_logo.png" 
-                    alt="GridLab Logo" 
-                    fill
-                    style={{ objectFit: 'contain' }}
-                  />
-                </Box>
-                <Box sx={{ position: 'relative', width: 100, height: 35 }}>
-                  <Image 
-                    src="/ucb_logo.png" 
-                    alt="UC Berkeley Logo" 
+                    src="/logo.png" 
+                    alt="Company Logo" 
                     fill
                     style={{ objectFit: 'contain' }}
                   />
@@ -219,7 +211,7 @@ export default function Footer() {
           }}
         >
           <Typography variant="body2" sx={{ color: 'rgba(255, 255, 255, 0.5)' }}>
-            © {currentYear} PowerDC. All rights reserved. UC Berkeley GridLab.
+            © {currentYear} PowerDC. All rights reserved.
           </Typography>
           <Typography variant="body2" sx={{ color: 'rgba(255, 255, 255, 0.5)' }}>
             Built with renewable energy insights

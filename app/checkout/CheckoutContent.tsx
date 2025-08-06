@@ -29,6 +29,7 @@ import {
 import { useAuth } from '@/hooks/useAuth'
 import { getStripe } from '@/lib/stripe/client'
 import { postData } from '@/lib/stripe/utils'
+import StripeDebugInfo from '@/components/StripeDebugInfo'
 
 interface PlanDetails {
   name: string
@@ -38,10 +39,11 @@ interface PlanDetails {
   priceId: string
 }
 
-// Mock price IDs - in production, these would come from your Stripe Dashboard
+// Price IDs - these should match your actual Stripe Dashboard price IDs
+// You can get these by running: npm run setup:stripe or from your Stripe Dashboard
 const PRICE_IDS = {
-  monthly: 'price_monthly_professional', // Replace with actual Stripe price ID
-  annual: 'price_annual_professional',   // Replace with actual Stripe price ID
+  monthly: process.env.NEXT_PUBLIC_STRIPE_MONTHLY_PRICE_ID || 'price_monthly_professional',
+  annual: process.env.NEXT_PUBLIC_STRIPE_ANNUAL_PRICE_ID || 'price_annual_professional',
 }
 
 export default function CheckoutContent() {
@@ -84,10 +86,23 @@ export default function CheckoutContent() {
       return
     }
 
+    // Validate price ID before making request
+    if (!planDetails.priceId || planDetails.priceId.startsWith('price_monthly_professional') || planDetails.priceId.startsWith('price_annual_professional')) {
+      setError('Stripe price configuration is incomplete. Please contact support.')
+      console.error('Invalid price ID:', planDetails.priceId)
+      return
+    }
+
     setLoading(true)
     setError('')
 
     try {
+      console.log('Creating checkout session with:', {
+        priceId: planDetails.priceId,
+        billingPeriod,
+        user: user.email
+      })
+
       const { sessionId } = await postData({
         url: '/api/stripe/create-checkout-session',
         data: {
@@ -97,10 +112,18 @@ export default function CheckoutContent() {
         },
       })
 
+      if (!sessionId) {
+        throw new Error('Failed to create checkout session - no session ID received')
+      }
+
+      console.log('Checkout session created:', sessionId)
+
       const stripe = await getStripe()
       if (!stripe) {
-        throw new Error('Stripe failed to load')
+        throw new Error('Stripe failed to load. Please check your internet connection and try again.')
       }
+
+      console.log('Redirecting to Stripe checkout...')
 
       const { error } = await stripe.redirectToCheckout({
         sessionId,
@@ -110,8 +133,28 @@ export default function CheckoutContent() {
         throw error
       }
     } catch (error: any) {
-      console.error('Checkout error:', error)
-      setError(error.message || 'An error occurred during checkout')
+      console.error('Detailed checkout error:', {
+        error: error,
+        message: error.message,
+        stack: error.stack,
+        priceId: planDetails.priceId,
+        user: user.email
+      })
+      
+      // Provide more specific error messages
+      let errorMessage = 'An error occurred during checkout'
+      
+      if (error.message?.includes('No such price')) {
+        errorMessage = 'The selected plan is not available. Please contact support.'
+      } else if (error.message?.includes('Stripe')) {
+        errorMessage = `Payment processing error: ${error.message}`
+      } else if (error.message?.includes('network') || error.message?.includes('fetch')) {
+        errorMessage = 'Network error. Please check your connection and try again.'
+      } else if (error.message) {
+        errorMessage = error.message
+      }
+      
+      setError(errorMessage)
     } finally {
       setLoading(false)
     }
@@ -130,6 +173,8 @@ export default function CheckoutContent() {
       >
         Back
       </Button>
+
+      <StripeDebugInfo />
 
       <Grid container spacing={4}>
         {/* Left side - Payment Form */}

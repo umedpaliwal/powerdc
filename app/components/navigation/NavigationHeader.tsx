@@ -90,20 +90,12 @@ export default function NavigationHeader() {
                 </Typography>
               </Box>
 
-              {/* Institution Logos */}
+              {/* Company Logo */}
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mr: 4 }}>
                 <Box sx={{ position: 'relative', width: 120, height: 40 }}>
                   <Image 
-                    src="/gridlab_logo.png" 
-                    alt="GridLab Logo" 
-                    fill
-                    style={{ objectFit: 'contain' }}
-                  />
-                </Box>
-                <Box sx={{ position: 'relative', width: 120, height: 40 }}>
-                  <Image 
-                    src="/ucb_logo.png" 
-                    alt="UCB Logo" 
+                    src="/logo.png" 
+                    alt="Company Logo" 
                     fill
                     style={{ objectFit: 'contain' }}
                   />
