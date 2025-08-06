@@ -12,18 +12,26 @@ export async function POST(request: NextRequest) {
     console.error('Stripe not configured - missing STRIPE_SECRET_KEY')
     return NextResponse.json({ error: 'Stripe is not configured. Please contact support.' }, { status: 500 })
   }
+  
+  let priceId: string | undefined
+  let user: any
+  
   try {
     const supabase = createServerComponentClient({ cookies })
     
     // Check if user is authenticated
-    const { data: { user }, error: authError } = await supabase.auth.getUser()
+    const authResult = await supabase.auth.getUser()
+    user = authResult.data.user
+    const authError = authResult.error
     
     if (authError || !user) {
       console.error('Authentication error:', authError)
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const { priceId, successUrl, cancelUrl } = await request.json()
+    const body = await request.json()
+    priceId = body.priceId
+    const { successUrl, cancelUrl } = body
 
     console.log('Checkout session request:', { priceId, userId: user.id, email: user.email })
 
