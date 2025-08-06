@@ -91,7 +91,7 @@ export default function NavigationHeader() {
               </Box>
 
               {/* Navigation Links */}
-              <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, gap: 1 }}>
+              <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, gap: 1, justifyContent: 'center' }}>
                 {navigationItems.map((item) => (
                   <Button
                     key={item.label}

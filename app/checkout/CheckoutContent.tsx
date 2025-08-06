@@ -295,7 +295,7 @@ export default function CheckoutContent() {
             <Box sx={{ mb: 3 }}>
               <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
                 <Typography variant="body1">
-                  PowerDC Professional
+                  WattCanvas Professional
                 </Typography>
                 <Typography variant="body1" fontWeight="500">
                   ${planDetails.price}/{planDetails.interval}
