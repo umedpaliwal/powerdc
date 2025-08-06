@@ -75,12 +75,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   const signUp = async (email: string, password: string, metadata?: any) => {
+    // Use NEXT_PUBLIC_SITE_URL in production, fallback to window.location.origin
+    const redirectUrl = process.env.NEXT_PUBLIC_SITE_URL || window.location.origin
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
       options: {
         data: metadata,
-        emailRedirectTo: `${window.location.origin}/auth/callback`,
+        emailRedirectTo: `${redirectUrl}/auth/callback`,
       },
     })
     
@@ -107,10 +109,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   const signInWithGoogle = async () => {
+    // Use NEXT_PUBLIC_SITE_URL in production, fallback to window.location.origin
+    const redirectUrl = process.env.NEXT_PUBLIC_SITE_URL || window.location.origin
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: `${window.location.origin}/auth/callback`,
+        redirectTo: `${redirectUrl}/auth/callback`,
       },
     })
     
@@ -118,10 +122,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   const signInWithMicrosoft = async () => {
+    // Use NEXT_PUBLIC_SITE_URL in production, fallback to window.location.origin
+    const redirectUrl = process.env.NEXT_PUBLIC_SITE_URL || window.location.origin
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'azure',
       options: {
-        redirectTo: `${window.location.origin}/auth/callback`,
+        redirectTo: `${redirectUrl}/auth/callback`,
       },
     })
     
