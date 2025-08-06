@@ -78,7 +78,7 @@ export function useSubscription(): SubscriptionData {
       return
     }
 
-    const fetchSubscriptionData = async () => {
+    const fetchSubscriptionData = async (retryCount = 0) => {
       setLoading(true)
       setError(null)
 
@@ -87,53 +87,77 @@ export function useSubscription(): SubscriptionData {
         if (loading) {
           setLoading(false)
         }
-      }, 2000) // 2 second timeout
+      }, 5000) // 5 second timeout
 
       try {
-        const supabase = createClient()
+        // Fetch subscription data using API route
+        const subscriptionPromise = fetch('/api/subscriptions', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
 
-        // Try to fetch subscription - handle table not existing gracefully
-        try {
-          const { data: subData, error: subError } = await supabase
-            .from('subscriptions')
-            .select('*')
-            .eq('user_id', user.id)
-            .eq('status', 'active')
-            .single()
+        // Fetch usage data using API route
+        const usagePromise = fetch('/api/usage', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
 
-          if (subError && subError.code !== 'PGRST116') { // PGRST116 is "no rows returned"
-            // Only log error, don't throw - table might not exist
-            // Subscription fetch error - table may not exist
+        // Wait for both requests to complete
+        const [subscriptionResponse, usageResponse] = await Promise.all([
+          subscriptionPromise,
+          usagePromise,
+        ])
+
+        // Handle subscription response
+        if (subscriptionResponse.ok) {
+          const subscriptionResult = await subscriptionResponse.json()
+          setSubscription(subscriptionResult.subscription || null)
+        } else {
+          const subError = await subscriptionResponse.json().catch(() => ({}))
+          if (subscriptionResponse.status >= 500 && retryCount < 2) {
+            console.log('Subscription fetch failed, will retry...', subError.error)
           } else {
-            setSubscription(subData)
+            console.log('Subscription fetch error (non-critical):', subError.error || 'Unknown error')
           }
-        } catch (subErr) {
-          // Table doesn't exist - use default
-          // Subscriptions table not found, using defaults
         }
 
-        // Try to fetch current month usage - handle table not existing gracefully
-        try {
-          const currentMonth = new Date().toISOString().slice(0, 7) // YYYY-MM format
-          const { data: usageData, error: usageError } = await supabase
-            .from('usage_tracking')
-            .select('*')
-            .eq('user_id', user.id)
-            .eq('month', currentMonth)
-            .single()
-
-          if (usageError && usageError.code !== 'PGRST116') {
-            // Only log error, don't throw - table might not exist
-            // Usage fetch error - table may not exist
+        // Handle usage response
+        if (usageResponse.ok) {
+          const usageResult = await usageResponse.json()
+          setUsage(usageResult.usage || null)
+        } else {
+          const usageError = await usageResponse.json().catch(() => ({}))
+          if (usageResponse.status >= 500 && retryCount < 2) {
+            console.log('Usage fetch failed, will retry...', usageError.error)
           } else {
-            setUsage(usageData)
+            console.log('Usage fetch error (non-critical):', usageError.error || 'Unknown error')
           }
-        } catch (usageErr) {
-          // Table doesn't exist - use default
-          // Usage tracking table not found, using defaults
         }
+
+        // If we got server errors and haven't retried too much, retry
+        if (
+          ((subscriptionResponse.status >= 500) || (usageResponse.status >= 500)) &&
+          retryCount < 2
+        ) {
+          const delay = Math.pow(2, retryCount) * 1000
+          console.log(`Retrying subscription data fetch in ${delay}ms...`)
+          setTimeout(() => fetchSubscriptionData(retryCount + 1), delay)
+        }
+
       } catch (err) {
-        setError(err instanceof Error ? err.message : 'Unknown error occurred')
+        const errorMessage = err instanceof Error ? err.message : 'Network error occurred'
+        
+        if (retryCount < 2) {
+          console.log('Subscription data fetch network error, retrying...', errorMessage)
+          const delay = Math.pow(2, retryCount) * 1000
+          setTimeout(() => fetchSubscriptionData(retryCount + 1), delay)
+        } else {
+          setError(errorMessage)
+        }
       } finally {
         clearTimeout(timeout)
         setLoading(false)

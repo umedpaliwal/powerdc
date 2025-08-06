@@ -67,23 +67,45 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   }, [])
 
-  const fetchUserProfile = async (userId: string) => {
+  const fetchUserProfile = async (userId: string, retryCount = 0) => {
     try {
-      const { data, error } = await supabase
-        .from('user_profiles')
-        .select('*')
-        .eq('id', userId)
-        .single()
+      // Use API route instead of direct database call
+      const response = await fetch('/api/user/profile', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
 
-      if (!error && data) {
-        setProfile(data)
+      if (response.ok) {
+        const { profile } = await response.json()
+        setProfile(profile)
       } else {
-        // Profile table might not exist or no profile yet - that's ok
-        console.log('Profile fetch skipped:', error?.message || 'No profile found')
+        const errorData = await response.json().catch(() => ({}))
+        
+        // Handle specific error cases
+        if (response.status === 404 && errorData.code === 'PROFILE_NOT_FOUND') {
+          console.log('User profile not found - this is normal for new users')
+          setProfile(null)
+        } else if (response.status >= 500 && retryCount < 2) {
+          // Retry server errors up to 2 times with exponential backoff
+          const delay = Math.pow(2, retryCount) * 1000
+          console.log(`Profile fetch failed, retrying in ${delay}ms...`)
+          setTimeout(() => fetchUserProfile(userId, retryCount + 1), delay)
+          return
+        } else {
+          console.log('Profile fetch failed:', errorData.error || 'Unknown error')
+        }
       }
     } catch (err) {
       // Don't let profile errors block auth
-      console.log('Profile fetch error:', err)
+      if (retryCount < 2) {
+        console.log('Profile fetch network error, retrying...', err)
+        const delay = Math.pow(2, retryCount) * 1000
+        setTimeout(() => fetchUserProfile(userId, retryCount + 1), delay)
+      } else {
+        console.log('Profile fetch failed after retries:', err)
+      }
     }
   }
 
@@ -111,17 +133,27 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     if (error) throw error
     
     // Create user profile after signup
-    if (data.user) {
-      const { error: profileError } = await supabase
-        .from('user_profiles')
-        .insert({
-          id: data.user.id,
-          company_name: metadata?.company_name,
-          industry_type: metadata?.industry_type,
-          phone: metadata?.phone,
+    if (data.user && metadata?.company_name) {
+      try {
+        const response = await fetch('/api/user/profile', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            company_name: metadata.company_name,
+            industry_type: metadata.industry_type,
+            phone: metadata.phone,
+          }),
         })
-      
-      if (profileError) console.error('Profile creation error:', profileError)
+        
+        if (!response.ok) {
+          const errorData = await response.json().catch(() => ({}))
+          console.error('Profile creation error:', errorData.error || 'Unknown error')
+        }
+      } catch (profileErr) {
+        console.error('Profile creation network error:', profileErr)
+      }
     }
   }
 
