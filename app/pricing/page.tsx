@@ -200,7 +200,7 @@ export default function PricingPage() {
       </Box>
 
       {/* Pricing Cards */}
-      <Grid container spacing={4} alignItems="stretch">
+      <Grid container spacing={4} alignItems="stretch" sx={{ mt: 2 }}>
         {plans.map((plan) => (
           <Grid item xs={12} md={4} key={plan.name}>
             <Card 
@@ -223,11 +223,13 @@ export default function PricingPage() {
                   size="small"
                   sx={{
                     position: 'absolute',
-                    top: -12,
-                    right: 24,
+                    top: 8,
+                    right: 8,
                     fontWeight: 'bold',
                     border: '1px solid',
-                    borderColor: 'primary.main'
+                    borderColor: 'primary.main',
+                    backgroundColor: 'rgba(58, 134, 255, 0.15)',
+                    color: '#3a86ff'
                   }}
                 />
               )}
@@ -292,6 +294,15 @@ export default function PricingPage() {
                   sx={{
                     py: 1.5,
                     fontWeight: 'bold',
+                    ...(plan.buttonText === "Upgrade to Pro" ? {
+                      backgroundColor: 'rgba(58, 134, 255, 0.2)',
+                      color: 'white',
+                      borderColor: 'rgba(58, 134, 255, 0.5)',
+                      '&:hover': {
+                        backgroundColor: 'rgba(58, 134, 255, 0.3)',
+                        borderColor: 'rgba(58, 134, 255, 0.7)',
+                      }
+                    } : {}),
                     ...(currentPlan === plan.name.toLowerCase() && {
                       backgroundColor: 'rgba(58, 134, 255, 0.1)',
                       color: '#3a86ff',
