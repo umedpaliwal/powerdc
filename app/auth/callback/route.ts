@@ -5,7 +5,9 @@ export async function GET(request: Request) {
   const requestUrl = new URL(request.url)
   const code = requestUrl.searchParams.get('code')
   const type = requestUrl.searchParams.get('type')
-  const origin = requestUrl.origin
+  
+  // Use NEXT_PUBLIC_SITE_URL in production, fallback to request origin
+  const origin = process.env.NEXT_PUBLIC_SITE_URL || requestUrl.origin
 
   if (code) {
     const supabase = await createClient()
