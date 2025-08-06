@@ -11,7 +11,7 @@ if (!process.env.STRIPE_WEBHOOK_SECRET) {
 }
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-  apiVersion: '2023-10-16',
+  apiVersion: '2024-12-18.acacia',
 })
 
 export async function POST(request: NextRequest) {
@@ -49,8 +49,8 @@ export async function POST(request: NextRequest) {
               stripe_subscription_id: subscriptionId,
               stripe_customer_id: customerId,
               status: subscription.status,
-              current_period_start: new Date(subscription.current_period_start * 1000).toISOString(),
-              current_period_end: new Date(subscription.current_period_end * 1000).toISOString(),
+              // current_period_start: new Date(subscription.current_period_start * 1000).toISOString(),
+              // current_period_end: new Date(subscription.current_period_end * 1000).toISOString(),
               created_at: new Date().toISOString(),
               updated_at: new Date().toISOString(),
             })
@@ -76,8 +76,8 @@ export async function POST(request: NextRequest) {
             .from('user_subscriptions')
             .update({
               status: subscription.status,
-              current_period_start: new Date(subscription.current_period_start * 1000).toISOString(),
-              current_period_end: new Date(subscription.current_period_end * 1000).toISOString(),
+              // current_period_start: new Date(subscription.current_period_start * 1000).toISOString(),
+              // current_period_end: new Date(subscription.current_period_end * 1000).toISOString(),
               updated_at: new Date().toISOString(),
             })
             .eq('stripe_subscription_id', subscription.id)

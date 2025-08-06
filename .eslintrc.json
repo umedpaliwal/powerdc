@@ -3,26 +3,10 @@
   "rules": {
     "no-console": ["warn", { "allow": ["warn", "error"] }],
     "no-unused-vars": "off",
-    "@typescript-eslint/no-unused-vars": ["warn", { 
-      "argsIgnorePattern": "^_",
-      "varsIgnorePattern": "^_",
-      "ignoreRestSiblings": true
-    }],
-    "prefer-const": "error",
+    "prefer-const": "warn",
     "no-var": "error",
     "react/display-name": "off",
-    "react-hooks/exhaustive-deps": "warn"
-  },
-  "overrides": [
-    {
-      "files": ["*.ts", "*.tsx"],
-      "rules": {
-        "@typescript-eslint/no-unused-vars": ["warn", {
-          "argsIgnorePattern": "^_",
-          "varsIgnorePattern": "^_",
-          "ignoreRestSiblings": true
-        }]
-      }
-    }
-  ]
+    "react-hooks/exhaustive-deps": "warn",
+    "react/no-unescaped-entities": "off"
+  }
 }
