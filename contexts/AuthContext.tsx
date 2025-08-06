@@ -27,15 +27,28 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     // Check active sessions and sets the user
     const getSession = async () => {
-      const { data: { session } } = await supabase.auth.getSession()
-      setUser(session?.user ?? null)
-      
-      if (session?.user) {
-        await fetchUserProfile(session.user.id)
+      try {
+        const { data: { session } } = await supabase.auth.getSession()
+        setUser(session?.user ?? null)
+        
+        if (session?.user) {
+          await fetchUserProfile(session.user.id)
+        }
+      } catch (error) {
+        console.error('Session fetch error:', error)
+        setUser(null)
+      } finally {
+        setLoading(false)
       }
-      
-      setLoading(false)
     }
+
+    // Set a timeout to ensure loading eventually becomes false
+    const timeout = setTimeout(() => {
+      if (loading) {
+        console.log('Auth check timeout - setting loading to false')
+        setLoading(false)
+      }
+    }, 3000) // 3 second timeout
 
     getSession()
 
@@ -50,18 +63,29 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       }
     })
 
-    return () => subscription.unsubscribe()
+    return () => {
+      subscription.unsubscribe()
+      clearTimeout(timeout)
+    }
   }, [])
 
   const fetchUserProfile = async (userId: string) => {
-    const { data, error } = await supabase
-      .from('user_profiles')
-      .select('*')
-      .eq('id', userId)
-      .single()
+    try {
+      const { data, error } = await supabase
+        .from('user_profiles')
+        .select('*')
+        .eq('id', userId)
+        .single()
 
-    if (!error && data) {
-      setProfile(data)
+      if (!error && data) {
+        setProfile(data)
+      } else {
+        // Profile table might not exist or no profile yet - that's ok
+        console.log('Profile fetch skipped:', error?.message || 'No profile found')
+      }
+    } catch (err) {
+      // Don't let profile errors block auth
+      console.log('Profile fetch error:', err)
     }
   }
 
