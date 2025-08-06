@@ -66,12 +66,8 @@ export default function PricingPage() {
         { text: "Basic interconnection data", included: true },
         { text: "Educational resources", included: true },
         { text: "Community forum access", included: true },
-        { text: "Monthly newsletter", included: true },
-        { text: "Full site database access", included: false },
         { text: "API access", included: false },
-        { text: "Custom reports", included: false },
-        { text: "Priority support", included: false },
-        { text: "White-label options", included: false }
+        { text: "Priority support", included: false }
       ],
       buttonText: currentPlan === 'explorer' ? "Current Plan" : (user ? "Downgrade" : "Start Free"),
       buttonVariant: "outlined",
@@ -85,14 +81,10 @@ export default function PricingPage() {
       features: [
         { text: "Access to 1,000+ sites", included: true },
         { text: "Real-time capacity data", included: true },
-        { text: "Detailed site analytics", included: true },
         { text: "API access (1000 calls/month)", included: true },
         { text: "Export data (CSV/JSON)", included: true },
-        { text: "Monthly market reports", included: true },
         { text: "Email support", included: true },
-        { text: "Custom integrations", included: false },
-        { text: "Dedicated account manager", included: false },
-        { text: "White-label options", included: false }
+        { text: "Custom integrations", included: false }
       ],
       highlighted: currentPlan === 'explorer' || !currentPlan,
       buttonText: currentPlan === 'professional' ? "Current Plan" : 
@@ -108,15 +100,11 @@ export default function PricingPage() {
       description: "Tailored solutions for large-scale deployments",
       features: [
         { text: "Unlimited site access", included: true },
-        { text: "Real-time capacity data", included: true },
-        { text: "Advanced analytics & AI insights", included: true },
+        { text: "Advanced analytics & AI", included: true },
         { text: "Unlimited API access", included: true },
-        { text: "Custom data exports", included: true },
-        { text: "Custom reports & dashboards", included: true },
+        { text: "Custom reports & exports", included: true },
         { text: "24/7 priority support", included: true },
-        { text: "Custom integrations", included: true },
-        { text: "Dedicated account manager", included: true },
-        { text: "White-label options", included: true }
+        { text: "Dedicated account manager", included: true }
       ],
       buttonText: currentPlan === 'enterprise' ? "Current Plan" : "Contact Sales",
       buttonVariant: "outlined",
@@ -154,9 +142,9 @@ export default function PricingPage() {
   const annualSavings = (99 * 12) - 990;
 
   return (
-    <Container maxWidth="lg" sx={{ py: 8 }}>
+    <Container maxWidth="lg" sx={{ py: 4 }}>
       {/* Header */}
-      <Box sx={{ textAlign: 'center', mb: 6 }}>
+      <Box sx={{ textAlign: 'center', mb: 3 }}>
         <Typography variant="h3" fontWeight="bold" gutterBottom color="white">
           {currentPlan ? 'Upgrade Your Plan' : 'Choose Your Plan'}
         </Typography>
@@ -200,13 +188,13 @@ export default function PricingPage() {
       </Box>
 
       {/* Pricing Cards */}
-      <Grid container spacing={4} alignItems="stretch" sx={{ mt: 2 }}>
+      <Grid container spacing={4} alignItems="stretch" sx={{ mt: 1 }}>
         {plans.map((plan) => (
           <Grid item xs={12} md={4} key={plan.name}>
             <Card 
               sx={{ 
-                minHeight: '480px',
-                maxHeight: '560px',
+                minHeight: '460px',
+                maxHeight: '520px',
                 display: 'flex',
                 flexDirection: 'column',
                 position: 'relative',

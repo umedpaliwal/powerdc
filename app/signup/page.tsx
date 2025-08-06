@@ -34,7 +34,7 @@ export default function SignUpPage() {
         <Paper elevation={3} sx={{ padding: 4, width: '100%', borderRadius: 2 }}>
           <Box sx={{ textAlign: 'center', mb: 3 }}>
             <Typography component="h1" variant="h4" gutterBottom>
-              Join PowerDC
+              Join WattCanvas
             </Typography>
             <Typography variant="body1" color="text.secondary">
               Get started with comprehensive power grid analytics and insights

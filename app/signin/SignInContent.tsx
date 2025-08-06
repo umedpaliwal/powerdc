@@ -37,7 +37,7 @@ export default function SignInContent() {
               Welcome Back
             </Typography>
             <Typography variant="body1" color="text.secondary">
-              Sign in to your PowerDC account
+              Sign in to your WattCanvas account
             </Typography>
           </Box>
 

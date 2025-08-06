@@ -48,31 +48,13 @@ export default function DashboardSidebar({
           color: "white",
           textAlign: "center",
           fontWeight: "bold",
-          mb: 2,
-          fontSize: "2rem",
-          letterSpacing: "0.5px",
+          mb: 3,
+          fontSize: "2.5rem",
+          letterSpacing: "1px",
         }}
       >
-        Surplus Interconnection
+        WattCanvas
       </Typography>
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          mb: 2,
-          width: "100%",
-          height: "50px",
-        }}
-      >
-        <Box sx={{ width: "48%", position: "relative" }}>
-          <Image
-            src="/logo.png"
-            alt="Company Logo"
-            fill
-            style={{ objectFit: "contain" }}
-          />
-        </Box>
-      </Box>
       <DashboardFilters
         filters={filters}
         setFilters={setFilters}

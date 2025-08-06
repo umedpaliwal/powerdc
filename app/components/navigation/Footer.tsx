@@ -211,10 +211,7 @@ export default function Footer() {
           }}
         >
           <Typography variant="body2" sx={{ color: 'rgba(255, 255, 255, 0.5)' }}>
-            © {currentYear} PowerDC. All rights reserved.
-          </Typography>
-          <Typography variant="body2" sx={{ color: 'rgba(255, 255, 255, 0.5)' }}>
-            Built with renewable energy insights
+            © {currentYear} WattCanvas. All rights reserved.
           </Typography>
         </Box>
       </Container>

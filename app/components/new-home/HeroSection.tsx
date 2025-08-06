@@ -99,17 +99,16 @@ export default function HeroSection() {
               }}
             >
               <Box sx={{ display: "flex", alignItems: "center", mb: 2, justifyContent: { xs: "center", md: "flex-start" } }}>
-                <ElectricBoltIcon sx={{ fontSize: 50, color: "#00E5FF", mr: 2 }} />
                 <Typography
-                  variant="overline"
+                  variant="h4"
                   sx={{
-                    fontSize: "1rem",
-                    fontWeight: 600,
+                    fontSize: "2rem",
+                    fontWeight: 700,
                     color: "#00E5FF",
-                    letterSpacing: "2px",
+                    letterSpacing: "1px",
                   }}
                 >
-                  POWERDC PLATFORM
+                  WattCanvas
                 </Typography>
               </Box>
               <Typography

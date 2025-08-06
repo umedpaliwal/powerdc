@@ -104,9 +104,8 @@ export default function BurgerMenu() {
         <Box sx={{ p: 2 }}>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <ElectricBoltIcon sx={{ fontSize: 30, color: '#00E5FF', mr: 1 }} />
-              <Typography variant="h6" sx={{ fontWeight: 600 }}>
-                PowerDC
+              <Typography variant="h6" sx={{ fontWeight: 600, color: '#00E5FF' }}>
+                WattCanvas
               </Typography>
             </Box>
             <IconButton onClick={() => setOpen(false)} sx={{ color: 'white' }}>

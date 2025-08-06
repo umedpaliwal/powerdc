@@ -51,7 +51,7 @@ export default function NavigationHeader() {
     { label: 'Dashboard', path: '/dashboard', requiresAuth: true },
     { label: 'Surplus Interconnection', path: '/surplus-interconnection' },
     { label: 'Plans', path: '/pricing' },
-    { label: 'API Docs', path: '/api-docs' },
+    { label: 'FAQ', path: '/faq' },
   ];
 
   return (
@@ -77,29 +77,17 @@ export default function NavigationHeader() {
                 }}
                 onClick={() => handleNavigate('/')}
               >
-                <ElectricBoltIcon sx={{ color: '#00E5FF', mr: 1, fontSize: 28 }} />
                 <Typography
-                  variant="h6"
+                  variant="h5"
                   sx={{
                     fontWeight: 700,
                     color: 'white',
                     textDecoration: 'none',
+                    letterSpacing: '1px',
                   }}
                 >
-                  PowerDC
+                  WattCanvas
                 </Typography>
-              </Box>
-
-              {/* Company Logo */}
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mr: 4 }}>
-                <Box sx={{ position: 'relative', width: 120, height: 40 }}>
-                  <Image 
-                    src="/logo.png" 
-                    alt="Company Logo" 
-                    fill
-                    style={{ objectFit: 'contain' }}
-                  />
-                </Box>
               </Box>
 
               {/* Navigation Links */}

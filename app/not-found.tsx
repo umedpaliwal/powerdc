@@ -199,7 +199,7 @@ export default function NotFound() {
               {[
                 { label: 'Dashboard', path: '/dashboard' },
                 { label: 'Plans', path: '/pricing' },
-                { label: 'API Docs', path: '/api-docs' },
+                { label: 'FAQ', path: '/faq' },
                 { label: 'Support', path: '/support' },
               ].map((link) => (
                 <Button

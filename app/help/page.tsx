@@ -25,12 +25,12 @@ import {
 export default function HelpCenter() {
   const faqData = [
     {
-      question: "How do I access the PowerDC dashboard?",
+      question: "How do I access the WattCanvas dashboard?",
       answer: "To access the dashboard, you need to create an account and sign in. Go to the Sign In page, create your account, and once logged in, you'll have access to our renewable energy analytics dashboard."
     },
     {
-      question: "What data is available on PowerDC?",
-      answer: "PowerDC provides comprehensive data on renewable energy resources, data center locations, thermal analysis, and surplus interconnection opportunities. This includes geographic data, capacity information, and optimization insights."
+      question: "What data is available on WattCanvas?",
+      answer: "WattCanvas provides comprehensive data on renewable energy resources, data center locations, thermal analysis, and surplus interconnection opportunities. This includes geographic data, capacity information, and optimization insights."
     },
     {
       question: "Can I export data from the platform?",
@@ -38,23 +38,23 @@ export default function HelpCenter() {
     },
     {
       question: "Is there API access available?",
-      answer: "Yes, PowerDC provides REST API access for developers and researchers. Check our API documentation for detailed information about available endpoints, authentication, and usage limits."
+      answer: "Yes, WattCanvas provides REST API access for developers and researchers. Check our API documentation for detailed information about available endpoints, authentication, and usage limits."
     },
     {
       question: "How is this data used for research?",
-      answer: "PowerDC is developed by UC Berkeley GridLab for academic research purposes. The platform helps researchers analyze renewable energy deployment opportunities and optimize data center sustainability."
+      answer: "WattCanvas is a platform for academic research purposes. The platform helps researchers analyze renewable energy deployment opportunities and optimize data center sustainability."
     },
     {
       question: "What are the system requirements?",
-      answer: "PowerDC is a web-based platform that works on modern browsers including Chrome, Firefox, Safari, and Edge. For the best experience, we recommend using the latest version of your preferred browser."
+      answer: "WattCanvas is a web-based platform that works on modern browsers including Chrome, Firefox, Safari, and Edge. For the best experience, we recommend using the latest version of your preferred browser."
     },
     {
       question: "How do I report a bug or issue?",
-      answer: "If you encounter any issues, please report them through our support page or email bugs@powerdc.dev. Include as much detail as possible about the issue and steps to reproduce it."
+      answer: "If you encounter any issues, please report them through our support page or email bugs@wattcanvas.com. Include as much detail as possible about the issue and steps to reproduce it."
     },
     {
       question: "Can I collaborate on research projects?",
-      answer: "Yes! PowerDC welcomes academic collaboration. Contact us at collaboration@powerdc.dev to discuss research partnerships and data sharing opportunities."
+      answer: "Yes! WattCanvas welcomes academic collaboration. Contact us at collaboration@wattcanvas.com to discuss research partnerships and data sharing opportunities."
     }
   ];
 
@@ -62,7 +62,7 @@ export default function HelpCenter() {
     {
       icon: <DashboardIcon sx={{ fontSize: 40, color: '#00E5FF' }} />,
       title: 'Getting Started',
-      description: 'Learn how to navigate the PowerDC dashboard and access key features.',
+      description: 'Learn how to navigate the WattCanvas dashboard and access key features.',
     },
     {
       icon: <MapIcon sx={{ fontSize: 40, color: '#4CAF50' }} />,
@@ -77,7 +77,7 @@ export default function HelpCenter() {
     {
       icon: <ApiIcon sx={{ fontSize: 40, color: '#9C27B0' }} />,
       title: 'API Usage',
-      description: 'Access PowerDC data programmatically through our REST API.',
+      description: 'Access WattCanvas data programmatically through our REST API.',
     },
   ];
 
@@ -107,7 +107,7 @@ export default function HelpCenter() {
             mx: 'auto',
           }}
         >
-          Find answers to common questions and learn how to use PowerDC
+          Find answers to common questions and learn how to use WattCanvas
         </Typography>
       </Box>
 

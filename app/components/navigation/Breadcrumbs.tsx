@@ -49,7 +49,7 @@ const pathLabelMap: { [key: string]: string } = {
   'surplus-interconnection': 'Surplus Interconnection',
   'pricing': 'Plans',
   'account': 'Account',
-  'api-docs': 'API Documentation',
+  'faq': 'FAQ',
   're': 'Renewable Energy',
   'thermal': 'Thermal',
   'export': 'Export',

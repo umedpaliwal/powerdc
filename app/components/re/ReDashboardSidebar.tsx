@@ -60,26 +60,8 @@ export default function ReDashboardSidebar({
           letterSpacing: "0.5px",
         }}
       >
-        Surplus Interconnection
+        WattCanvas
       </Typography>
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          mb: 2,
-          width: "100%",
-          height: "50px",
-        }}
-      >
-        <Box sx={{ width: "48%", position: "relative" }}>
-          <Image
-            src="/logo.png"
-            alt="Company Logo"
-            fill
-            style={{ objectFit: "contain" }}
-          />
-        </Box>
-      </Box>
 
       <Tabs
         sx={{
