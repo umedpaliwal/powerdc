@@ -87,7 +87,6 @@ export default function ReDashboardContent({}) {
         });
 
         mapInstance.on("load", () => {
-          console.log("Map loaded successfully");
 
           // Add source
           mapInstance.addSource("power-plants", {
@@ -181,7 +180,6 @@ export default function ReDashboardContent({}) {
     if (!mapLoaded || !map.current) return;
 
     const loadAllFeatures = () => {
-      console.log("loading features");
       const plants = plantsData.map((plant) => ({
         ...plant.properties,
         geometry: plant.geometry,
@@ -407,7 +405,6 @@ export default function ReDashboardContent({}) {
 
     const observer = new ResizeObserver((entries) => {
       for (let entry of entries) {
-        console.log("Map container size:", entry.contentRect);
       }
     });
 
@@ -535,7 +532,6 @@ export default function ReDashboardContent({}) {
         filterExpression.push(["<", ["get", "urban_area_perc"], 30]);
       }
 
-      console.log("Filter expression:", filterExpression);
       map.current.setFilter(LAYER_ID, filterExpression);
 
       // Filter directly from plants data
@@ -730,7 +726,6 @@ export default function ReDashboardContent({}) {
   //   const selectedPlant = filteredPlants[0]; // Assuming the first filtered plant is selected
   //   if (!selectedPlant) return;
 
-  //   console.log("Selected plant:", selectedPlant);
 
   //   const s3Url = `https://etaiplatform.s3.us-west-2.amazonaws.com/existing_re/${selectedPlant.technology.toLowerCase()}/facility_siting_outputs/visual_geojson/${
   //     selectedPlant.fac_id_eia
@@ -781,7 +776,6 @@ export default function ReDashboardContent({}) {
     const selectedPlant = filteredPlants[0]; // Assuming the first filtered plant is selected
     if (!selectedPlant) return;
 
-    console.log("Selected plant:", selectedPlant);
 
     const s3Url = `https://etaiplatform.s3.us-west-2.amazonaws.com/existing_re/${selectedPlant.technology.toLowerCase()}/facility_siting_outputs/visual_geojson/${
       selectedPlant.fac_id_eia

@@ -38,7 +38,6 @@ export default function ThermalStatCards({
   });
 
   // Add debugging logs
-  console.log("Number of plants being processed:", plantsToUse.length);
 
   const calculateAverage = (values: number[]) => {
     const validValues = values.filter(
@@ -51,7 +50,6 @@ export default function ThermalStatCards({
 
   // Log unique facility IDs to check for duplicates
   const facilityIds = new Set(plantsToUse.map((p) => p.fac_id_eia));
-  console.log("Number of unique facilities:", facilityIds.size);
 
   const calculateStats = () => {
     return setStats({
@@ -72,13 +70,11 @@ export default function ThermalStatCards({
 
       solarCapacity: plantsToUse.reduce((sum, p) => {
         const solar = Number(p.install_solar_capacity_mw_2030);
-        // console.log(`Facility ${p.fac_id_eia} Solar: ${solar}`);
         return sum + (isNaN(solar) ? 0 : solar);
       }, 0),
 
       windCapacity: plantsToUse.reduce((sum, p) => {
         const wind = Number(p.install_wind_capacity_mw_2030);
-        // console.log(`Facility ${p.fac_id_eia} Wind: ${wind}`);
         return sum + (isNaN(wind) ? 0 : wind);
       }, 0),
     });
@@ -89,7 +85,6 @@ export default function ThermalStatCards({
   }, [plantsToUse]);
 
   // Log final calculations
-  console.log("Final stats:", stats);
 
   const statConfigs = [
     {

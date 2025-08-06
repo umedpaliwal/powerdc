@@ -32,7 +32,6 @@ export default function SimpleMap({ plants, mapConfig }) {
         });
 
         map.on('load', () => {
-          console.log('SimpleMap loaded successfully');
 
           // Add plants to the map
           plants.forEach((plant) => {

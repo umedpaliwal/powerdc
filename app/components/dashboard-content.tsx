@@ -79,7 +79,6 @@ export default function DashboardContent({ plantsData }) {
         });
 
         mapInstance.on("load", () => {
-          console.log("Map loaded successfully");
 
           // Add source
           mapInstance.addSource("power-plants", {
@@ -178,7 +177,6 @@ export default function DashboardContent({ plantsData }) {
     if (!mapLoaded || !map.current) return;
 
     const loadAllFeatures = () => {
-      console.log("loading features");
       const plants = plantsData.map((plant) => ({
         ...plant.properties,
         geometry: plant.geometry,
@@ -436,7 +434,6 @@ export default function DashboardContent({ plantsData }) {
 
     const observer = new ResizeObserver((entries) => {
       for (let entry of entries) {
-        console.log("Map container size:", entry.contentRect);
       }
     });
 

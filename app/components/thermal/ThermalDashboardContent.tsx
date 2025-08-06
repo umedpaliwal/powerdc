@@ -85,7 +85,6 @@ export default function ThermalDashboardContent({}) {
         });
 
         mapInstance.on("load", () => {
-          console.log("Map loaded successfully");
 
           // Add source
           mapInstance.addSource("power-plants", {
@@ -183,7 +182,6 @@ export default function ThermalDashboardContent({}) {
     if (!mapLoaded || !map.current) return;
 
     const loadAllFeatures = () => {
-      console.log("loading features");
       const plants = plantsData.map((plant) => ({
         ...plant.properties,
         geometry: plant.geometry,
@@ -441,7 +439,6 @@ export default function ThermalDashboardContent({}) {
 
     const observer = new ResizeObserver((entries) => {
       for (let entry of entries) {
-        console.log("Map container size:", entry.contentRect);
       }
     });
 
@@ -763,7 +760,6 @@ export default function ThermalDashboardContent({}) {
     const selectedPlant = filteredPlants[0]; // Assuming the first filtered plant is selected
     if (!selectedPlant) return;
 
-    console.log("Selected plant:", selectedPlant);
 
     const s3Url = `https://etaiplatform.s3.us-west-2.amazonaws.com/1000GW/facility_siting_outputs_final/visual_geojson/${selectedPlant.fac_id_eia}_visual.geojson`;
 
@@ -844,8 +840,6 @@ export default function ThermalDashboardContent({}) {
   //     return;
   //   }
 
-  //   console.log("New filters:", filters);
-  //   console.log("plants filters:", filteredPlants);
 
   //   if (filters.plant_name) {
   //     if (currentSelectedPlant) {

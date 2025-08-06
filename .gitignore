@@ -12,8 +12,12 @@ build/
 
 # Logs and environment files
 *.log
-.env*
+.env
+.env.local
+.env.production
+.env.development
 .env*.local
+!.env.example
 
 # OS and IDE files
 .DS_Store

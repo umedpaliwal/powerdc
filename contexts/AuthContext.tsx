@@ -35,7 +35,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           await fetchUserProfile(session.user.id)
         }
       } catch (error) {
-        console.error('Session fetch error:', error)
         setUser(null)
       } finally {
         setLoading(false)
@@ -45,7 +44,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     // Set a timeout to ensure loading eventually becomes false
     const timeout = setTimeout(() => {
       if (loading) {
-        console.log('Auth check timeout - setting loading to false')
         setLoading(false)
       }
     }, 3000) // 3 second timeout

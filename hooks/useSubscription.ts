@@ -85,7 +85,6 @@ export function useSubscription(): SubscriptionData {
       // Set a timeout to ensure loading completes
       const timeout = setTimeout(() => {
         if (loading) {
-          console.log('Subscription fetch timeout - using defaults')
           setLoading(false)
         }
       }, 2000) // 2 second timeout
@@ -104,13 +103,13 @@ export function useSubscription(): SubscriptionData {
 
           if (subError && subError.code !== 'PGRST116') { // PGRST116 is "no rows returned"
             // Only log error, don't throw - table might not exist
-            console.log('Subscription fetch error (table may not exist):', subError)
+            // Subscription fetch error - table may not exist
           } else {
             setSubscription(subData)
           }
         } catch (subErr) {
           // Table doesn't exist - use default
-          console.log('Subscriptions table not found, using defaults')
+          // Subscriptions table not found, using defaults
         }
 
         // Try to fetch current month usage - handle table not existing gracefully
@@ -125,16 +124,15 @@ export function useSubscription(): SubscriptionData {
 
           if (usageError && usageError.code !== 'PGRST116') {
             // Only log error, don't throw - table might not exist
-            console.log('Usage fetch error (table may not exist):', usageError)
+            // Usage fetch error - table may not exist
           } else {
             setUsage(usageData)
           }
         } catch (usageErr) {
           // Table doesn't exist - use default
-          console.log('Usage tracking table not found, using defaults')
+          // Usage tracking table not found, using defaults
         }
       } catch (err) {
-        console.error('Error fetching subscription data:', err)
         setError(err instanceof Error ? err.message : 'Unknown error occurred')
       } finally {
         clearTimeout(timeout)

@@ -15,7 +15,6 @@ import Link from 'next/link'
 export default function VerifyEmailPage() {
   const handleResendEmail = () => {
     // TODO: Implement resend verification email functionality
-    console.log('Resend verification email')
   }
 
   return (

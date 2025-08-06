@@ -60,7 +60,6 @@ export default function ReStatCards({
   });
 
   // Add debugging logs
-  console.log("Number of plants being processed:", plantsToUse.length);
 
   const calculateAverage = (values: number[]) => {
     const validValues = values.filter(
@@ -73,7 +72,6 @@ export default function ReStatCards({
 
   // Log unique facility IDs to check for duplicates
   const facilityIds = new Set(plantsToUse.map((p) => p.fac_id_eia));
-  console.log("Number of unique facilities:", facilityIds.size);
 
   const calculateStats = () => {
     return setStats({
@@ -83,26 +81,22 @@ export default function ReStatCards({
       }, 0),
       solarIntegrationPotential: plantsToUse.reduce((sum, p) => {
         const solar = Number(p.optimal_solar_mw);
-        // console.log(`Facility ${p.fac_id_eia} Solar: ${solar}`);
         return sum + (isNaN(solar) ? 0 : solar);
       }, 0),
       windIntegrationPotential: plantsToUse.reduce((sum, p) => {
         const solar = Number(p.optimal_wind_mw);
-        // console.log(`Facility ${p.fac_id_eia} Solar: ${solar}`);
         return sum + (isNaN(solar) ? 0 : solar);
       }, 0),
       storageIntegrationPotentialMw: plantsToUse.reduce((sum, p) => {
         const optimal_battery_mw = Number(p.optimal_battery_mw);
         const storage = optimal_battery_mw;
 
-        // console.log(`Facility ${p.fac_id_eia} Storage: ${storage}`);
         return sum + (isNaN(storage) ? 0 : storage);
       }, 0),
       storageIntegrationPotentialMwh: plantsToUse.reduce((sum, p) => {
         const optimal_battery_mwh = Number(p.optimal_battery_mwh);
         const storage = optimal_battery_mwh;
 
-        // console.log(`Facility ${p.fac_id_eia} Storage: ${storage}`);
         return sum + (isNaN(storage) ? 0 : storage);
       }, 0),
       currentInterconnectionUtilization: calculateAverage(
@@ -127,7 +121,6 @@ export default function ReStatCards({
   }, [plantsToUse]);
 
   // Log final calculations
-  console.log("Final stats:", stats);
 
   const statConfigs = [
     {
