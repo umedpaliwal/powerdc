@@ -23,6 +23,7 @@ import LogoutIcon from '@mui/icons-material/Logout'
 import DashboardIcon from '@mui/icons-material/Dashboard'
 import ApiIcon from '@mui/icons-material/Api'
 import DownloadIcon from '@mui/icons-material/Download'
+import SubscriptionManager from '@/components/SubscriptionManager'
 
 export default function AccountContent() {
   const { user, profile, loading: authLoading, signOut } = useAuth()
@@ -236,75 +237,29 @@ export default function AccountContent() {
 
           {/* Subscription Information */}
           <Grid item xs={12} md={6}>
-            <Paper
-              elevation={0}
-              sx={{ 
-                p: 4,
-                height: '100%',
+            <Box sx={{
+              '& .MuiCard-root': {
                 background: "rgba(255,255,255,0.05)",
                 backdropFilter: "blur(20px)",
                 border: "1px solid rgba(255,255,255,0.1)",
                 borderRadius: 3,
-              }}
-            >
-              <Typography variant="h5" component="h2" gutterBottom color="white">
-                Subscription Plan
-              </Typography>
-              
-              <Box display="flex" alignItems="center" gap={1} sx={{ mb: 3 }}>
-                <Chip 
-                  label={subscription?.plan_type?.toUpperCase() || 'EXPLORER'} 
-                  sx={{
-                    backgroundColor: subscription?.plan_type === 'enterprise' ? '#FF5252' : 
-                                   subscription?.plan_type === 'professional' ? '#FFA726' : '#00E5FF',
-                    color: 'white',
-                    fontWeight: 600
-                  }}
-                />
-                {subscription?.status && (
-                  <Chip 
-                    label={subscription.status} 
-                    size="small"
-                    sx={{
-                      backgroundColor: subscription.status === 'active' ? '#4CAF50' : '#757575',
-                      color: 'white'
-                    }}
-                  />
-                )}
-              </Box>
-              
-              {subscription?.trial_ends_at && (
-                <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.5)', mb: 2 }}>
-                  Trial ends: {new Date(subscription.trial_ends_at).toLocaleDateString()}
-                </Typography>
-              )}
-              
-              <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.7)', mb: 2 }}>
-                Features included:
-              </Typography>
-              <Box component="ul" sx={{ pl: 2, color: 'rgba(255,255,255,0.8)' }}>
-                <li>Dashboard access</li>
-                {featureAccess.canExportData && <li>Data export</li>}
-                {featureAccess.canAccessApiDocs && <li>API documentation</li>}
-                {featureAccess.hasApiAccess && <li>API access</li>}
-              </Box>
-              
-              {(!subscription || subscription.plan_type === 'explorer') && (
-                <Button 
-                  variant="contained" 
-                  onClick={() => router.push('/checkout?plan=professional')}
-                  sx={{ 
-                    mt: 3,
-                    background: 'linear-gradient(45deg, #00E5FF 30%, #0090EA 90%)',
-                    '&:hover': {
-                      background: 'linear-gradient(45deg, #00B8D4 30%, #0078C8 90%)',
-                    }
-                  }}
-                >
-                  Upgrade to Professional
-                </Button>
-              )}
-            </Paper>
+                height: '100%',
+              },
+              '& .MuiCardContent-root': {
+                color: 'white',
+              },
+              '& .MuiTypography-h6': {
+                color: 'white',
+              },
+              '& .MuiButton-contained': {
+                background: 'linear-gradient(45deg, #00E5FF 30%, #0090EA 90%)',
+                '&:hover': {
+                  background: 'linear-gradient(45deg, #00B8D4 30%, #0078C8 90%)',
+                }
+              }
+            }}>
+              <SubscriptionManager />
+            </Box>
           </Grid>
 
           {/* Usage Statistics */}

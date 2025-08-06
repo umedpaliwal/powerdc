@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { useAuth } from './useAuth'
 import { createClient } from '@/lib/supabase/client'
 import { Subscription, UsageTracking } from '@/types/auth'
+import { postData } from '@/lib/stripe/utils'
 
 type FeatureAccess = {
   canExportData: boolean
@@ -21,6 +22,9 @@ type SubscriptionData = {
   featureAccess: FeatureAccess
   loading: boolean
   error: string | null
+  manageSubscription: () => Promise<void>
+  cancelSubscription: () => Promise<void>
+  reactivateSubscription: () => Promise<void>
 }
 
 const DEFAULT_FEATURE_ACCESS: FeatureAccess = {
@@ -172,12 +176,92 @@ export function useSubscription(): SubscriptionData {
     ? PLAN_FEATURES[subscription.plan_type] || DEFAULT_FEATURE_ACCESS
     : DEFAULT_FEATURE_ACCESS
 
+  // Subscription management functions
+  const manageSubscription = async () => {
+    if (!user || !subscription?.stripe_customer_id) {
+      throw new Error('No active subscription found')
+    }
+
+    try {
+      const { url } = await postData({
+        url: '/api/stripe/create-portal-session',
+        data: {
+          returnUrl: `${window.location.origin}/account`,
+        },
+      })
+
+      window.location.href = url
+    } catch (error: any) {
+      console.error('Failed to open customer portal:', error)
+      throw error
+    }
+  }
+
+  const cancelSubscription = async () => {
+    if (!subscription?.stripe_subscription_id) {
+      throw new Error('No active subscription found')
+    }
+
+    try {
+      const response = await fetch('/api/stripe/cancel-subscription', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          subscriptionId: subscription.stripe_subscription_id,
+        }),
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to cancel subscription')
+      }
+
+      // Refresh subscription data
+      setSubscription(prev => prev ? { ...prev, status: 'canceled' } : null)
+    } catch (error: any) {
+      console.error('Failed to cancel subscription:', error)
+      throw error
+    }
+  }
+
+  const reactivateSubscription = async () => {
+    if (!subscription?.stripe_subscription_id) {
+      throw new Error('No subscription found')
+    }
+
+    try {
+      const response = await fetch('/api/stripe/reactivate-subscription', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          subscriptionId: subscription.stripe_subscription_id,
+        }),
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to reactivate subscription')
+      }
+
+      // Refresh subscription data
+      setSubscription(prev => prev ? { ...prev, status: 'active' } : null)
+    } catch (error: any) {
+      console.error('Failed to reactivate subscription:', error)
+      throw error
+    }
+  }
+
   return {
     subscription,
     usage,
     featureAccess,
     loading,
     error,
+    manageSubscription,
+    cancelSubscription,
+    reactivateSubscription,
   }
 }
 

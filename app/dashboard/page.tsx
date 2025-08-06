@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import DashboardIntroModal from "@/app/components/DashboardIntroModal";
 import { useAuth } from "@/hooks/useAuth";
+import DashboardSkeleton from "@/app/components/loading/DashboardSkeleton";
 
 export default function Dashboard() {
   const [showIntroModal, setShowIntroModal] = useState(false);
@@ -21,20 +22,7 @@ export default function Dashboard() {
 
   // Show loading while checking auth
   if (loading) {
-    return (
-      <Box 
-        display="flex" 
-        justifyContent="center" 
-        alignItems="center" 
-        minHeight="100vh"
-        flexDirection="column"
-        gap={2}
-        sx={{ background: "linear-gradient(135deg, #0F2027 0%, #203A43 50%, #2C5364 100%)" }}
-      >
-        <CircularProgress sx={{ color: '#00E5FF' }} />
-        <Typography sx={{ color: 'white' }}>Loading dashboard...</Typography>
-      </Box>
-    );
+    return <DashboardSkeleton />;
   }
 
   // Redirect if not authenticated

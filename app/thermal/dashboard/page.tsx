@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import DashboardIntroModal from "@/app/components/DashboardIntroModal";
 import { useAuth } from "@/hooks/useAuth";
+import DashboardSkeleton from "@/app/components/loading/DashboardSkeleton";
 
 export default function Dashboard() {
   const [showIntroModal, setShowIntroModal] = useState(false);

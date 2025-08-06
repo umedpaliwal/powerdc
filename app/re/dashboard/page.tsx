@@ -6,6 +6,7 @@ import { Box, Typography, CircularProgress } from "@mui/material";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/hooks/useAuth";
+import DashboardSkeleton from "@/app/components/loading/DashboardSkeleton";
 
 export default function Dashboard() {
   const [showIntroModal, setShowIntroModal] = useState(false);
@@ -19,19 +20,7 @@ export default function Dashboard() {
   }, [user, loading, router]);
 
   if (loading) {
-    return (
-      <Box 
-        display="flex" 
-        justifyContent="center" 
-        alignItems="center" 
-        minHeight="100vh"
-        flexDirection="column"
-        gap={2}
-      >
-        <CircularProgress />
-        <Typography>Loading dashboard...</Typography>
-      </Box>
-    );
+    return <DashboardSkeleton />;
   }
 
   if (!user) {

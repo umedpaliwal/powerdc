@@ -8,7 +8,6 @@ import {
   Typography,
   Paper,
   Grid,
-  TextField,
   Button,
   Divider,
   Alert,
@@ -18,27 +17,31 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
-  FormControlLabel,
-  Switch,
   Card,
   CardContent,
-  IconButton,
-  InputAdornment,
 } from '@mui/material'
 import {
   Check,
   Lock,
-  CreditCard,
   ArrowBack,
   Info,
 } from '@mui/icons-material'
 import { useAuth } from '@/hooks/useAuth'
+import { getStripe } from '@/lib/stripe/client'
+import { postData } from '@/lib/stripe/utils'
 
 interface PlanDetails {
   name: string
   price: number
   interval: 'month' | 'year'
   features: string[]
+  priceId: string
+}
+
+// Mock price IDs - in production, these would come from your Stripe Dashboard
+const PRICE_IDS = {
+  monthly: 'price_monthly_professional', // Replace with actual Stripe price ID
+  annual: 'price_annual_professional',   // Replace with actual Stripe price ID
 }
 
 export default function CheckoutContent() {
@@ -48,17 +51,6 @@ export default function CheckoutContent() {
   const [loading, setLoading] = useState(false)
   const [billingPeriod, setBillingPeriod] = useState<'monthly' | 'annual'>('monthly')
   const [error, setError] = useState('')
-  const [success, setSuccess] = useState(false)
-
-  // Form state
-  const [formData, setFormData] = useState({
-    cardNumber: '',
-    cardName: '',
-    expiryDate: '',
-    cvc: '',
-    country: 'United States',
-    postalCode: '',
-  })
 
   const plan = searchParams?.get('plan') || 'professional'
   
@@ -66,6 +58,7 @@ export default function CheckoutContent() {
     name: 'Professional',
     price: billingPeriod === 'monthly' ? 99 : 990,
     interval: billingPeriod === 'monthly' ? 'month' : 'year',
+    priceId: PRICE_IDS[billingPeriod],
     features: [
       'Access to 1,000+ sites',
       'Real-time capacity data',
@@ -85,88 +78,47 @@ export default function CheckoutContent() {
     }
   }, [user, router])
 
-  const formatCardNumber = (value: string) => {
-    const v = value.replace(/\s+/g, '').replace(/[^0-9]/gi, '')
-    const matches = v.match(/\d{4,16}/g)
-    const match = (matches && matches[0]) || ''
-    const parts: string[] = []
-
-    for (let i = 0, len = match.length; i < len; i += 4) {
-      parts.push(match.substring(i, i + 4))
+  const handleCheckout = async () => {
+    if (!user) {
+      setError('You must be logged in to subscribe')
+      return
     }
 
-    if (parts.length) {
-      return parts.join(' ')
-    } else {
-      return value
-    }
-  }
-
-  const formatExpiryDate = (value: string) => {
-    const v = value.replace(/\s+/g, '').replace(/[^0-9]/gi, '')
-    if (v.length >= 2) {
-      return v.slice(0, 2) + (v.length > 2 ? '/' + v.slice(2, 4) : '')
-    }
-    return v
-  }
-
-  const handleInputChange = (field: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
-    let value = e.target.value
-    
-    if (field === 'cardNumber') {
-      value = formatCardNumber(value)
-      if (value.replace(/\s/g, '').length > 16) return
-    } else if (field === 'expiryDate') {
-      value = formatExpiryDate(value)
-      if (value.replace('/', '').length > 4) return
-    } else if (field === 'cvc') {
-      value = value.replace(/[^0-9]/gi, '')
-      if (value.length > 4) return
-    }
-
-    setFormData(prev => ({ ...prev, [field]: value }))
-  }
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
     setLoading(true)
     setError('')
 
-    // Simulate payment processing
-    setTimeout(() => {
-      setSuccess(true)
+    try {
+      const { sessionId } = await postData({
+        url: '/api/stripe/create-checkout-session',
+        data: {
+          priceId: planDetails.priceId,
+          successUrl: `${window.location.origin}/account?session_id={CHECKOUT_SESSION_ID}`,
+          cancelUrl: `${window.location.origin}/checkout?canceled=true`,
+        },
+      })
+
+      const stripe = await getStripe()
+      if (!stripe) {
+        throw new Error('Stripe failed to load')
+      }
+
+      const { error } = await stripe.redirectToCheckout({
+        sessionId,
+      })
+
+      if (error) {
+        throw error
+      }
+    } catch (error: any) {
+      console.error('Checkout error:', error)
+      setError(error.message || 'An error occurred during checkout')
+    } finally {
       setLoading(false)
-      
-      // Redirect to success page after 2 seconds
-      setTimeout(() => {
-        router.push('/account?upgraded=true')
-      }, 2000)
-    }, 2000)
+    }
   }
 
   if (!user) {
     return null
-  }
-
-  if (success) {
-    return (
-      <Container maxWidth="sm" sx={{ py: 8 }}>
-        <Paper sx={{ p: 4, textAlign: 'center' }}>
-          <Box sx={{ mb: 3 }}>
-            <Check sx={{ fontSize: 60, color: 'success.main' }} />
-          </Box>
-          <Typography variant="h4" gutterBottom>
-            Payment Successful!
-          </Typography>
-          <Typography variant="body1" color="text.secondary" gutterBottom>
-            Your subscription has been upgraded to Professional.
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Redirecting to your account...
-          </Typography>
-        </Paper>
-      </Container>
-    )
   }
 
   return (
@@ -189,7 +141,7 @@ export default function CheckoutContent() {
             
             <Alert severity="info" sx={{ mb: 3 }}>
               <Typography variant="body2">
-                <strong>Test Mode:</strong> Use card number 4242 4242 4242 4242 with any future date and CVC.
+                <strong>Test Mode:</strong> You'll be redirected to Stripe's secure checkout page.
               </Typography>
             </Alert>
 
@@ -249,136 +201,42 @@ export default function CheckoutContent() {
 
             <Divider sx={{ mb: 3 }} />
 
-            {/* Payment Form */}
-            <form onSubmit={handleSubmit}>
-              <Typography variant="subtitle1" gutterBottom fontWeight="500">
-                Payment Information
-              </Typography>
-              
-              <Grid container spacing={2} sx={{ mb: 3 }}>
-                <Grid item xs={12}>
-                  <TextField
-                    fullWidth
-                    label="Card Number"
-                    placeholder="1234 5678 9012 3456"
-                    value={formData.cardNumber}
-                    onChange={handleInputChange('cardNumber')}
-                    required
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <CreditCard />
-                        </InputAdornment>
-                      ),
-                    }}
-                  />
-                </Grid>
-                
-                <Grid item xs={12}>
-                  <TextField
-                    fullWidth
-                    label="Cardholder Name"
-                    placeholder="John Doe"
-                    value={formData.cardName}
-                    onChange={handleInputChange('cardName')}
-                    required
-                  />
-                </Grid>
-                
-                <Grid item xs={6}>
-                  <TextField
-                    fullWidth
-                    label="Expiry Date"
-                    placeholder="MM/YY"
-                    value={formData.expiryDate}
-                    onChange={handleInputChange('expiryDate')}
-                    required
-                  />
-                </Grid>
-                
-                <Grid item xs={6}>
-                  <TextField
-                    fullWidth
-                    label="CVC"
-                    placeholder="123"
-                    value={formData.cvc}
-                    onChange={handleInputChange('cvc')}
-                    required
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <Lock fontSize="small" />
-                        </InputAdornment>
-                      ),
-                    }}
-                  />
-                </Grid>
-              </Grid>
+            {error && (
+              <Alert severity="error" sx={{ mb: 3 }}>
+                {error}
+              </Alert>
+            )}
 
-              <Typography variant="subtitle1" gutterBottom fontWeight="500">
-                Billing Address
-              </Typography>
-              
-              <Grid container spacing={2} sx={{ mb: 3 }}>
-                <Grid item xs={12}>
-                  <TextField
-                    fullWidth
-                    label="Country"
-                    value={formData.country}
-                    onChange={handleInputChange('country')}
-                    required
-                  />
-                </Grid>
-                
-                <Grid item xs={12}>
-                  <TextField
-                    fullWidth
-                    label="Postal Code"
-                    placeholder="12345"
-                    value={formData.postalCode}
-                    onChange={handleInputChange('postalCode')}
-                    required
-                  />
-                </Grid>
-              </Grid>
-
-              {error && (
-                <Alert severity="error" sx={{ mb: 2 }}>
-                  {error}
-                </Alert>
+            <Button
+              onClick={handleCheckout}
+              fullWidth
+              variant="contained"
+              size="large"
+              disabled={loading}
+              sx={{ 
+                py: 1.5,
+                background: 'linear-gradient(45deg, #00E5FF 30%, #0090EA 90%)',
+                '&:hover': {
+                  background: 'linear-gradient(45deg, #00B8D4 30%, #0078C8 90%)',
+                }
+              }}
+            >
+              {loading ? (
+                <>
+                  <CircularProgress size={20} sx={{ mr: 1 }} />
+                  Processing...
+                </>
+              ) : (
+                `Subscribe for $${planDetails.price}/${planDetails.interval}`
               )}
+            </Button>
 
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                size="large"
-                disabled={loading}
-                sx={{ 
-                  py: 1.5,
-                  background: 'linear-gradient(45deg, #00E5FF 30%, #0090EA 90%)',
-                  '&:hover': {
-                    background: 'linear-gradient(45deg, #00B8D4 30%, #0078C8 90%)',
-                  }
-                }}
-              >
-                {loading ? (
-                  <>
-                    <CircularProgress size={20} sx={{ mr: 1 }} />
-                    Processing...
-                  </>
-                ) : (
-                  `Subscribe for $${planDetails.price}/${planDetails.interval}`
-                )}
-              </Button>
-
-              <Box sx={{ mt: 3, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <Lock sx={{ fontSize: 16, mr: 1, color: 'text.secondary' }} />
-                <Typography variant="caption" color="text.secondary">
-                  Secured by Stripe. Your payment information is encrypted and secure.
-                </Typography>
-              </Box>
-            </form>
+            <Box sx={{ mt: 3, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <Lock sx={{ fontSize: 16, mr: 1, color: 'text.secondary' }} />
+              <Typography variant="caption" color="text.secondary">
+                Secured by Stripe. Your payment information is encrypted and secure.
+              </Typography>
+            </Box>
           </Paper>
         </Grid>
 
