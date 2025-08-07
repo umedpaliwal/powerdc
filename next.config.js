@@ -33,7 +33,9 @@ const securityHeaders = [
     key: 'Content-Security-Policy',
     value: `
       default-src 'self';
-      script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.stripe.com https://*.supabase.co https://*.mapbox.com https://api.mapbox.com;
+      script-src 'self' 'unsafe-inline' 'unsafe-eval' blob: https://*.stripe.com https://*.supabase.co https://*.mapbox.com https://api.mapbox.com;
+      worker-src 'self' blob:;
+      child-src 'self' blob:;
       style-src 'self' 'unsafe-inline' https://*.mapbox.com https://api.mapbox.com;
       img-src 'self' data: blob: https://*.stripe.com https://*.supabase.co https://*.mapbox.com https://api.mapbox.com;
       font-src 'self' data:;
