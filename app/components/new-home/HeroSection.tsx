@@ -158,25 +158,19 @@ export default function HeroSection() {
 
             {/* Stats Row */}
             <Grid container spacing={3} sx={{ mb: 4, animation: mounted ? "fadeIn 1.2s ease-out" : "none", "@keyframes fadeIn": { "0%": { opacity: 0 }, "100%": { opacity: 1 } } }}>
-              <Grid item xs={6} sm={3}>
+              <Grid item xs={4}>
                 <Box>
-                  <Typography sx={{ fontSize: "2rem", fontWeight: 700, color: "#00E5FF" }}>200+</Typography>
+                  <Typography sx={{ fontSize: "2rem", fontWeight: 700, color: "#00E5FF" }}>1000</Typography>
                   <Typography sx={{ fontSize: "0.9rem", color: "rgba(255,255,255,0.7)" }}>GW Available</Typography>
                 </Box>
               </Grid>
-              <Grid item xs={6} sm={3}>
-                <Box>
-                  <Typography sx={{ fontSize: "2rem", fontWeight: 700, color: "#00E5FF" }}>75%</Typography>
-                  <Typography sx={{ fontSize: "0.9rem", color: "rgba(255,255,255,0.7)" }}>Cost Savings</Typography>
-                </Box>
-              </Grid>
-              <Grid item xs={6} sm={3}>
+              <Grid item xs={4}>
                 <Box>
                   <Typography sx={{ fontSize: "2rem", fontWeight: 700, color: "#00E5FF" }}>18</Typography>
                   <Typography sx={{ fontSize: "0.9rem", color: "rgba(255,255,255,0.7)" }}>Months Deploy</Typography>
                 </Box>
               </Grid>
-              <Grid item xs={6} sm={3}>
+              <Grid item xs={4}>
                 <Box>
                   <Typography sx={{ fontSize: "2rem", fontWeight: 700, color: "#00E5FF" }}>1000+</Typography>
                   <Typography sx={{ fontSize: "0.9rem", color: "rgba(255,255,255,0.7)" }}>Sites Ready</Typography>
@@ -358,7 +352,7 @@ export default function HeroSection() {
               textTransform: "uppercase",
             }}
           >
-            Powered by EIA & NREL Data • FERC Order 845 Compliant
+            A Unique Opportunity for Deploying Data Centers with FERC Order 845
           </Typography>
         </Box>
 
