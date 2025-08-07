@@ -12,8 +12,8 @@ import {
 export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname
 
-  // CRITICAL: Skip middleware entirely for Stripe webhooks
-  if (pathname === '/api/stripe/webhooks') {
+  // CRITICAL: Skip middleware entirely for Stripe webhooks (with or without trailing slash)
+  if (pathname === '/api/stripe/webhooks' || pathname === '/api/stripe/webhooks/') {
     return NextResponse.next()
   }
 
@@ -118,6 +118,6 @@ export const config = {
      * - favicon.ico (favicon file)
      * Feel free to modify this pattern to include more paths.
      */
-    '/((?!api/stripe/webhooks|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
+    '/((?!api/stripe/webhooks/?|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
   ],
 }
