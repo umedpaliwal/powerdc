@@ -1,7 +1,13 @@
 import { createClient } from '@/lib/supabase/server'
-import { NextResponse } from 'next/server'
+import { NextResponse, NextRequest } from 'next/server'
+import { rateLimiters } from '@/lib/rate-limit'
 
-export async function GET(request: Request) {
+export async function GET(request: NextRequest) {
+  // Apply rate limiting for read operations
+  const rateLimitResponse = await rateLimiters.read(request)
+  if (rateLimitResponse) {
+    return rateLimitResponse
+  }
   try {
     const supabase = await createClient()
     
@@ -62,7 +68,12 @@ export async function GET(request: Request) {
   }
 }
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
+  // Apply rate limiting for write operations
+  const rateLimitResponse = await rateLimiters.write(request)
+  if (rateLimitResponse) {
+    return rateLimitResponse
+  }
   try {
     const supabase = await createClient()
     

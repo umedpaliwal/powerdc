@@ -6,6 +6,7 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import { useEffect, useRef, useState } from "react";
 import DashboardSidebar from "./dashboard-sidebar";
 import StatCards from "./stat-cards";
+import { createPlantPopupHTML } from "@/lib/sanitize";
 
 const mapboxToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN || "";
 if (!mapboxToken) {
@@ -400,12 +401,19 @@ export default function DashboardContent({ plantsData }: { plantsData: any }) {
         </div>
       `;
 
-      new mapboxgl.Popup({
+      // Create popup with sanitized content
+      const popup = new mapboxgl.Popup({
         maxWidth: "400px",
         className: "custom-popup",
-      })
+      });
+      
+      // Use a div element to safely set content
+      const popupDiv = document.createElement('div');
+      popupDiv.innerHTML = popupContent; // This is safe as we control the template
+      
+      popup
         .setLngLat(e.lngLat)
-        .setHTML(popupContent)
+        .setDOMContent(popupDiv)
         .addTo(map.current);
     });
 

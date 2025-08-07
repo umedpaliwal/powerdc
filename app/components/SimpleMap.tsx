@@ -2,6 +2,7 @@
 
 import React, { useRef, useEffect, useState } from 'react';
 import 'mapbox-gl/dist/mapbox-gl.css';
+import { createPlantPopupHTML, escapeHtml } from '@/lib/sanitize';
 
 const mapboxToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN || '';
 
@@ -46,33 +47,55 @@ export default function SimpleMap({ plants, mapConfig }) {
             el.style.height = `${size}px`;
             el.style.backgroundColor = categoryColors[plant[mapConfig.colorField]] || '#808080';
 
+            // Create safe popup HTML
+            const popupData = {
+              name: plant.fac_name,
+              category: plant[mapConfig.colorField],
+              capacity: plant[mapConfig.sizeField],
+              solarCapacity: plant['Solar Capacity (MW)'],
+              windCapacity: plant['Wind Capacity (MW)']
+            };
+            
+            const popupHTML = createPlantPopupHTML({
+              name: plant.fac_name,
+              'Plant Type': plant[mapConfig.colorField],
+              'Total Capacity (MW)': plant[mapConfig.sizeField],
+              'Solar Capacity (MW)': plant['Solar Capacity (MW)'],
+              'Wind Capacity (MW)': plant['Wind Capacity (MW)']
+            });
+
             new mapboxgl.default.Marker(el)
               .setLngLat([plant[mapConfig.longitudeField], plant[mapConfig.latitudeField]])
               .setPopup(
                 new mapboxgl.default.Popup({ offset: 25 })
-                  .setHTML(`
-                    <strong>${plant.fac_name}</strong><br>
-                    Category: ${plant[mapConfig.colorField]}<br>
-                    Capacity: ${plant[mapConfig.sizeField]} MW<br>
-                    Solar Capacity: ${plant['Solar Capacity (MW)']} MW<br>
-                    Wind Capacity: ${plant['Wind Capacity (MW)']} MW
-                  `)
+                  .setHTML(popupHTML)
               )
               .addTo(map);
           });
 
-          // Add legend
+          // Add legend with safe HTML
           const legend = document.createElement('div');
           legend.className = 'map-legend';
-          legend.innerHTML = `
-            <h4>Plant Categories</h4>
-            ${Object.entries(categoryColors).map(([category, color]) => `
-              <div>
-                <span class="legend-key" style="background-color: ${color}"></span>
-                <span>${category}</span>
-              </div>
-            `).join('')}
-          `;
+          
+          // Create legend HTML safely
+          const legendTitle = document.createElement('h4');
+          legendTitle.textContent = 'Plant Categories';
+          legend.appendChild(legendTitle);
+          
+          Object.entries(categoryColors).forEach(([category, color]) => {
+            const legendItem = document.createElement('div');
+            
+            const colorKey = document.createElement('span');
+            colorKey.className = 'legend-key';
+            colorKey.style.backgroundColor = color;
+            
+            const label = document.createElement('span');
+            label.textContent = category;
+            
+            legendItem.appendChild(colorKey);
+            legendItem.appendChild(label);
+            legend.appendChild(legendItem);
+          });
           map.getContainer().appendChild(legend);
         });
 

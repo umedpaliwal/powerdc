@@ -2,12 +2,19 @@ import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
+import { rateLimiters } from '@/lib/rate-limit'
 
 const stripe = process.env.STRIPE_SECRET_KEY ? new Stripe(process.env.STRIPE_SECRET_KEY, {
   apiVersion: '2025-07-30.basil',
 }) : null
 
 export async function POST(request: NextRequest) {
+  // Apply rate limiting for payment operations
+  const rateLimitResponse = await rateLimiters.stripe(request)
+  if (rateLimitResponse) {
+    return rateLimitResponse
+  }
+
   if (!stripe) {
     console.error('Stripe not configured - missing STRIPE_SECRET_KEY')
     return NextResponse.json({ error: 'Stripe is not configured. Please contact support.' }, { status: 500 })

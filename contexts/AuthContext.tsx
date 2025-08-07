@@ -87,6 +87,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         headers: {
           'Content-Type': 'application/json',
         },
+        credentials: 'same-origin',
       })
 
       if (response.ok) {
@@ -147,11 +148,20 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     // Create user profile after signup
     if (data.user && metadata?.company_name) {
       try {
+        // Get CSRF token first
+        const csrfResponse = await fetch('/api/csrf', {
+          method: 'GET',
+          credentials: 'same-origin',
+        })
+        const { token: csrfToken } = await csrfResponse.json()
+
         const response = await fetch('/api/user/profile', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
+            'x-csrf-token': csrfToken,
           },
+          credentials: 'same-origin',
           body: JSON.stringify({
             company_name: metadata.company_name,
             industry_type: metadata.industry_type,
