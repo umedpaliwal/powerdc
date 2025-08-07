@@ -15,7 +15,6 @@ import {
 } from "@mui/material";
 import { useEffect, useRef } from "react";
 import StatisticCard from "./StatisticCard";
-import TimelineComparison from "./TimelineComparison";
 
 export default function DataCenterCrisisSection() {
   const theme = useTheme();
@@ -191,15 +190,6 @@ export default function DataCenterCrisisSection() {
                 </Box>
               </Grid>
             ))}
-          </Grid>
-
-          {/* Timeline Comparison */}
-          <Grid container spacing={4}>
-            <Grid item xs={12}>
-              <Box className="fade-in-section">
-                <TimelineComparison />
-              </Box>
-            </Grid>
           </Grid>
 
           {/* Bottom Call to Action */}
