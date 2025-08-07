@@ -12,19 +12,29 @@ import {
   Link,
   Snackbar,
   Alert,
+  CircularProgress,
 } from '@mui/material';
 import {
   Email as EmailIcon,
   Send as SendIcon,
 } from '@mui/icons-material';
+import emailjs from '@emailjs/browser';
+
+// EmailJS Configuration - Replace these with your actual values
+const EMAILJS_SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || 'YOUR_SERVICE_ID';
+const EMAILJS_TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || 'YOUR_TEMPLATE_ID';
+const EMAILJS_PUBLIC_KEY = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || 'YOUR_PUBLIC_KEY';
 
 export default function Support() {
   const [formData, setFormData] = useState({
     name: '',
+    email: '',
     company: '',
     message: '',
   });
   const [showSuccess, setShowSuccess] = useState(false);
+  const [showError, setShowError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
@@ -33,20 +43,47 @@ export default function Support() {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Create mailto link with form data
-    const subject = `Support Request from ${formData.name} - ${formData.company}`;
-    const body = `Name: ${formData.name}%0D%0ACompany: ${formData.company}%0D%0A%0D%0AMessage:%0D%0A${formData.message}`;
-    window.location.href = `mailto:contact@wattcanvas.com?subject=${encodeURIComponent(subject)}&body=${body}`;
-    
-    // Show success message
-    setShowSuccess(true);
-    
-    // Reset form
-    setTimeout(() => {
-      setFormData({ name: '', company: '', message: '' });
-    }, 2000);
+    setIsLoading(true);
+
+    // Check if EmailJS is configured
+    if (EMAILJS_SERVICE_ID === 'YOUR_SERVICE_ID') {
+      // Fallback to mailto if EmailJS is not configured
+      const subject = `Support Request from ${formData.name} - ${formData.company}`;
+      const body = `Name: ${formData.name}%0D%0AEmail: ${formData.email}%0D%0ACompany: ${formData.company}%0D%0A%0D%0AMessage:%0D%0A${formData.message}`;
+      window.location.href = `mailto:contact@wattcanvas.com?subject=${encodeURIComponent(subject)}&body=${body}`;
+      setIsLoading(false);
+      setShowSuccess(true);
+      setTimeout(() => {
+        setFormData({ name: '', email: '', company: '', message: '' });
+      }, 2000);
+      return;
+    }
+
+    // Send email using EmailJS
+    try {
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        {
+          from_name: formData.name,
+          from_email: formData.email,
+          company: formData.company,
+          message: formData.message,
+          to_email: 'contact@wattcanvas.com',
+        },
+        EMAILJS_PUBLIC_KEY
+      );
+      
+      setShowSuccess(true);
+      setFormData({ name: '', email: '', company: '', message: '' });
+    } catch (error) {
+      console.error('Failed to send email:', error);
+      setShowError(true);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -178,6 +215,32 @@ export default function Support() {
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
+                disabled={isLoading}
+                sx={{
+                  mb: 3,
+                  '& .MuiOutlinedInput-root': {
+                    '&:hover fieldset': {
+                      borderColor: '#00E5FF',
+                    },
+                    '&.Mui-focused fieldset': {
+                      borderColor: '#00E5FF',
+                    },
+                  },
+                  '& .MuiInputLabel-root.Mui-focused': {
+                    color: '#00E5FF',
+                  },
+                }}
+              />
+              
+              <TextField
+                fullWidth
+                required
+                label="Email"
+                name="email"
+                type="email"
+                value={formData.email}
+                onChange={handleChange}
+                disabled={isLoading}
                 sx={{
                   mb: 3,
                   '& .MuiOutlinedInput-root': {
@@ -201,6 +264,7 @@ export default function Support() {
                 name="company"
                 value={formData.company}
                 onChange={handleChange}
+                disabled={isLoading}
                 sx={{
                   mb: 3,
                   '& .MuiOutlinedInput-root': {
@@ -226,6 +290,7 @@ export default function Support() {
                 name="message"
                 value={formData.message}
                 onChange={handleChange}
+                disabled={isLoading}
                 sx={{
                   mb: 3,
                   '& .MuiOutlinedInput-root': {
@@ -247,7 +312,8 @@ export default function Support() {
                 fullWidth
                 variant="contained"
                 size="large"
-                endIcon={<SendIcon />}
+                disabled={isLoading}
+                endIcon={isLoading ? <CircularProgress size={20} /> : <SendIcon />}
                 sx={{
                   backgroundColor: '#00E5FF',
                   color: '#000',
@@ -261,9 +327,12 @@ export default function Support() {
                     transform: 'translateY(-2px)',
                     boxShadow: '0 8px 20px rgba(0, 229, 255, 0.3)',
                   },
+                  '&:disabled': {
+                    backgroundColor: 'rgba(0, 229, 255, 0.3)',
+                  },
                 }}
               >
-                Send Message
+                {isLoading ? 'Sending...' : 'Send Message'}
               </Button>
             </Box>
           </Paper>
@@ -305,7 +374,25 @@ export default function Support() {
           severity="success"
           sx={{ width: '100%' }}
         >
-          Your email client has been opened with the message. Please send the email to complete your request.
+          {EMAILJS_SERVICE_ID === 'YOUR_SERVICE_ID' 
+            ? 'Your email client has been opened with the message. Please send the email to complete your request.'
+            : 'Thank you for contacting us! We\'ll get back to you soon.'}
+        </Alert>
+      </Snackbar>
+
+      {/* Error Snackbar */}
+      <Snackbar
+        open={showError}
+        autoHideDuration={6000}
+        onClose={() => setShowError(false)}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      >
+        <Alert
+          onClose={() => setShowError(false)}
+          severity="error"
+          sx={{ width: '100%' }}
+        >
+          Failed to send message. Please try again or email us directly at contact@wattcanvas.com
         </Alert>
       </Snackbar>
     </Container>
