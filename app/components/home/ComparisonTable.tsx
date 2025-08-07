@@ -124,7 +124,7 @@ export default function ComparisonTable() {
         ref={sectionRef}
         sx={{
           py: { xs: 10, md: 12 },
-          background: "linear-gradient(180deg, #16213e 0%, #0f172a 50%, #1e1b4b 100%)",
+          background: "linear-gradient(135deg, #0F2027 0%, #203A43 50%, #2C5364 100%)",
           position: "relative",
           overflow: "hidden",
           color: "white",
@@ -196,9 +196,9 @@ export default function ComparisonTable() {
             <Card
               className="table-glow"
               sx={{
-                bgcolor: "rgba(0,20,40,0.9)",
-                backdropFilter: "blur(10px)",
-                border: "1px solid rgba(142,202,230,0.2)",
+                background: "rgba(255,255,255,0.05)",
+                backdropFilter: "blur(20px)",
+                border: "1px solid rgba(0, 229, 255, 0.3)",
                 borderRadius: 3,
                 overflow: "hidden",
               }}

@@ -20,20 +20,9 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   const footerLinks = {
-    legal: [
-      { label: 'Terms of Service', href: '/terms' },
-      { label: 'Privacy Policy', href: '/privacy' },
-      { label: 'Cookie Policy', href: '/cookies' },
-    ],
     support: [
       { label: 'Contact Support', href: '/support' },
-      { label: 'API Documentation', href: '/api-docs' },
-      { label: 'Help Center', href: '/help' },
-    ],
-    resources: [
-      { label: 'About', href: '/about' },
-      { label: 'Research', href: '/research' },
-      { label: 'Publications', href: '/publications' },
+      { label: 'FAQ', href: '/faq' },
     ],
   };
 
@@ -55,7 +44,7 @@ export default function Footer() {
               <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
                 <ElectricBoltIcon sx={{ color: '#00E5FF', mr: 1, fontSize: 32 }} />
                 <Typography variant="h5" sx={{ fontWeight: 700 }}>
-                  PowerDC
+                  WattCanvas
                 </Typography>
               </Box>
               <Typography variant="body2" sx={{ color: 'rgba(255, 255, 255, 0.7)', mb: 3 }}>
@@ -77,32 +66,7 @@ export default function Footer() {
           </Grid>
 
           {/* Links Sections */}
-          <Grid item xs={12} md={2}>
-            <Typography variant="h6" sx={{ fontWeight: 600, mb: 2, color: '#00E5FF' }}>
-              Legal
-            </Typography>
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-              {footerLinks.legal.map((link) => (
-                <Link
-                  key={link.label}
-                  href={link.href}
-                  sx={{
-                    color: 'rgba(255, 255, 255, 0.7)',
-                    textDecoration: 'none',
-                    fontSize: '0.9rem',
-                    '&:hover': {
-                      color: '#00E5FF',
-                      textDecoration: 'underline',
-                    },
-                  }}
-                >
-                  {link.label}
-                </Link>
-              ))}
-            </Box>
-          </Grid>
-
-          <Grid item xs={12} md={2}>
+          <Grid item xs={12} md={4}>
             <Typography variant="h6" sx={{ fontWeight: 600, mb: 2, color: '#00E5FF' }}>
               Support
             </Typography>
@@ -127,33 +91,8 @@ export default function Footer() {
             </Box>
           </Grid>
 
-          <Grid item xs={12} md={2}>
-            <Typography variant="h6" sx={{ fontWeight: 600, mb: 2, color: '#00E5FF' }}>
-              Resources
-            </Typography>
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-              {footerLinks.resources.map((link) => (
-                <Link
-                  key={link.label}
-                  href={link.href}
-                  sx={{
-                    color: 'rgba(255, 255, 255, 0.7)',
-                    textDecoration: 'none',
-                    fontSize: '0.9rem',
-                    '&:hover': {
-                      color: '#00E5FF',
-                      textDecoration: 'underline',
-                    },
-                  }}
-                >
-                  {link.label}
-                </Link>
-              ))}
-            </Box>
-          </Grid>
-
           {/* Contact Section */}
-          <Grid item xs={12} md={2}>
+          <Grid item xs={12} md={4}>
             <Typography variant="h6" sx={{ fontWeight: 600, mb: 2, color: '#00E5FF' }}>
               Connect
             </Typography>

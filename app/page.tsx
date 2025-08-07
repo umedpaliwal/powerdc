@@ -2,7 +2,7 @@
 
 import { Box, CssBaseline } from "@mui/material";
 import HeroSection from "./components/new-home/HeroSection";
-import HowItWorksSection from "./components/home/HowItWorksSection";
+import SchematicDiagram from "./components/home/SchematicDiagram";
 import DataCenterCrisisSection from "./components/home/DataCenterCrisisSection";
 
 export default function Home() {
@@ -19,7 +19,7 @@ export default function Home() {
       >
         <Box component="main" sx={{ flexGrow: 1 }}>
           <HeroSection />
-          <HowItWorksSection />
+          <SchematicDiagram />
           <DataCenterCrisisSection />
         </Box>
       </Box>

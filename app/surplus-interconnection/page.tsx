@@ -66,23 +66,6 @@ export default function SurplusInterconnection() {
   return (
     <Box sx={{ minHeight: "100vh", background: "linear-gradient(135deg, #0F2027 0%, #203A43 50%, #2C5364 100%)" }}>
       <Container maxWidth="lg" sx={{ pt: 12, pb: 8 }}>
-        {/* Page Title */}
-        <Typography 
-          variant="h2" 
-          sx={{ 
-            textAlign: "center", 
-            fontWeight: 700, 
-            color: "#fff",
-            mb: 2,
-            background: "linear-gradient(45deg, #ffffff 30%, #00E5FF 90%)",
-            backgroundClip: "text",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-          }}
-        >
-          Surplus Interconnection for Data Centers
-        </Typography>
-
         {/* What is Surplus Interconnection Section */}
         <Box sx={{ py: 6 }}>
           <Typography 
@@ -101,7 +84,8 @@ export default function SurplusInterconnection() {
             sx={{ 
               p: 5,
               borderRadius: 3,
-              background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+              background: "rgba(0, 229, 255, 0.1)",
+              border: "1px solid rgba(0, 229, 255, 0.3)",
               color: 'white',
               mb: 5
             }}
