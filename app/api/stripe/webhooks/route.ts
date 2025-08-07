@@ -61,14 +61,24 @@ export async function POST(request: NextRequest) {
             
             // Update user subscription in database
             console.log('Upserting subscription to database for user:', userId)
+            
+            // Get period dates from the first subscription item
+            const subscriptionItem = subscriptionData.items.data[0]
+            const periodStart = subscriptionItem?.current_period_start 
+              ? new Date(subscriptionItem.current_period_start * 1000).toISOString()
+              : new Date(subscriptionData.start_date * 1000).toISOString()
+            const periodEnd = subscriptionItem?.current_period_end
+              ? new Date(subscriptionItem.current_period_end * 1000).toISOString()
+              : new Date(subscriptionData.billing_cycle_anchor * 1000 + 30 * 24 * 60 * 60 * 1000).toISOString() // 30 days from anchor
+            
             const { error: upsertError } = await supabase.from('subscriptions').upsert({
               user_id: userId,
               stripe_subscription_id: subscriptionId,
               stripe_customer_id: customerId,
               status: subscriptionData.status,
               plan_type: planType,
-              current_period_start: new Date((subscriptionData as any).current_period_start * 1000).toISOString(),
-              current_period_end: new Date((subscriptionData as any).current_period_end * 1000).toISOString(),
+              current_period_start: periodStart,
+              current_period_end: periodEnd,
               created_at: new Date().toISOString(),
               updated_at: new Date().toISOString(),
             })
@@ -100,12 +110,21 @@ export async function POST(request: NextRequest) {
         }
 
         if (userSub) {
+          // Get period dates from the first subscription item
+          const subscriptionItem = (subscription as any).items?.data?.[0]
+          const periodStart = subscriptionItem?.current_period_start 
+            ? new Date(subscriptionItem.current_period_start * 1000).toISOString()
+            : new Date((subscription as any).start_date * 1000).toISOString()
+          const periodEnd = subscriptionItem?.current_period_end
+            ? new Date(subscriptionItem.current_period_end * 1000).toISOString()
+            : new Date((subscription as any).billing_cycle_anchor * 1000 + 30 * 24 * 60 * 60 * 1000).toISOString()
+          
           const { error: updateError } = await supabase
             .from('subscriptions')
             .update({
               status: subscription.status,
-              current_period_start: new Date((subscription as any).current_period_start * 1000).toISOString(),
-              current_period_end: new Date((subscription as any).current_period_end * 1000).toISOString(),
+              current_period_start: periodStart,
+              current_period_end: periodEnd,
               updated_at: new Date().toISOString(),
             })
             .eq('stripe_subscription_id', subscription.id)
