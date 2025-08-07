@@ -28,7 +28,7 @@ export async function POST(request: NextRequest) {
 
     // Verify that the subscription belongs to the authenticated user
     const { data: userSub } = await supabase
-      .from('user_subscriptions')
+      .from('subscriptions')
       .select('*')
       .eq('stripe_subscription_id', subscriptionId)
       .eq('user_id', user.id)
@@ -45,10 +45,9 @@ export async function POST(request: NextRequest) {
 
     // Update local database
     await supabase
-      .from('user_subscriptions')
+      .from('subscriptions')
       .update({
         status: subscription.status,
-        cancel_at_period_end: subscription.cancel_at_period_end,
         updated_at: new Date().toISOString(),
       })
       .eq('stripe_subscription_id', subscriptionId)

@@ -36,19 +36,29 @@ export async function POST(request: NextRequest) {
 
           if (userId && subscriptionId) {
             // Get subscription details
-            const subscription = await stripe.subscriptions.retrieve(subscriptionId)
+            const subscriptionData = await stripe.subscriptions.retrieve(subscriptionId)
+            
+            // Determine plan type based on price
+            const priceId = subscriptionData.items.data[0]?.price.id
+            const planType = 'professional' // default
             
             // Update user subscription in database
-            await supabase.from('user_subscriptions').upsert({
+            const { error: upsertError } = await supabase.from('subscriptions').upsert({
               user_id: userId,
               stripe_subscription_id: subscriptionId,
               stripe_customer_id: customerId,
-              status: subscription.status,
-              // current_period_start: new Date(subscription.current_period_start * 1000).toISOString(),
-              // current_period_end: new Date(subscription.current_period_end * 1000).toISOString(),
+              status: subscriptionData.status,
+              plan_type: planType,
+              current_period_start: new Date((subscriptionData as any).current_period_start * 1000).toISOString(),
+              current_period_end: new Date((subscriptionData as any).current_period_end * 1000).toISOString(),
               created_at: new Date().toISOString(),
               updated_at: new Date().toISOString(),
             })
+            
+            if (upsertError) {
+              console.error('Failed to upsert subscription:', upsertError)
+              throw upsertError
+            }
 
             console.log(`Subscription created for user ${userId}:`, subscriptionId)
           }
@@ -60,22 +70,31 @@ export async function POST(request: NextRequest) {
         const subscription = event.data.object as Stripe.Subscription
         
         // Find user by customer ID
-        const { data: userSub } = await supabase
-          .from('user_subscriptions')
+        const { data: userSub, error: findError } = await supabase
+          .from('subscriptions')
           .select('user_id')
           .eq('stripe_customer_id', subscription.customer)
           .single()
 
+        if (findError) {
+          console.error('Failed to find subscription:', findError)
+        }
+
         if (userSub) {
-          await supabase
-            .from('user_subscriptions')
+          const { error: updateError } = await supabase
+            .from('subscriptions')
             .update({
               status: subscription.status,
-              // current_period_start: new Date(subscription.current_period_start * 1000).toISOString(),
-              // current_period_end: new Date(subscription.current_period_end * 1000).toISOString(),
+              current_period_start: new Date(subscription.current_period_start * 1000).toISOString(),
+              current_period_end: new Date(subscription.current_period_end * 1000).toISOString(),
               updated_at: new Date().toISOString(),
             })
             .eq('stripe_subscription_id', subscription.id)
+          
+          if (updateError) {
+            console.error('Failed to update subscription:', updateError)
+            throw updateError
+          }
 
           console.log(`Subscription updated for user ${userSub.user_id}:`, subscription.id)
         }
@@ -86,13 +105,18 @@ export async function POST(request: NextRequest) {
         const subscription = event.data.object as Stripe.Subscription
         
         // Update subscription status to canceled
-        await supabase
-          .from('user_subscriptions')
+        const { error: cancelError } = await supabase
+          .from('subscriptions')
           .update({
             status: 'canceled',
             updated_at: new Date().toISOString(),
           })
           .eq('stripe_subscription_id', subscription.id)
+        
+        if (cancelError) {
+          console.error('Failed to cancel subscription:', cancelError)
+          throw cancelError
+        }
 
         console.log(`Subscription canceled:`, subscription.id)
         break
@@ -104,13 +128,17 @@ export async function POST(request: NextRequest) {
         
         if (subscriptionId) {
           // Update subscription status to active
-          await supabase
-            .from('user_subscriptions')
+          const { error: activeError } = await supabase
+            .from('subscriptions')
             .update({
               status: 'active',
               updated_at: new Date().toISOString(),
             })
             .eq('stripe_subscription_id', subscriptionId)
+          
+          if (activeError) {
+            console.error('Failed to activate subscription:', activeError)
+          }
 
           console.log(`Payment succeeded for subscription:`, subscriptionId)
         }
@@ -123,13 +151,17 @@ export async function POST(request: NextRequest) {
         
         if (subscriptionId) {
           // Update subscription status to past_due
-          await supabase
-            .from('user_subscriptions')
+          const { error: pastDueError } = await supabase
+            .from('subscriptions')
             .update({
               status: 'past_due',
               updated_at: new Date().toISOString(),
             })
             .eq('stripe_subscription_id', subscriptionId)
+          
+          if (pastDueError) {
+            console.error('Failed to update subscription to past_due:', pastDueError)
+          }
 
           console.log(`Payment failed for subscription:`, subscriptionId)
         }
