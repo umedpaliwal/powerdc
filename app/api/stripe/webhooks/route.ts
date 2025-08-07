@@ -7,42 +7,60 @@ const stripe = process.env.STRIPE_SECRET_KEY ? new Stripe(process.env.STRIPE_SEC
 }) : null
 
 export async function POST(request: NextRequest) {
+  console.log('Webhook received at:', new Date().toISOString())
+  console.log('Stripe configured:', !!stripe)
+  console.log('Webhook secret exists:', !!process.env.STRIPE_WEBHOOK_SECRET)
+  
   if (!stripe || !process.env.STRIPE_WEBHOOK_SECRET) {
+    console.error('Missing configuration:', {
+      stripe: !!stripe,
+      webhookSecret: !!process.env.STRIPE_WEBHOOK_SECRET
+    })
     return NextResponse.json({ error: 'Stripe is not configured' }, { status: 500 })
   }
   const body = await request.text()
   const sig = request.headers.get('stripe-signature')!
+  console.log('Signature header present:', !!sig)
 
   let event: Stripe.Event
 
   try {
     event = stripe.webhooks.constructEvent(body, sig, process.env.STRIPE_WEBHOOK_SECRET!)
+    console.log('Webhook signature verified successfully for event:', event.type)
   } catch (err: any) {
     console.error('Webhook signature verification failed:', err.message)
+    console.error('Error details:', err)
     return NextResponse.json({ error: 'Webhook signature verification failed' }, { status: 400 })
   }
 
   const supabase = createServiceRoleClient()
+  console.log('Supabase client created')
 
   try {
     switch (event.type) {
       case 'checkout.session.completed': {
         const session = event.data.object as Stripe.Checkout.Session
+        console.log('Processing checkout.session.completed for session:', session.id)
         
         if (session.mode === 'subscription') {
           const subscriptionId = session.subscription as string
           const customerId = session.customer as string
           const userId = session.metadata?.user_id
+          console.log('Subscription details:', { subscriptionId, customerId, userId })
 
           if (userId && subscriptionId) {
             // Get subscription details
+            console.log('Retrieving subscription from Stripe:', subscriptionId)
             const subscriptionData = await stripe.subscriptions.retrieve(subscriptionId)
+            console.log('Subscription retrieved, status:', subscriptionData.status)
             
             // Determine plan type based on price
             const priceId = subscriptionData.items.data[0]?.price.id
             const planType = 'professional' // default
+            console.log('Plan details:', { priceId, planType })
             
             // Update user subscription in database
+            console.log('Upserting subscription to database for user:', userId)
             const { error: upsertError } = await supabase.from('subscriptions').upsert({
               user_id: userId,
               stripe_subscription_id: subscriptionId,
@@ -57,10 +75,11 @@ export async function POST(request: NextRequest) {
             
             if (upsertError) {
               console.error('Failed to upsert subscription:', upsertError)
+              console.error('Upsert error details:', JSON.stringify(upsertError, null, 2))
               throw upsertError
             }
 
-            console.log(`Subscription created for user ${userId}:`, subscriptionId)
+            console.log(`Subscription successfully created for user ${userId}:`, subscriptionId)
           }
         }
         break
@@ -172,11 +191,14 @@ export async function POST(request: NextRequest) {
         console.log(`Unhandled event type: ${event.type}`)
     }
 
+    console.log('Webhook processed successfully')
     return NextResponse.json({ received: true })
   } catch (error: any) {
     console.error('Webhook handler error:', error)
+    console.error('Full error details:', JSON.stringify(error, null, 2))
+    console.error('Error stack:', error.stack)
     return NextResponse.json(
-      { error: 'Webhook handler failed' },
+      { error: 'Webhook handler failed', details: error.message },
       { status: 500 }
     )
   }
