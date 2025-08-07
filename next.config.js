@@ -39,7 +39,7 @@ const securityHeaders = [
       style-src 'self' 'unsafe-inline' https://*.mapbox.com https://api.mapbox.com;
       img-src 'self' data: blob: https://*.stripe.com https://*.supabase.co https://*.mapbox.com https://api.mapbox.com;
       font-src 'self' data:;
-      connect-src 'self' https://*.supabase.co https://*.stripe.com https://*.mapbox.com https://api.mapbox.com wss://*.supabase.co https://events.mapbox.com;
+      connect-src 'self' https://*.supabase.co https://*.stripe.com https://*.mapbox.com https://api.mapbox.com wss://*.supabase.co https://events.mapbox.com https://api.emailjs.com;
       frame-src 'self' https://*.stripe.com https://*.youtube.com https://youtube.com;
       object-src 'none';
       base-uri 'self';
