@@ -39,7 +39,7 @@ export default function SchematicDiagram() {
       }}
     >
       <Container maxWidth="xl">
-        <Box sx={{ textAlign: 'center', mb: 6 }}>
+        <Box sx={{ textAlign: 'center', mb: 5 }}>
           <Typography
             variant="h3"
             component="h2"
@@ -47,7 +47,7 @@ export default function SchematicDiagram() {
               fontWeight: 700,
               color: '#fff',
               mb: 2,
-              fontSize: { xs: '2rem', md: '3rem' },
+              fontSize: { xs: '1.6rem', md: '2.4rem' },
             }}
           >
             Surplus Interconnection Configuration
@@ -56,9 +56,10 @@ export default function SchematicDiagram() {
             variant="h6"
             sx={{
               color: 'rgba(255, 255, 255, 0.8)',
-              maxWidth: '800px',
+              maxWidth: '640px',
               mx: 'auto',
               lineHeight: 1.6,
+              fontSize: { xs: '0.95rem', md: '1.1rem' },
             }}
           >
             Deploy data centers with 95% renewable energy using existing gas plant interconnections
@@ -73,14 +74,14 @@ export default function SchematicDiagram() {
               <Paper
                 elevation={0}
                 sx={{
-                  p: 4,
+                  p: 3.2,
                   background: "rgba(255,255,255,0.05)",
                   backdropFilter: "blur(20px)",
                   border: "1px solid rgba(0, 229, 255, 0.2)",
                   borderRadius: 3,
                 }}
               >
-                <Typography variant="h5" sx={{ color: '#00E5FF', mb: 3, fontWeight: 600 }}>
+                <Typography variant="h5" sx={{ color: '#00E5FF', mb: 2.4, fontWeight: 600, fontSize: '1.4rem' }}>
                   Configuration Setup
                 </Typography>
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
@@ -90,7 +91,7 @@ export default function SchematicDiagram() {
                       sx={{
                         display: 'flex',
                         alignItems: 'center',
-                        p: 2,
+                        p: 1.6,
                         borderRadius: 2,
                         background: 'rgba(0, 229, 255, 0.05)',
                         border: '1px solid rgba(0, 229, 255, 0.1)',
@@ -110,10 +111,10 @@ export default function SchematicDiagram() {
                         {React.cloneElement(item.icon, { fontSize: 'medium' })}
                       </Box>
                       <Box sx={{ flex: 1 }}>
-                        <Typography sx={{ color: 'white', fontWeight: 600 }}>
+                        <Typography sx={{ color: 'white', fontWeight: 600, fontSize: '0.95rem' }}>
                           {item.label}
                         </Typography>
-                        <Typography sx={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.9rem' }}>
+                        <Typography sx={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.85rem' }}>
                           {item.value}
                         </Typography>
                       </Box>
@@ -126,7 +127,7 @@ export default function SchematicDiagram() {
               <Paper
                 elevation={0}
                 sx={{
-                  p: 4,
+                  p: 3.2,
                   background: "rgba(255,255,255,0.05)",
                   backdropFilter: "blur(20px)",
                   border: "1px solid rgba(0, 229, 255, 0.2)",
@@ -134,7 +135,7 @@ export default function SchematicDiagram() {
                   flex: 1,
                 }}
               >
-                <Typography variant="h5" sx={{ color: '#00E5FF', mb: 3, fontWeight: 600 }}>
+                <Typography variant="h5" sx={{ color: '#00E5FF', mb: 2.4, fontWeight: 600, fontSize: '1.4rem' }}>
                   Key Benefits
                 </Typography>
                 <Grid container spacing={2}>
@@ -142,7 +143,7 @@ export default function SchematicDiagram() {
                     <Grid item xs={12} sm={6} key={index}>
                       <Box
                         sx={{
-                          p: 2,
+                          p: 1.6,
                           borderRadius: 2,
                           background: 'rgba(0, 229, 255, 0.05)',
                           border: '1px solid rgba(0, 229, 255, 0.1)',
@@ -158,11 +159,11 @@ export default function SchematicDiagram() {
                           <Box sx={{ color: '#00E5FF', mr: 1 }}>
                             {React.cloneElement(benefit.icon, { fontSize: 'small' })}
                           </Box>
-                          <Typography sx={{ color: 'white', fontWeight: 600, fontSize: '0.95rem' }}>
+                          <Typography sx={{ color: 'white', fontWeight: 600, fontSize: '0.9rem' }}>
                             {benefit.label}
                           </Typography>
                         </Box>
-                        <Typography sx={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.85rem' }}>
+                        <Typography sx={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.8rem' }}>
                           {benefit.description}
                         </Typography>
                       </Box>
@@ -178,7 +179,7 @@ export default function SchematicDiagram() {
             <Paper
               elevation={0}
               sx={{
-                p: 3,
+                p: 2.4,
                 background: "rgba(255,255,255,0.05)",
                 backdropFilter: "blur(20px)",
                 border: "1px solid rgba(0, 229, 255, 0.2)",
@@ -188,7 +189,7 @@ export default function SchematicDiagram() {
                 flexDirection: 'column',
               }}
             >
-              <Typography variant="h5" sx={{ color: '#00E5FF', mb: 3, fontWeight: 600, textAlign: 'center' }}>
+              <Typography variant="h5" sx={{ color: '#00E5FF', mb: 2.4, fontWeight: 600, textAlign: 'center', fontSize: '1.4rem' }}>
                 System Architecture
               </Typography>
               <Box
@@ -196,7 +197,7 @@ export default function SchematicDiagram() {
                   position: 'relative',
                   width: '100%',
                   flex: 1,
-                  minHeight: { xs: '400px', md: '500px' },
+                  minHeight: { xs: '320px', md: '400px' },
                   borderRadius: 2,
                   overflow: 'hidden',
                   background: 'rgba(0, 0, 0, 0.2)',
@@ -212,7 +213,7 @@ export default function SchematicDiagram() {
                   priority
                 />
               </Box>
-              <Box sx={{ mt: 3, display: 'flex', justifyContent: 'center', gap: 2, flexWrap: 'wrap' }}>
+              <Box sx={{ mt: 2.4, display: 'flex', justifyContent: 'center', gap: 1.6, flexWrap: 'wrap' }}>
                 <Chip
                   label="95% Solar + Storage"
                   sx={{

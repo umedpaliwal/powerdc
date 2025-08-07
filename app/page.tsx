@@ -2,8 +2,10 @@
 
 import { Box, CssBaseline } from "@mui/material";
 import HeroSection from "./components/new-home/HeroSection";
-import SchematicDiagram from "./components/home/SchematicDiagram";
 import DataCenterCrisisSection from "./components/home/DataCenterCrisisSection";
+import ProblemSolutionSection from "./components/new-home/ProblemSolutionSection";
+import SchematicDiagram from "./components/home/SchematicDiagram";
+import TimelineComparison from "./components/home/TimelineComparison";
 
 export default function Home() {
   return (
@@ -19,8 +21,10 @@ export default function Home() {
       >
         <Box component="main" sx={{ flexGrow: 1 }}>
           <HeroSection />
-          <SchematicDiagram />
           <DataCenterCrisisSection />
+          <ProblemSolutionSection />
+          <SchematicDiagram />
+          <TimelineComparison />
         </Box>
       </Box>
     </main>
