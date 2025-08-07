@@ -12,6 +12,11 @@ import {
 export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname
 
+  // CRITICAL: Skip middleware entirely for Stripe webhooks
+  if (pathname === '/api/stripe/webhooks') {
+    return NextResponse.next()
+  }
+
   // Remove the temporary bypass - dashboard and account now require authentication
   // Only keeping thermal/dashboard bypass if needed for specific demo
   // if (pathname.includes('/thermal/dashboard')) {
@@ -107,11 +112,12 @@ export const config = {
   matcher: [
     /*
      * Match all request paths except for the ones starting with:
+     * - api/stripe/webhooks (Stripe webhook endpoint)
      * - _next/static (static files)
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
      * Feel free to modify this pattern to include more paths.
      */
-    '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
+    '/((?!api/stripe/webhooks|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
   ],
 }
