@@ -25,6 +25,12 @@ const EMAILJS_SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || 'YOUR_S
 const EMAILJS_TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || 'YOUR_TEMPLATE_ID';
 const EMAILJS_PUBLIC_KEY = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || 'YOUR_PUBLIC_KEY';
 
+// Check if EmailJS is properly configured
+const isEmailJSConfigured = 
+  EMAILJS_SERVICE_ID && EMAILJS_SERVICE_ID !== 'YOUR_SERVICE_ID' &&
+  EMAILJS_TEMPLATE_ID && EMAILJS_TEMPLATE_ID !== 'YOUR_TEMPLATE_ID' &&
+  EMAILJS_PUBLIC_KEY && EMAILJS_PUBLIC_KEY !== 'YOUR_PUBLIC_KEY';
+
 export default function Support() {
   const [formData, setFormData] = useState({
     name: '',
@@ -47,9 +53,8 @@ export default function Support() {
     e.preventDefault();
     setIsLoading(true);
 
-    // Check if EmailJS is configured
-    if (EMAILJS_SERVICE_ID === 'YOUR_SERVICE_ID') {
-      // Fallback to mailto if EmailJS is not configured
+    if (!isEmailJSConfigured) {
+      // Use mailto as the default method
       const subject = `Support Request from ${formData.name} - ${formData.company}`;
       const body = `Name: ${formData.name}%0D%0AEmail: ${formData.email}%0D%0ACompany: ${formData.company}%0D%0A%0D%0AMessage:%0D%0A${formData.message}`;
       window.location.href = `mailto:contact@wattcanvas.com?subject=${encodeURIComponent(subject)}&body=${body}`;
@@ -61,7 +66,7 @@ export default function Support() {
       return;
     }
 
-    // Send email using EmailJS
+    // Send email using EmailJS only if properly configured
     try {
       await emailjs.send(
         EMAILJS_SERVICE_ID,
@@ -374,7 +379,7 @@ export default function Support() {
           severity="success"
           sx={{ width: '100%' }}
         >
-          {EMAILJS_SERVICE_ID === 'YOUR_SERVICE_ID' 
+          {!isEmailJSConfigured 
             ? 'Your email client has been opened with the message. Please send the email to complete your request.'
             : 'Thank you for contacting us! We\'ll get back to you soon.'}
         </Alert>
