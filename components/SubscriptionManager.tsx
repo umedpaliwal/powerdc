@@ -31,6 +31,16 @@ import {
 import { useSubscription } from '@/hooks/useSubscription'
 import { formatPrice, isSubscriptionActive, subscriptionNeedsAttention } from '@/lib/stripe/utils'
 
+// Helper function to format dates nicely
+const formatDate = (dateString: string | Date) => {
+  const date = new Date(dateString)
+  return date.toLocaleDateString('en-US', { 
+    year: 'numeric', 
+    month: 'long', 
+    day: 'numeric' 
+  })
+}
+
 export default function SubscriptionManager() {
   const {
     subscription,
@@ -178,10 +188,37 @@ export default function SubscriptionManager() {
           {subscription.cancel_at_period_end && (
             <Alert severity="info" sx={{ mb: 3 }}>
               Your subscription will be canceled at the end of the current billing period (
-              {subscription.current_period_end ? new Date(subscription.current_period_end).toLocaleDateString() : 'N/A'}
+              {subscription.current_period_end ? formatDate(subscription.current_period_end) : 'N/A'}
               ).
             </Alert>
           )}
+
+          {/* Subscription Period Info */}
+          <Box sx={{ mb: 3, p: 2, bgcolor: 'rgba(0, 229, 255, 0.05)', borderRadius: 1 }}>
+            <Typography variant="subtitle2" color="text.secondary" gutterBottom>
+              Billing Information
+            </Typography>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+              <Typography variant="body2">
+                <strong>Plan:</strong> Professional (Monthly)
+              </Typography>
+              {subscription.current_period_start && (
+                <Typography variant="body2">
+                  <strong>Current Period:</strong> {formatDate(subscription.current_period_start)} - {subscription.current_period_end ? formatDate(subscription.current_period_end) : 'N/A'}
+                </Typography>
+              )}
+              {subscription.current_period_end && !subscription.cancel_at_period_end && (
+                <Typography variant="body2" color="success.main">
+                  <strong>Next Renewal:</strong> {formatDate(subscription.current_period_end)}
+                </Typography>
+              )}
+              {subscription.cancel_at_period_end && (
+                <Typography variant="body2" color="warning.main">
+                  <strong>Cancels on:</strong> {subscription.current_period_end ? formatDate(subscription.current_period_end) : 'N/A'}
+                </Typography>
+              )}
+            </Box>
+          </Box>
 
           <Box sx={{ mb: 3 }}>
             <Typography variant="subtitle1" gutterBottom fontWeight="500">
@@ -225,6 +262,16 @@ export default function SubscriptionManager() {
           </Box>
 
           <Divider sx={{ mb: 3 }} />
+
+          {/* Automatic Renewal Notice */}
+          {!subscription.cancel_at_period_end && subscription.status === 'active' && (
+            <Alert severity="info" sx={{ mb: 3 }}>
+              <Typography variant="body2">
+                <strong>Automatic Renewal:</strong> Your subscription will automatically renew on {subscription.current_period_end ? formatDate(subscription.current_period_end) : 'the renewal date'}. 
+                Your payment method on file will be charged automatically. No action is required to continue your service.
+              </Typography>
+            </Alert>
+          )}
 
           <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
             <Button
