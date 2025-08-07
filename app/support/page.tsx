@@ -1,57 +1,56 @@
 "use client";
 
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Container,
   Typography,
   Box,
   Paper,
-  Grid,
-  Card,
-  CardContent,
+  TextField,
   Button,
+  Grid,
+  Link,
+  Snackbar,
+  Alert,
 } from '@mui/material';
 import {
   Email as EmailIcon,
-  Help as HelpIcon,
-  BugReport as BugReportIcon,
-  School as SchoolIcon,
+  Send as SendIcon,
 } from '@mui/icons-material';
 
 export default function Support() {
-  const supportOptions = [
-    {
-      icon: <EmailIcon sx={{ fontSize: 40, color: '#00E5FF' }} />,
-      title: 'Email Support',
-      description: 'Get help from our team via email',
-      action: 'Contact Us',
-      href: 'mailto:support@powerdc.dev',
-    },
-    {
-      icon: <HelpIcon sx={{ fontSize: 40, color: '#4CAF50' }} />,
-      title: 'Help Center',
-      description: 'Browse our knowledge base and guides',
-      action: 'View Docs',
-      href: '/api-docs',
-    },
-    {
-      icon: <BugReportIcon sx={{ fontSize: 40, color: '#FF5722' }} />,
-      title: 'Report Bug',
-      description: 'Report technical issues or bugs',
-      action: 'Report Issue',
-      href: 'mailto:bugs@powerdc.dev',
-    },
-    {
-      icon: <SchoolIcon sx={{ fontSize: 40, color: '#9C27B0' }} />,
-      title: 'Academic Collaboration',
-      description: 'Partner with UC Berkeley GridLab',
-      action: 'Learn More',
-      href: 'mailto:collaboration@powerdc.dev',
-    },
-  ];
+  const [formData, setFormData] = useState({
+    name: '',
+    company: '',
+    message: '',
+  });
+  const [showSuccess, setShowSuccess] = useState(false);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Create mailto link with form data
+    const subject = `Support Request from ${formData.name} - ${formData.company}`;
+    const body = `Name: ${formData.name}%0D%0ACompany: ${formData.company}%0D%0A%0D%0AMessage:%0D%0A${formData.message}`;
+    window.location.href = `mailto:contact@wattcanvas.com?subject=${encodeURIComponent(subject)}&body=${body}`;
+    
+    // Show success message
+    setShowSuccess(true);
+    
+    // Reset form
+    setTimeout(() => {
+      setFormData({ name: '', company: '', message: '' });
+    }, 2000);
+  };
 
   return (
-    <Container maxWidth="lg" sx={{ py: 6 }}>
+    <Container maxWidth="md" sx={{ py: 8 }}>
       <Box sx={{ textAlign: 'center', mb: 6 }}>
         <Typography
           variant="h2"
@@ -63,9 +62,10 @@ export default function Support() {
             backgroundClip: 'text',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
+            fontSize: { xs: '2.5rem', md: '3.5rem' },
           }}
         >
-          Support Center
+          Contact Support
         </Typography>
         <Typography
           variant="h5"
@@ -74,131 +74,240 @@ export default function Support() {
             fontWeight: 400,
             maxWidth: 600,
             mx: 'auto',
+            fontSize: { xs: '1.1rem', md: '1.5rem' },
           }}
         >
-          Get help with PowerDC's renewable energy analytics platform
+          We're here to help with any questions about WattCanvas
         </Typography>
       </Box>
 
-      <Grid container spacing={4} sx={{ mb: 6 }}>
-        {supportOptions.map((option, index) => (
-          <Grid item xs={12} md={6} key={index}>
-            <Card
+      <Grid container spacing={4}>
+        {/* Email Contact Section */}
+        <Grid item xs={12} md={5}>
+          <Paper
+            sx={{
+              p: 4,
+              background: 'rgba(0, 229, 255, 0.05)',
+              backdropFilter: 'blur(20px)',
+              border: '1px solid rgba(0, 229, 255, 0.2)',
+              borderRadius: 3,
+              height: '100%',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              textAlign: 'center',
+            }}
+          >
+            <EmailIcon sx={{ fontSize: 60, color: '#00E5FF', mb: 3 }} />
+            <Typography
+              variant="h5"
               sx={{
-                height: '100%',
-                background: 'rgba(255, 255, 255, 0.05)',
-                backdropFilter: 'blur(10px)',
-                border: '1px solid rgba(0, 229, 255, 0.1)',
-                borderRadius: 3,
-                transition: 'all 0.3s ease',
+                fontWeight: 600,
+                mb: 2,
+                color: '#00E5FF',
+              }}
+            >
+              Email Us Directly
+            </Typography>
+            <Typography
+              variant="body1"
+              sx={{
+                color: 'text.secondary',
+                mb: 3,
+                lineHeight: 1.6,
+              }}
+            >
+              For immediate assistance, send us an email and we'll get back to you as soon as possible.
+            </Typography>
+            <Link
+              href="mailto:contact@wattcanvas.com"
+              sx={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 1,
+                fontSize: '1.2rem',
+                fontWeight: 600,
+                color: '#00E5FF',
+                textDecoration: 'none',
+                p: 2,
+                borderRadius: 2,
+                border: '2px solid #00E5FF',
+                transition: 'all 0.3s',
                 '&:hover': {
-                  transform: 'translateY(-4px)',
-                  boxShadow: '0 12px 40px rgba(0, 229, 255, 0.15)',
-                  border: '1px solid rgba(0, 229, 255, 0.3)',
+                  backgroundColor: 'rgba(0, 229, 255, 0.1)',
+                  transform: 'translateY(-2px)',
+                  boxShadow: '0 8px 20px rgba(0, 229, 255, 0.2)',
                 },
               }}
             >
-              <CardContent sx={{ p: 4, textAlign: 'center' }}>
-                <Box sx={{ mb: 3 }}>
-                  {option.icon}
-                </Box>
-                <Typography
-                  variant="h5"
-                  sx={{ fontWeight: 600, mb: 2, color: 'text.primary' }}
-                >
-                  {option.title}
-                </Typography>
-                <Typography
-                  variant="body1"
-                  sx={{ color: 'text.secondary', mb: 3, lineHeight: 1.6 }}
-                >
-                  {option.description}
-                </Typography>
-                <Button
-                  variant="contained"
-                  href={option.href}
-                  sx={{
-                    backgroundColor: '#00E5FF',
-                    color: '#000',
-                    fontWeight: 600,
-                    px: 3,
-                    py: 1,
-                    borderRadius: 3,
-                    textTransform: 'none',
-                    '&:hover': {
-                      backgroundColor: '#40C4FF',
-                      transform: 'translateY(-2px)',
+              <EmailIcon />
+              contact@wattcanvas.com
+            </Link>
+          </Paper>
+        </Grid>
+
+        {/* Contact Form Section */}
+        <Grid item xs={12} md={7}>
+          <Paper
+            sx={{
+              p: 4,
+              background: 'rgba(255, 255, 255, 0.05)',
+              backdropFilter: 'blur(20px)',
+              border: '1px solid rgba(0, 229, 255, 0.1)',
+              borderRadius: 3,
+            }}
+          >
+            <Typography
+              variant="h5"
+              sx={{
+                fontWeight: 600,
+                mb: 3,
+                color: '#00E5FF',
+                textAlign: 'center',
+              }}
+            >
+              Or Fill Out This Form
+            </Typography>
+            
+            <Box component="form" onSubmit={handleSubmit} sx={{ mt: 2 }}>
+              <TextField
+                fullWidth
+                required
+                label="Name"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                sx={{
+                  mb: 3,
+                  '& .MuiOutlinedInput-root': {
+                    '&:hover fieldset': {
+                      borderColor: '#00E5FF',
                     },
-                  }}
-                >
-                  {option.action}
-                </Button>
-              </CardContent>
-            </Card>
-          </Grid>
-        ))}
+                    '&.Mui-focused fieldset': {
+                      borderColor: '#00E5FF',
+                    },
+                  },
+                  '& .MuiInputLabel-root.Mui-focused': {
+                    color: '#00E5FF',
+                  },
+                }}
+              />
+              
+              <TextField
+                fullWidth
+                required
+                label="Company"
+                name="company"
+                value={formData.company}
+                onChange={handleChange}
+                sx={{
+                  mb: 3,
+                  '& .MuiOutlinedInput-root': {
+                    '&:hover fieldset': {
+                      borderColor: '#00E5FF',
+                    },
+                    '&.Mui-focused fieldset': {
+                      borderColor: '#00E5FF',
+                    },
+                  },
+                  '& .MuiInputLabel-root.Mui-focused': {
+                    color: '#00E5FF',
+                  },
+                }}
+              />
+              
+              <TextField
+                fullWidth
+                required
+                multiline
+                rows={6}
+                label="How can we help?"
+                name="message"
+                value={formData.message}
+                onChange={handleChange}
+                sx={{
+                  mb: 3,
+                  '& .MuiOutlinedInput-root': {
+                    '&:hover fieldset': {
+                      borderColor: '#00E5FF',
+                    },
+                    '&.Mui-focused fieldset': {
+                      borderColor: '#00E5FF',
+                    },
+                  },
+                  '& .MuiInputLabel-root.Mui-focused': {
+                    color: '#00E5FF',
+                  },
+                }}
+              />
+              
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                size="large"
+                endIcon={<SendIcon />}
+                sx={{
+                  backgroundColor: '#00E5FF',
+                  color: '#000',
+                  fontWeight: 600,
+                  py: 1.5,
+                  borderRadius: 3,
+                  fontSize: '1.1rem',
+                  textTransform: 'none',
+                  '&:hover': {
+                    backgroundColor: '#40C4FF',
+                    transform: 'translateY(-2px)',
+                    boxShadow: '0 8px 20px rgba(0, 229, 255, 0.3)',
+                  },
+                }}
+              >
+                Send Message
+              </Button>
+            </Box>
+          </Paper>
+        </Grid>
       </Grid>
 
-      <Paper
+      {/* Response Time Notice */}
+      <Box
         sx={{
-          p: 6,
-          background: 'rgba(255, 255, 255, 0.05)',
-          backdropFilter: 'blur(10px)',
-          border: '1px solid rgba(0, 229, 255, 0.1)',
+          mt: 6,
+          p: 3,
+          background: 'rgba(0, 229, 255, 0.05)',
           borderRadius: 3,
+          border: '1px solid rgba(0, 229, 255, 0.1)',
           textAlign: 'center',
         }}
       >
         <Typography
-          variant="h4"
-          sx={{ fontWeight: 600, mb: 3, color: '#00E5FF' }}
+          variant="body1"
+          sx={{
+            color: 'text.secondary',
+            lineHeight: 1.6,
+          }}
         >
-          Frequently Asked Questions
+          We typically respond within 24-48 hours during business days. 
+          For urgent matters, please indicate so in your message.
         </Typography>
-        
-        <Grid container spacing={4} sx={{ textAlign: 'left' }}>
-          <Grid item xs={12} md={6}>
-            <Typography variant="h6" sx={{ fontWeight: 600, mb: 1 }}>
-              What is PowerDC?
-            </Typography>
-            <Typography variant="body2" sx={{ color: 'text.secondary', mb: 3 }}>
-              PowerDC is a research platform by UC Berkeley GridLab that provides 
-              analytics and optimization tools for renewable energy deployment and 
-              sustainable data center operations.
-            </Typography>
-          </Grid>
-          
-          <Grid item xs={12} md={6}>
-            <Typography variant="h6" sx={{ fontWeight: 600, mb: 1 }}>
-              How do I access the dashboard?
-            </Typography>
-            <Typography variant="body2" sx={{ color: 'text.secondary', mb: 3 }}>
-              You'll need to create an account and sign in to access the dashboard 
-              and its analytical tools. Some features may require a subscription.
-            </Typography>
-          </Grid>
-          
-          <Grid item xs={12} md={6}>
-            <Typography variant="h6" sx={{ fontWeight: 600, mb: 1 }}>
-              Can I use this data for research?
-            </Typography>
-            <Typography variant="body2" sx={{ color: 'text.secondary', mb: 3 }}>
-              Yes, PowerDC is designed for academic and research use. Please cite 
-              our work appropriately and contact us for collaboration opportunities.
-            </Typography>
-          </Grid>
-          
-          <Grid item xs={12} md={6}>
-            <Typography variant="h6" sx={{ fontWeight: 600, mb: 1 }}>
-              Is there API access available?
-            </Typography>
-            <Typography variant="body2" sx={{ color: 'text.secondary', mb: 3 }}>
-              Yes, we provide API access for programmatic data retrieval. 
-              Check our API documentation for details on endpoints and authentication.
-            </Typography>
-          </Grid>
-        </Grid>
-      </Paper>
+      </Box>
+
+      {/* Success Snackbar */}
+      <Snackbar
+        open={showSuccess}
+        autoHideDuration={6000}
+        onClose={() => setShowSuccess(false)}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      >
+        <Alert
+          onClose={() => setShowSuccess(false)}
+          severity="success"
+          sx={{ width: '100%' }}
+        >
+          Your email client has been opened with the message. Please send the email to complete your request.
+        </Alert>
+      </Snackbar>
     </Container>
   );
 }

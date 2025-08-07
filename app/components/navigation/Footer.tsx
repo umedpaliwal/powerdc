@@ -98,7 +98,7 @@ export default function Footer() {
             </Typography>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
               <Link
-                href="mailto:support@powerdc.dev"
+                href="mailto:contact@wattcanvas.com"
                 sx={{
                   color: 'rgba(255, 255, 255, 0.7)',
                   textDecoration: 'none',
@@ -110,7 +110,7 @@ export default function Footer() {
                 }}
               >
                 <EmailIcon sx={{ fontSize: 18 }} />
-                Support
+                contact@wattcanvas.com
               </Link>
               
               <Box sx={{ display: 'flex', gap: 1, mt: 1 }}>
