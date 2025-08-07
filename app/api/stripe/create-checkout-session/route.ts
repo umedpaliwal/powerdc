@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
-import { cookies } from 'next/headers'
+import { createClient } from '@/lib/supabase/server'
 import { rateLimiters } from '@/lib/rate-limit'
 
 const stripe = process.env.STRIPE_SECRET_KEY ? new Stripe(process.env.STRIPE_SECRET_KEY, {
@@ -24,7 +23,7 @@ export async function POST(request: NextRequest) {
   let user: any
   
   try {
-    const supabase = createServerComponentClient({ cookies })
+    const supabase = await createClient()
     
     // Check if user is authenticated
     const authResult = await supabase.auth.getUser()
