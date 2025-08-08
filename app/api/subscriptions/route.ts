@@ -24,12 +24,12 @@ export async function GET() {
       )
     }
 
-    // Fetch active subscription
+    // Fetch subscription (including those pending cancellation)
     const { data: subscription, error: subscriptionError } = await supabase
       .from('subscriptions')
       .select('*')
       .eq('user_id', user.id)
-      .eq('status', 'active')
+      .in('status', ['active', 'trialing', 'past_due'])
       .single()
 
     if (subscriptionError) {

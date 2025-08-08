@@ -97,6 +97,7 @@ export async function POST(request: NextRequest) {
 
       case 'customer.subscription.updated': {
         const subscription = event.data.object as Stripe.Subscription
+        const previousAttributes = (event.data as any).previous_attributes || {}
         
         // Find user by customer ID
         const { data: userSub, error: findError } = await supabase
@@ -119,14 +120,40 @@ export async function POST(request: NextRequest) {
             ? new Date(subscriptionItem.current_period_end * 1000).toISOString()
             : new Date((subscription as any).billing_cycle_anchor * 1000 + 30 * 24 * 60 * 60 * 1000).toISOString()
           
+          // Update database with ALL fields including cancellation fields
+          const updateData: any = {
+            status: subscription.status,
+            current_period_start: periodStart,
+            current_period_end: periodEnd,
+            cancel_at_period_end: subscription.cancel_at_period_end || false,
+            updated_at: new Date().toISOString(),
+          }
+
+          // Add cancellation fields if they exist
+          if (subscription.canceled_at) {
+            updateData.canceled_at = new Date(subscription.canceled_at * 1000).toISOString()
+          }
+          if (subscription.cancel_at) {
+            updateData.cancel_at = new Date(subscription.cancel_at * 1000).toISOString()
+          }
+          if (subscription.cancellation_details) {
+            updateData.cancellation_details = subscription.cancellation_details
+          }
+
+          // Log cancellation/reactivation events
+          if (!previousAttributes.cancel_at_period_end && subscription.cancel_at_period_end) {
+            console.log(`Subscription ${subscription.id} scheduled for cancellation via Stripe Portal`)
+          } else if (previousAttributes.cancel_at_period_end && !subscription.cancel_at_period_end) {
+            console.log(`Subscription ${subscription.id} reactivated via Stripe Portal`)
+            // Clear cancellation fields on reactivation
+            updateData.canceled_at = null
+            updateData.cancel_at = null
+            updateData.cancellation_details = null
+          }
+          
           const { error: updateError } = await supabase
             .from('subscriptions')
-            .update({
-              status: subscription.status,
-              current_period_start: periodStart,
-              current_period_end: periodEnd,
-              updated_at: new Date().toISOString(),
-            })
+            .update(updateData)
             .eq('stripe_subscription_id', subscription.id)
           
           if (updateError) {

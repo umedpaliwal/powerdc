@@ -43,11 +43,15 @@ export async function POST(request: NextRequest) {
       cancel_at_period_end: true,
     })
 
-    // Update local database
+    // Update local database with ALL cancellation fields
     await supabase
       .from('subscriptions')
       .update({
         status: subscription.status,
+        cancel_at_period_end: subscription.cancel_at_period_end,
+        canceled_at: subscription.canceled_at ? new Date(subscription.canceled_at * 1000).toISOString() : new Date().toISOString(),
+        cancel_at: subscription.cancel_at ? new Date(subscription.cancel_at * 1000).toISOString() : null,
+        cancellation_details: subscription.cancellation_details || { reason: 'customer_requested', comment: 'Canceled via app' },
         updated_at: new Date().toISOString(),
       })
       .eq('stripe_subscription_id', subscriptionId)
