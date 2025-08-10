@@ -34,3 +34,4 @@ scripts/*.py
 scripts/__pycache__/
 *.pyc
 
+public/stripe_api.md

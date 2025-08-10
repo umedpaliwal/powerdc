@@ -204,7 +204,7 @@ export default function SchematicDiagram() {
                 }}
               >
                 <Image
-                  src="/scheme.png"
+                  src="/scheme.svg"
                   alt="Surplus Interconnection Schematic Diagram"
                   fill
                   style={{
