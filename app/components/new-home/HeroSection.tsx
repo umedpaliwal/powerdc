@@ -1,21 +1,23 @@
 "use client";
 
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import LaunchIcon from "@mui/icons-material/Launch";
-import { Box, Button, Container, Grid, Typography, Paper } from "@mui/material";
+import CalendarMonth from "@mui/icons-material/CalendarMonth";
+import { Box, Button, Container, Grid, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
-import React from "react";
-import ElectricBoltIcon from '@mui/icons-material/ElectricBolt';
-import SpeedIcon from '@mui/icons-material/Speed';
-import DataCenterIcon from '@mui/icons-material/Storage';
-import TrendingUpIcon from '@mui/icons-material/TrendingUp';
+import DemoModal from "../demo/DemoModal";
 
 export default function HeroSection() {
   const [mounted, setMounted] = useState(false);
+  const [demoModalOpen, setDemoModalOpen] = useState(false);
 
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  const handleDemoClick = () => {
+    console.log("Demo button clicked, opening modal");
+    setDemoModalOpen(true);
+  };
 
   return (
     <Box
@@ -155,99 +157,9 @@ export default function HeroSection() {
                 Access <Box component="span" sx={{ fontWeight: 700, color: "#00E5FF" }}>1,000 GW</Box> of ready grid capacity. Skip the 5-year interconnection queue with surplus interconnection.
               </Typography>
             </Box>
-
-            {/* Stats Row */}
-            <Grid container spacing={3} sx={{ mb: 4, animation: mounted ? "fadeIn 1.2s ease-out" : "none", "@keyframes fadeIn": { "0%": { opacity: 0 }, "100%": { opacity: 1 } } }}>
-              <Grid item xs={4}>
-                <Box>
-                  <Typography sx={{ fontSize: "2rem", fontWeight: 700, color: "#00E5FF" }}>1000</Typography>
-                  <Typography sx={{ fontSize: "0.9rem", color: "rgba(255,255,255,0.7)" }}>GW Available</Typography>
-                </Box>
-              </Grid>
-              <Grid item xs={4}>
-                <Box>
-                  <Typography sx={{ fontSize: "2rem", fontWeight: 700, color: "#00E5FF" }}>18</Typography>
-                  <Typography sx={{ fontSize: "0.9rem", color: "rgba(255,255,255,0.7)" }}>Months Deploy</Typography>
-                </Box>
-              </Grid>
-              <Grid item xs={4}>
-                <Box>
-                  <Typography sx={{ fontSize: "2rem", fontWeight: 700, color: "#00E5FF" }}>1000+</Typography>
-                  <Typography sx={{ fontSize: "0.9rem", color: "rgba(255,255,255,0.7)" }}>Sites Ready</Typography>
-                </Box>
-              </Grid>
-            </Grid>
-
-            {/* CTA Buttons */}
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: { xs: "column", sm: "row" },
-                alignItems: { xs: "center", sm: "flex-start" },
-                gap: 2,
-                mb: 3,
-                animation: mounted ? "slideInUp 1.4s ease-out" : "none",
-                "@keyframes slideInUp": {
-                  "0%": { opacity: 0, transform: "translateY(30px)" },
-                  "100%": { opacity: 1, transform: "translateY(0)" },
-                },
-              }}
-            >
-              <Button
-                variant="contained"
-                size="large"
-                href="/dashboard"
-                endIcon={<LaunchIcon />}
-                sx={{
-                  py: 2,
-                  px: 4,
-                  fontSize: "1.2rem",
-                  fontWeight: 600,
-                  borderRadius: "50px",
-                  background: "linear-gradient(45deg, #00E5FF 30%, #0090EA 90%)",
-                  "&:hover": {
-                    background: "linear-gradient(45deg, #00B8D4 30%, #0078C8 90%)",
-                    transform: "translateY(-2px)",
-                    boxShadow: "0 10px 30px rgba(0, 229, 255, 0.4)",
-                  },
-                  boxShadow: "0 6px 20px rgba(0, 229, 255, 0.3)",
-                  transition: "all 0.3s ease",
-                  minWidth: "200px",
-                }}
-              >
-                Explore Dashboard
-              </Button>
-
-              <Button
-                variant="outlined"
-                size="large"
-                href="/signup"
-                sx={{
-                  py: 2,
-                  px: 4,
-                  fontSize: "1.2rem",
-                  fontWeight: 600,
-                  borderRadius: "50px",
-                  color: "#fff",
-                  borderColor: "rgba(255,255,255,0.5)",
-                  minWidth: "200px",
-                  backdropFilter: "blur(10px)",
-                  backgroundColor: "rgba(255,255,255,0.05)",
-                  "&:hover": {
-                    borderColor: "#00E5FF",
-                    color: "#00E5FF",
-                    backgroundColor: "rgba(0, 229, 255, 0.1)",
-                    transform: "translateY(-2px)",
-                  },
-                  transition: "all 0.3s ease",
-                }}
-              >
-                Start Free Trial
-              </Button>
-            </Box>
           </Grid>
 
-          {/* Right side - Interactive Visual */}
+          {/* Right side - Stats and CTA */}
           <Grid item xs={12} md={6}>
             <Box
               sx={{
@@ -257,80 +169,154 @@ export default function HeroSection() {
                   "0%": { opacity: 0, transform: "translateX(50px)" },
                   "100%": { opacity: 1, transform: "translateX(0)" },
                 },
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: { xs: "center", md: "flex-start" },
+                gap: 4,
               }}
             >
-              <Paper
-                elevation={0}
+              {/* Stats Grid */}
+              <Grid container spacing={3} sx={{ mb: 2 }}>
+                <Grid item xs={4}>
+                  <Box
+                    sx={{
+                      p: 3,
+                      borderRadius: 3,
+                      background: "rgba(255,255,255,0.05)",
+                      backdropFilter: "blur(20px)",
+                      border: "1px solid rgba(0,229,255,0.3)",
+                      textAlign: "center",
+                      transition: "all 0.3s",
+                      "&:hover": {
+                        background: "rgba(0,229,255,0.1)",
+                        transform: "translateY(-5px)",
+                        boxShadow: "0 10px 30px rgba(0,229,255,0.2)",
+                      },
+                    }}
+                  >
+                    <Typography sx={{ fontSize: "2.5rem", fontWeight: 700, color: "#00E5FF", lineHeight: 1 }}>
+                      1000
+                    </Typography>
+                    <Typography sx={{ fontSize: "1rem", color: "rgba(255,255,255,0.8)", mt: 1 }}>
+                      GW Available
+                    </Typography>
+                  </Box>
+                </Grid>
+                <Grid item xs={4}>
+                  <Box
+                    sx={{
+                      p: 3,
+                      borderRadius: 3,
+                      background: "rgba(255,255,255,0.05)",
+                      backdropFilter: "blur(20px)",
+                      border: "1px solid rgba(0,229,255,0.3)",
+                      textAlign: "center",
+                      transition: "all 0.3s",
+                      "&:hover": {
+                        background: "rgba(0,229,255,0.1)",
+                        transform: "translateY(-5px)",
+                        boxShadow: "0 10px 30px rgba(0,229,255,0.2)",
+                      },
+                    }}
+                  >
+                    <Typography sx={{ fontSize: "2.5rem", fontWeight: 700, color: "#00E5FF", lineHeight: 1 }}>
+                      18
+                    </Typography>
+                    <Typography sx={{ fontSize: "1rem", color: "rgba(255,255,255,0.8)", mt: 1 }}>
+                      Months Deploy
+                    </Typography>
+                  </Box>
+                </Grid>
+                <Grid item xs={4}>
+                  <Box
+                    sx={{
+                      p: 3,
+                      borderRadius: 3,
+                      background: "rgba(255,255,255,0.05)",
+                      backdropFilter: "blur(20px)",
+                      border: "1px solid rgba(0,229,255,0.3)",
+                      textAlign: "center",
+                      transition: "all 0.3s",
+                      "&:hover": {
+                        background: "rgba(0,229,255,0.1)",
+                        transform: "translateY(-5px)",
+                        boxShadow: "0 10px 30px rgba(0,229,255,0.2)",
+                      },
+                    }}
+                  >
+                    <Typography sx={{ fontSize: "2.5rem", fontWeight: 700, color: "#00E5FF", lineHeight: 1 }}>
+                      1000+
+                    </Typography>
+                    <Typography sx={{ fontSize: "1rem", color: "rgba(255,255,255,0.8)", mt: 1 }}>
+                      Sites Ready
+                    </Typography>
+                  </Box>
+                </Grid>
+              </Grid>
+
+              {/* CTA Buttons */}
+              <Box
                 sx={{
-                  p: 4,
-                  borderRadius: 4,
-                  background: "rgba(255,255,255,0.05)",
-                  backdropFilter: "blur(20px)",
-                  border: "1px solid rgba(255,255,255,0.1)",
-                  position: "relative",
-                  overflow: "hidden",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 2,
+                  width: "100%",
                 }}
               >
-                {/* Animated grid background */}
-                <Box
+                <Button
+                  variant="contained"
+                  size="large"
+                  onClick={handleDemoClick}
+                  endIcon={<CalendarMonth />}
                   sx={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    backgroundImage: `linear-gradient(rgba(0,229,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(0,229,255,0.1) 1px, transparent 1px)`,
-                    backgroundSize: "30px 30px",
-                    animation: "grid 10s linear infinite",
-                    "@keyframes grid": {
-                      "0%": { transform: "translate(0, 0)" },
-                      "100%": { transform: "translate(30px, 30px)" },
+                    py: 2.5,
+                    px: 4,
+                    fontSize: "1.3rem",
+                    fontWeight: 600,
+                    borderRadius: "50px",
+                    background: "linear-gradient(45deg, #00E5FF 30%, #0090EA 90%) !important",
+                    color: "#0a0a0a !important",
+                    "&:hover": {
+                      background: "linear-gradient(45deg, #00FFE5 30%, #00B8FF 90%) !important",
+                      transform: "translateY(-3px) scale(1.02)",
+                      boxShadow: "0 20px 50px rgba(0, 229, 255, 0.6)",
                     },
+                    boxShadow: "0 10px 30px rgba(0, 229, 255, 0.5)",
+                    transition: "all 0.3s ease",
+                    width: "100%",
                   }}
-                />
-                
-                <Box sx={{ position: "relative", zIndex: 1 }}>
-                  <Typography variant="h5" sx={{ color: "#00E5FF", mb: 3, fontWeight: 600 }}>
-                    Real-Time Grid Intelligence
-                  </Typography>
-                  
-                  <Grid container spacing={2}>
-                    {[
-                      { icon: <SpeedIcon />, label: "Fast Track", value: "18 months" },
-                      { icon: <DataCenterIcon />, label: "Data Centers", value: "100+ MW" },
-                      { icon: <TrendingUpIcon />, label: "Efficiency", value: "99.9%" },
-                      { icon: <ElectricBoltIcon />, label: "Grid Ready", value: "1000 GW" },
-                    ].map((item, index) => (
-                      <Grid item xs={6} key={index}>
-                        <Box
-                          sx={{
-                            p: 2,
-                            borderRadius: 2,
-                            background: "rgba(0,229,255,0.1)",
-                            border: "1px solid rgba(0,229,255,0.3)",
-                            transition: "all 0.3s",
-                            cursor: "pointer",
-                            "&:hover": {
-                              background: "rgba(0,229,255,0.2)",
-                              transform: "scale(1.05)",
-                            },
-                          }}
-                        >
-                          <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
-                            {React.cloneElement(item.icon, { sx: { color: "#00E5FF", fontSize: 24, mr: 1 } })}
-                            <Typography sx={{ color: "rgba(255,255,255,0.7)", fontSize: "0.9rem" }}>
-                              {item.label}
-                            </Typography>
-                          </Box>
-                          <Typography sx={{ color: "#fff", fontWeight: 700, fontSize: "1.2rem" }}>
-                            {item.value}
-                          </Typography>
-                        </Box>
-                      </Grid>
-                    ))}
-                  </Grid>
-                </Box>
-              </Paper>
+                >
+                  Schedule Demo
+                </Button>
+
+                <Button
+                  variant="outlined"
+                  size="large"
+                  href="/signup"
+                  sx={{
+                    py: 2.5,
+                    px: 4,
+                    fontSize: "1.3rem",
+                    fontWeight: 600,
+                    borderRadius: "50px",
+                    color: "#fff",
+                    borderColor: "rgba(255,255,255,0.5)",
+                    width: "100%",
+                    backdropFilter: "blur(10px)",
+                    backgroundColor: "rgba(255,255,255,0.05)",
+                    "&:hover": {
+                      borderColor: "#00E5FF",
+                      color: "#00E5FF",
+                      backgroundColor: "rgba(0, 229, 255, 0.1)",
+                      transform: "translateY(-2px)",
+                    },
+                    transition: "all 0.3s ease",
+                  }}
+                >
+                  Start Free Trial
+                </Button>
+              </Box>
             </Box>
           </Grid>
         </Grid>
@@ -375,6 +361,12 @@ export default function HeroSection() {
           />
         </Box>
       </Container>
+      
+      {/* Demo Modal */}
+      <DemoModal 
+        open={demoModalOpen} 
+        onClose={() => setDemoModalOpen(false)} 
+      />
     </Box>
   );
 }

@@ -1,64 +1,47 @@
 "use client";
 
+import { useState } from "react";
 import { Box, Container, Typography, Paper, Grid, Card, CardContent, Button } from "@mui/material";
-import { HelpOutline, Article, Description, Support, School, Email } from "@mui/icons-material";
+import { HelpOutline, Article, Description, Support } from "@mui/icons-material";
 import { useRouter } from "next/navigation";
+import DemoModal from "../components/demo/DemoModal";
 
 export default function ResourcesPage() {
   const router = useRouter();
+  const [demoModalOpen, setDemoModalOpen] = useState(false);
 
   const resources = [
     {
       icon: <HelpOutline sx={{ fontSize: 48 }} />,
       title: "Frequently Asked Questions",
       description: "Find answers to common questions about surplus interconnection, deployment timelines, and our platform.",
-      link: "/resources/faq",
+      link: "/faq",
       buttonText: "View FAQ",
       color: "#00E5FF"
     },
     {
-      icon: <Article sx={{ fontSize: 48 }} />,
-      title: "Documentation",
-      description: "Technical documentation, API references, and integration guides for the WattCanvas platform.",
-      link: "/resources/docs",
-      buttonText: "Browse Docs",
-      color: "#764ba2",
-      comingSoon: true
-    },
-    {
       icon: <Description sx={{ fontSize: 48 }} />,
       title: "Whitepapers & Research",
-      description: "In-depth research on surplus interconnection, including UC Berkeley studies and GridLab reports.",
+      description: "UC Berkeley and RMI studies showing 800+ GW potential through surplus interconnection at existing fossil sites.",
       link: "/resources/research",
-      buttonText: "Read Research",
-      color: "#4CAF50",
-      comingSoon: true
+      buttonText: "View All Research",
+      color: "#4CAF50"
     },
     {
-      icon: <School sx={{ fontSize: 48 }} />,
-      title: "Learning Center",
-      description: "Educational resources about FERC Order 845, renewable energy integration, and data center deployment.",
-      link: "/resources/learn",
-      buttonText: "Start Learning",
-      color: "#FFC107",
-      comingSoon: true
+      icon: <Article sx={{ fontSize: 48 }} />,
+      title: "Recent News Coverage",
+      description: "Latest media coverage on surplus interconnection opportunities and regulatory developments.",
+      link: "/resources/news",
+      buttonText: "View News",
+      color: "#FFC107"
     },
     {
       icon: <Support sx={{ fontSize: 48 }} />,
-      title: "Support Center",
+      title: "Contact Us",
       description: "Get help with your account, technical issues, or platform questions.",
       link: "/support",
-      buttonText: "Get Support",
-      color: "#FF6B6B"
-    },
-    {
-      icon: <Email sx={{ fontSize: 48 }} />,
-      title: "Contact Us",
-      description: "Reach out to our team for partnerships, media inquiries, or general questions.",
-      link: "mailto:contact@wattcanvas.com",
       buttonText: "Contact Team",
-      color: "#2196F3",
-      external: true
+      color: "#FF6B6B"
     }
   ];
 
@@ -79,23 +62,12 @@ export default function ResourcesPage() {
           >
             Resources & Support
           </Typography>
-          <Typography 
-            variant="h5" 
-            sx={{ 
-              color: "rgba(255,255,255,0.9)", 
-              maxWidth: "700px", 
-              mx: "auto",
-              lineHeight: 1.6
-            }}
-          >
-            Everything you need to understand and leverage surplus interconnection for your data center deployment.
-          </Typography>
         </Box>
 
         {/* Resource Cards */}
         <Grid container spacing={4}>
           {resources.map((resource, index) => (
-            <Grid item xs={12} md={6} lg={4} key={index}>
+            <Grid item xs={12} md={6} key={index}>
               <Card 
                 sx={{ 
                   height: "100%",
@@ -112,26 +84,6 @@ export default function ResourcesPage() {
                   }
                 }}
               >
-                {resource.comingSoon && (
-                  <Box
-                    sx={{
-                      position: "absolute",
-                      top: 16,
-                      right: 16,
-                      backgroundColor: "rgba(255, 152, 0, 0.2)",
-                      color: "#FF9800",
-                      px: 2,
-                      py: 0.5,
-                      borderRadius: 2,
-                      fontSize: "0.75rem",
-                      fontWeight: 600,
-                      border: "1px solid rgba(255, 152, 0, 0.3)"
-                    }}
-                  >
-                    Coming Soon
-                  </Box>
-                )}
-                
                 <CardContent sx={{ p: 4, height: "100%", display: "flex", flexDirection: "column" }}>
                   <Box sx={{ display: "flex", alignItems: "center", mb: 3 }}>
                     <Box sx={{ color: resource.color, mr: 2 }}>
@@ -150,16 +102,11 @@ export default function ResourcesPage() {
                   <Button
                     variant="outlined"
                     onClick={() => {
-                      if (resource.external) {
-                        window.location.href = resource.link;
-                      } else {
-                        router.push(resource.link);
-                      }
+                      router.push(resource.link);
                     }}
-                    disabled={resource.comingSoon}
                     sx={{
-                      borderColor: resource.comingSoon ? "rgba(255,255,255,0.2)" : resource.color,
-                      color: resource.comingSoon ? "rgba(255,255,255,0.3)" : resource.color,
+                      borderColor: resource.color,
+                      color: resource.color,
                       "&:hover": {
                         borderColor: resource.color,
                         backgroundColor: `${resource.color}20`
@@ -174,75 +121,30 @@ export default function ResourcesPage() {
           ))}
         </Grid>
 
-        {/* Quick Links Section */}
-        <Paper 
-          elevation={0}
-          sx={{ 
-            mt: 8,
-            p: 5,
-            borderRadius: 3,
-            background: "rgba(0, 229, 255, 0.1)",
-            border: "1px solid rgba(0, 229, 255, 0.3)",
-            textAlign: "center"
-          }}
-        >
-          <Typography 
-            variant="h4" 
-            sx={{ 
-              fontWeight: 600, 
-              color: "#00E5FF", 
-              mb: 3 
+        {/* Schedule Demo Button */}
+        <Box sx={{ textAlign: "center", mt: 8 }}>
+          <Button
+            variant="contained"
+            size="large"
+            onClick={() => setDemoModalOpen(true)}
+            sx={{
+              background: "linear-gradient(45deg, #00E5FF 30%, #0090EA 90%) !important",
+              color: "#0a0a0a !important",
+              px: 4,
+              py: 1.5,
+              fontWeight: 600,
+              "&:hover": {
+                backgroundColor: "#00B8D4",
+                transform: "translateY(-2px)",
+                boxShadow: "0 6px 20px rgba(0, 229, 255, 0.3)"
+              }
             }}
           >
-            Need Immediate Assistance?
-          </Typography>
-          
-          <Typography sx={{ color: "rgba(255,255,255,0.9)", mb: 4, fontSize: "1.1rem" }}>
-            Our team is here to help you accelerate your data center deployment with surplus interconnection.
-          </Typography>
-          
-          <Box sx={{ display: "flex", gap: 2, justifyContent: "center", flexWrap: "wrap" }}>
-            <Button
-              variant="contained"
-              size="large"
-              onClick={() => router.push("/demo")}
-              sx={{
-                backgroundColor: "#00E5FF",
-                color: "#0a0a0a",
-                px: 4,
-                py: 1.5,
-                fontWeight: 600,
-                "&:hover": {
-                  backgroundColor: "#00B8D4",
-                  transform: "translateY(-2px)",
-                  boxShadow: "0 6px 20px rgba(0, 229, 255, 0.3)"
-                }
-              }}
-            >
-              Schedule a Demo
-            </Button>
-            
-            <Button
-              variant="outlined"
-              size="large"
-              href="mailto:contact@wattcanvas.com"
-              sx={{
-                borderColor: "white",
-                color: "white",
-                px: 4,
-                py: 1.5,
-                fontWeight: 600,
-                "&:hover": {
-                  borderColor: "#00E5FF",
-                  backgroundColor: "rgba(255,255,255,0.1)"
-                }
-              }}
-            >
-              Email Support
-            </Button>
-          </Box>
-        </Paper>
+            Schedule a Demo
+          </Button>
+        </Box>
       </Container>
+      <DemoModal open={demoModalOpen} onClose={() => setDemoModalOpen(false)} />
     </Box>
   );
 }

@@ -3,6 +3,7 @@
 import { Box, Container, CssBaseline } from "@mui/material";
 import HeroSection from "./components/new-home/HeroSection";
 import DataCenterCrisisSection from "./components/home/DataCenterCrisisSection";
+import WhoBenefitsSection from "./components/home/WhoBenefitsSection";
 import SchematicDiagram from "./components/home/SchematicDiagram";
 import TimelineComparison from "./components/home/TimelineComparison";
 
@@ -21,6 +22,7 @@ export default function Home() {
         <Box component="main" sx={{ flexGrow: 1 }}>
           <HeroSection />
           <DataCenterCrisisSection />
+          <WhoBenefitsSection />
           <SchematicDiagram />
           <Box sx={{ 
             py: { xs: 8, md: 10 },

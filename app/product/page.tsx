@@ -1,13 +1,16 @@
 "use client";
 
+import { useState } from "react";
 import { Box, Container, Typography, Paper, Grid, Button, Card, CardContent, Chip } from "@mui/material";
 import { Dashboard, Analytics, Map, Speed, Security, CloudSync, ArrowForward, Login } from "@mui/icons-material";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/hooks/useAuth";
+import DemoModal from "../components/demo/DemoModal";
 
 export default function ProductPage() {
   const router = useRouter();
   const { user } = useAuth();
+  const [demoModalOpen, setDemoModalOpen] = useState(false);
 
   const features = [
     {
@@ -107,10 +110,10 @@ export default function ProductPage() {
                 <Button
                   variant="contained"
                   size="large"
-                  onClick={() => router.push("/demo")}
+                  onClick={() => setDemoModalOpen(true)}
                   sx={{
-                    backgroundColor: "#00E5FF",
-                    color: "#0a0a0a",
+                    background: "linear-gradient(45deg, #00E5FF 30%, #0090EA 90%) !important",
+                    color: "#0a0a0a !important",
                     px: 4,
                     py: 1.5,
                     fontSize: "1.1rem",
@@ -318,6 +321,7 @@ export default function ProductPage() {
           </Typography>
         </Box>
       </Container>
+      <DemoModal open={demoModalOpen} onClose={() => setDemoModalOpen(false)} />
     </Box>
   );
 }

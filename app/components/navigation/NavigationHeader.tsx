@@ -1,6 +1,6 @@
 "use client";
 
-import React from 'react';
+import React, { useState } from 'react';
 import {
   AppBar,
   Toolbar,
@@ -15,6 +15,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth';
 import ElectricBoltIcon from '@mui/icons-material/ElectricBolt';
+import DemoModal from '../demo/DemoModal';
 
 interface Props {
   window?: () => Window;
@@ -37,9 +38,14 @@ function HideOnScroll(props: Props) {
 export default function NavigationHeader() {
   const router = useRouter();
   const { user } = useAuth();
+  const [demoModalOpen, setDemoModalOpen] = useState(false);
 
   const handleNavigate = (path: string) => {
     router.push(path);
+  };
+
+  const handleDemoClick = () => {
+    setDemoModalOpen(true);
   };
 
   const navigationItems = [
@@ -159,20 +165,21 @@ export default function NavigationHeader() {
                       Sign In
                     </Button>
                     <Button
-                      onClick={() => handleNavigate('/demo')}
+                      onClick={handleDemoClick}
                       variant="contained"
                       sx={{
-                        backgroundColor: '#00E5FF',
-                        color: '#0a0a0a',
+                        background: 'linear-gradient(45deg, #00E5FF 30%, #0090EA 90%) !important',
+                        color: '#0a0a0a !important',
                         textTransform: 'none',
                         fontWeight: 600,
                         px: 3,
                         py: 1,
                         '&:hover': {
-                          backgroundColor: '#00B8D4',
-                          transform: 'translateY(-2px)',
-                          boxShadow: '0 4px 12px rgba(0, 229, 255, 0.3)',
+                          background: 'linear-gradient(45deg, #00FFE5 30%, #00B8FF 90%) !important',
+                          transform: 'translateY(-2px) scale(1.05)',
+                          boxShadow: '0 8px 25px rgba(0, 229, 255, 0.5)',
                         },
+                        boxShadow: '0 6px 20px rgba(0, 229, 255, 0.4)',
                         transition: 'all 0.3s ease',
                       }}
                     >
@@ -187,6 +194,12 @@ export default function NavigationHeader() {
       </HideOnScroll>
       {/* Spacer to prevent content from being hidden behind fixed header */}
       <Toolbar />
+      
+      {/* Demo Modal */}
+      <DemoModal 
+        open={demoModalOpen} 
+        onClose={() => setDemoModalOpen(false)} 
+      />
     </>
   );
 }

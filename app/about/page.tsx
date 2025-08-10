@@ -1,9 +1,12 @@
 "use client";
 
-import { Box, Container, Typography, Paper, Grid, Card, CardContent, Avatar, Chip } from "@mui/material";
-import { Lightbulb, Speed, Public, Group, Target, TrendingUp } from "@mui/icons-material";
+import { useState } from "react";
+import { Box, Container, Typography, Paper, Grid, Card, CardContent, Avatar, Chip, Button } from "@mui/material";
+import { Lightbulb, Speed, Public, Group, TrendingUp, FlagCircle } from "@mui/icons-material";
+import DemoModal from "../components/demo/DemoModal";
 
 export default function AboutPage() {
+  const [demoModalOpen, setDemoModalOpen] = useState(false);
   const values = [
     {
       icon: <Speed sx={{ fontSize: 40 }} />,
@@ -27,12 +30,6 @@ export default function AboutPage() {
     }
   ];
 
-  const milestones = [
-    { year: "2023", event: "Founded to solve the data center energy crisis" },
-    { year: "2024", event: "Analyzed 1,500+ thermal plants nationwide" },
-    { year: "2024", event: "Identified 30+ GW of available capacity" },
-    { year: "2025", event: "Launching WattCanvas platform for public access" }
-  ];
 
   return (
     <Box sx={{ minHeight: "100vh", background: "linear-gradient(135deg, #0F2027 0%, #203A43 50%, #2C5364 100%)" }}>
@@ -77,7 +74,7 @@ export default function AboutPage() {
             textAlign: "center"
           }}
         >
-          <Target sx={{ fontSize: 48, color: "#00E5FF", mb: 2 }} />
+          <FlagCircle sx={{ fontSize: 48, color: "#00E5FF", mb: 2 }} />
           <Typography variant="h4" sx={{ fontWeight: 600, color: "white", mb: 3 }}>
             Our Mission
           </Typography>
@@ -187,32 +184,6 @@ export default function AboutPage() {
           </Grid>
         </Box>
 
-        {/* Company Timeline */}
-        <Box sx={{ mb: 8 }}>
-          <Typography variant="h3" sx={{ textAlign: "center", fontWeight: 600, color: "white", mb: 5 }}>
-            Our Journey
-          </Typography>
-          
-          <Box sx={{ position: "relative" }}>
-            {milestones.map((milestone, index) => (
-              <Box key={index} sx={{ display: "flex", mb: 4, alignItems: "center" }}>
-                <Chip 
-                  label={milestone.year}
-                  sx={{ 
-                    backgroundColor: "#00E5FF",
-                    color: "#0a0a0a",
-                    fontWeight: 600,
-                    mr: 3,
-                    minWidth: "80px"
-                  }}
-                />
-                <Typography sx={{ color: "rgba(255,255,255,0.9)" }}>
-                  {milestone.event}
-                </Typography>
-              </Box>
-            ))}
-          </Box>
-        </Box>
 
         {/* Technology & Innovation */}
         <Paper 
@@ -270,10 +241,10 @@ export default function AboutPage() {
             <Button
               variant="contained"
               size="large"
-              href="/demo"
+              onClick={() => setDemoModalOpen(true)}
               sx={{
-                backgroundColor: "#00E5FF",
-                color: "#0a0a0a",
+                background: "linear-gradient(45deg, #00E5FF 30%, #0090EA 90%) !important",
+                color: "#0a0a0a !important",
                 px: 4,
                 py: 1.5,
                 fontWeight: 600,
@@ -289,7 +260,7 @@ export default function AboutPage() {
             <Button
               variant="outlined"
               size="large"
-              href="mailto:contact@wattcanvas.com"
+              href="/support"
               sx={{
                 borderColor: "white",
                 color: "white",
@@ -307,6 +278,7 @@ export default function AboutPage() {
           </Box>
         </Box>
       </Container>
+      <DemoModal open={demoModalOpen} onClose={() => setDemoModalOpen(false)} />
     </Box>
   );
 }
