@@ -26,7 +26,7 @@ const PUBLIC_ROUTES = [
   '/auth/callback',
   '/thermal',
   '/re',
-  '/surplus-interconnection',
+  '/solution',
   '/pricing',
 ] as const
 

@@ -53,6 +53,20 @@ const securityHeaders = [
 const nextConfig = {
   reactStrictMode: true,
   transpilePackages: ['mapbox-gl'],
+  async redirects() {
+    return [
+      {
+        source: '/surplus-interconnection',
+        destination: '/solution',
+        permanent: true,
+      },
+      {
+        source: '/plans',
+        destination: '/pricing',
+        permanent: true,
+      },
+    ]
+  },
   async headers() {
     return [
       {

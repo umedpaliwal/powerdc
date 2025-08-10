@@ -50,12 +50,12 @@ export default function BurgerMenu() {
       requiresAuth: true 
     },
     { 
-      text: 'Surplus Interconnection', 
+      text: 'Solution', 
       icon: <ElectricBoltIcon />, 
-      path: '/surplus-interconnection' 
+      path: '/solution' 
     },
     { 
-      text: 'Plans', 
+      text: 'Pricing', 
       icon: <AttachMoneyIcon />, 
       path: '/pricing' 
     },

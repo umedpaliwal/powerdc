@@ -39,19 +39,16 @@ export default function NavigationHeader() {
   const { user } = useAuth();
 
   const handleNavigate = (path: string) => {
-    if (path === '/dashboard' && !user) {
-      router.push('/signin?redirectTo=/dashboard');
-    } else {
-      router.push(path);
-    }
+    router.push(path);
   };
 
   const navigationItems = [
     { label: 'Home', path: '/' },
-    { label: 'Dashboard', path: '/dashboard', requiresAuth: true },
-    { label: 'Surplus Interconnection', path: '/surplus-interconnection' },
-    { label: 'Plans', path: '/pricing' },
-    { label: 'FAQ', path: '/faq' },
+    { label: 'Product', path: '/product' },
+    { label: 'Solution', path: '/solution' },
+    { label: 'Pricing', path: '/pricing' },
+    { label: 'Resources', path: '/resources' },
+    { label: 'About', path: '/about' },
   ];
 
   return (
@@ -111,19 +108,6 @@ export default function NavigationHeader() {
                     }}
                   >
                     {item.label}
-                    {item.requiresAuth && !user && (
-                      <Typography
-                        component="span"
-                        sx={{
-                          ml: 1,
-                          fontSize: '0.75rem',
-                          color: 'rgba(255, 255, 255, 0.5)',
-                          fontWeight: 400,
-                        }}
-                      >
-                        (Login)
-                      </Typography>
-                    )}
                   </Button>
                 ))}
               </Box>
@@ -131,36 +115,70 @@ export default function NavigationHeader() {
               {/* User Section */}
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                 {user ? (
-                  <Button
-                    onClick={() => handleNavigate('/account')}
-                    sx={{
-                      color: '#00E5FF',
-                      textTransform: 'none',
-                      fontWeight: 500,
-                      '&:hover': {
-                        backgroundColor: 'rgba(0, 229, 255, 0.1)',
-                      },
-                    }}
-                  >
-                    Account
-                  </Button>
+                  <>
+                    <Button
+                      onClick={() => handleNavigate('/dashboard')}
+                      sx={{
+                        color: 'white',
+                        textTransform: 'none',
+                        fontWeight: 500,
+                        '&:hover': {
+                          backgroundColor: 'rgba(0, 229, 255, 0.1)',
+                        },
+                      }}
+                    >
+                      Dashboard
+                    </Button>
+                    <Button
+                      onClick={() => handleNavigate('/account')}
+                      sx={{
+                        color: '#00E5FF',
+                        textTransform: 'none',
+                        fontWeight: 500,
+                        '&:hover': {
+                          backgroundColor: 'rgba(0, 229, 255, 0.1)',
+                        },
+                      }}
+                    >
+                      Account
+                    </Button>
+                  </>
                 ) : (
-                  <Button
-                    onClick={() => handleNavigate('/signin')}
-                    variant="outlined"
-                    sx={{
-                      color: '#00E5FF',
-                      borderColor: '#00E5FF',
-                      textTransform: 'none',
-                      fontWeight: 500,
-                      '&:hover': {
-                        borderColor: '#00E5FF',
-                        backgroundColor: 'rgba(0, 229, 255, 0.1)',
-                      },
-                    }}
-                  >
-                    Sign In
-                  </Button>
+                  <>
+                    <Button
+                      onClick={() => handleNavigate('/signin')}
+                      sx={{
+                        color: 'white',
+                        textTransform: 'none',
+                        fontWeight: 500,
+                        '&:hover': {
+                          backgroundColor: 'rgba(0, 229, 255, 0.1)',
+                        },
+                      }}
+                    >
+                      Sign In
+                    </Button>
+                    <Button
+                      onClick={() => handleNavigate('/demo')}
+                      variant="contained"
+                      sx={{
+                        backgroundColor: '#00E5FF',
+                        color: '#0a0a0a',
+                        textTransform: 'none',
+                        fontWeight: 600,
+                        px: 3,
+                        py: 1,
+                        '&:hover': {
+                          backgroundColor: '#00B8D4',
+                          transform: 'translateY(-2px)',
+                          boxShadow: '0 4px 12px rgba(0, 229, 255, 0.3)',
+                        },
+                        transition: 'all 0.3s ease',
+                      }}
+                    >
+                      Request Demo
+                    </Button>
+                  </>
                 )}
               </Box>
             </Toolbar>
