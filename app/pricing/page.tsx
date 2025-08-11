@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from '@/hooks/useAuth';
 import { useSubscription } from '@/hooks/useSubscription';
+import DemoModal from '../components/demo/DemoModal';
 import {
   Box,
   Container,
@@ -51,6 +52,7 @@ export default function PricingPage() {
   const { user } = useAuth();
   const { subscription } = useSubscription();
   const [billingPeriod, setBillingPeriod] = useState<'monthly' | 'annual'>('monthly');
+  const [demoModalOpen, setDemoModalOpen] = useState(false);
   
   // Determine current plan
   const currentPlan = subscription?.plan_type || (user ? 'explorer' : null);
@@ -142,17 +144,33 @@ export default function PricingPage() {
   const annualSavings = (99 * 12) - 990;
 
   return (
-    <Container maxWidth="lg" sx={{ py: 4 }}>
-      {/* Header */}
-      <Box sx={{ textAlign: 'center', mb: 3 }}>
-        <Typography variant="h3" fontWeight="bold" gutterBottom color="white">
-          {currentPlan ? 'Upgrade Your Plan' : 'Choose Your Plan'}
-        </Typography>
-        <Typography variant="h6" sx={{ color: 'rgba(255, 255, 255, 0.7)', mb: 2 }}>
-          Access the largest database of surplus interconnection opportunities
-        </Typography>
+    <Box sx={{
+      minHeight: '100vh',
+      background: 'linear-gradient(135deg, #0F2027 0%, #203A43 50%, #2C5364 100%)',
+      py: 8
+    }}>
+      <Container maxWidth="lg">
+        {/* Header */}
+        <Box sx={{ textAlign: 'center', mb: 3 }}>
+          <Typography variant="h3" fontWeight="bold" gutterBottom sx={{ 
+            color: 'white',
+            textShadow: '0 0 20px rgba(0, 229, 255, 0.3)',
+            mb: 3
+          }}>
+            {currentPlan ? 'Upgrade Your Plan' : 'Choose Your Plan'}
+          </Typography>
         {currentPlan && (
-          <Alert severity="info" sx={{ maxWidth: 600, mx: 'auto', mt: 2 }}>
+          <Alert severity="info" sx={{ 
+            maxWidth: 600, 
+            mx: 'auto', 
+            mt: 2,
+            backgroundColor: 'rgba(0, 229, 255, 0.1)',
+            border: '1px solid rgba(0, 229, 255, 0.3)',
+            color: 'white',
+            '& .MuiAlert-icon': {
+              color: '#00E5FF'
+            }
+          }}>
             You're currently on the <strong>{currentPlan.charAt(0).toUpperCase() + currentPlan.slice(1)}</strong> plan.
             {currentPlan === 'explorer' && ' Upgrade to Professional to unlock advanced features!'}
           </Alert>
@@ -168,7 +186,14 @@ export default function PricingPage() {
               <Switch 
                 checked={billingPeriod === 'annual'}
                 onChange={(e) => setBillingPeriod(e.target.checked ? 'annual' : 'monthly')}
-                color="primary"
+                sx={{
+                  '& .MuiSwitch-switchBase.Mui-checked': {
+                    color: '#00E5FF',
+                  },
+                  '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
+                    backgroundColor: '#00E5FF',
+                  },
+                }}
               />
             }
             label=""
@@ -179,9 +204,13 @@ export default function PricingPage() {
           {billingPeriod === 'annual' && (
             <Chip 
               label={`Save $${annualSavings}/year`}
-              color="success"
               size="small"
-              sx={{ ml: 2 }}
+              sx={{ 
+                ml: 2,
+                backgroundColor: 'rgba(76, 175, 80, 0.2)',
+                color: '#4caf50',
+                border: '1px solid rgba(76, 175, 80, 0.4)'
+              }}
             />
           )}
         </Box>
@@ -198,16 +227,22 @@ export default function PricingPage() {
                 display: 'flex',
                 flexDirection: 'column',
                 position: 'relative',
+                bgcolor: 'rgba(0, 30, 50, 0.9)',
+                backdropFilter: 'blur(10px)',
                 border: plan.highlighted ? '2px solid' : '1px solid',
-                borderColor: plan.highlighted ? 'primary.main' : 'divider',
+                borderColor: plan.highlighted ? '#00E5FF' : 'rgba(0, 229, 255, 0.2)',
                 transform: plan.highlighted ? 'scale(1.05)' : 'none',
-                boxShadow: plan.highlighted ? 8 : 1
+                boxShadow: plan.highlighted ? '0 20px 40px rgba(0, 229, 255, 0.3)' : '0 10px 30px rgba(0,0,0,0.3)',
+                transition: 'all 0.3s ease',
+                '&:hover': {
+                  transform: plan.highlighted ? 'scale(1.05)' : 'translateY(-5px)',
+                  boxShadow: '0 20px 40px rgba(0, 229, 255, 0.2)'
+                }
               }}
             >
               {plan.tag && (
                 <Chip
                   label={plan.tag}
-                  color="primary"
                   size="small"
                   sx={{
                     position: 'absolute',
@@ -215,9 +250,9 @@ export default function PricingPage() {
                     right: 8,
                     fontWeight: 'bold',
                     border: '1px solid',
-                    borderColor: 'primary.main',
-                    backgroundColor: 'rgba(58, 134, 255, 0.15)',
-                    color: '#3a86ff'
+                    borderColor: '#00E5FF',
+                    backgroundColor: 'rgba(0, 229, 255, 0.15)',
+                    color: '#00E5FF'
                   }}
                 />
               )}
@@ -248,16 +283,16 @@ export default function PricingPage() {
                   {plan.description}
                 </Typography>
 
-                <Divider sx={{ my: 1 }} />
+                <Divider sx={{ my: 1, borderColor: 'rgba(255, 255, 255, 0.1)' }} />
 
                 <List dense>
                   {plan.features.map((feature, index) => (
                     <ListItem key={index} sx={{ px: 0 }}>
                       <ListItemIcon sx={{ minWidth: 32 }}>
                         {feature.included ? (
-                          <Check sx={{ color: 'success.main', fontSize: 20 }} />
+                          <Check sx={{ color: '#4caf50', fontSize: 20 }} />
                         ) : (
-                          <Close sx={{ color: 'text.disabled', fontSize: 20 }} />
+                          <Close sx={{ color: 'rgba(255, 255, 255, 0.3)', fontSize: 20 }} />
                         )}
                       </ListItemIcon>
                       <ListItemText 
@@ -282,23 +317,36 @@ export default function PricingPage() {
                   sx={{
                     py: 1.5,
                     fontWeight: 'bold',
-                    ...(plan.buttonText === "Upgrade to Pro" ? {
-                      backgroundColor: 'rgba(58, 134, 255, 0.2)',
-                      color: 'white',
-                      borderColor: 'rgba(58, 134, 255, 0.5)',
+                    ...(plan.buttonVariant === 'contained' ? {
+                      background: 'linear-gradient(45deg, #00E5FF 30%, #0090EA 90%) !important',
+                      color: '#0a0a0a !important',
+                      border: 'none',
                       '&:hover': {
-                        backgroundColor: 'rgba(58, 134, 255, 0.3)',
-                        borderColor: 'rgba(58, 134, 255, 0.7)',
+                        background: 'linear-gradient(45deg, #00FFE5 30%, #00B8FF 90%) !important',
+                        transform: 'translateY(-2px)',
+                        boxShadow: '0 8px 25px rgba(0, 229, 255, 0.5)',
                       }
-                    } : {}),
+                    } : {
+                      color: '#00E5FF',
+                      borderColor: '#00E5FF',
+                      backgroundColor: 'transparent',
+                      '&:hover': {
+                        backgroundColor: 'rgba(0, 229, 255, 0.1)',
+                        borderColor: '#00FFE5',
+                        transform: 'translateY(-2px)',
+                        boxShadow: '0 8px 25px rgba(0, 229, 255, 0.4)'
+                      }
+                    }),
                     ...(currentPlan === plan.name.toLowerCase() && {
-                      backgroundColor: 'rgba(58, 134, 255, 0.1)',
-                      color: '#3a86ff',
-                      borderColor: 'primary.main',
+                      backgroundColor: 'rgba(0, 229, 255, 0.1) !important',
+                      background: 'rgba(0, 229, 255, 0.1) !important',
+                      color: '#00E5FF',
+                      borderColor: '#00E5FF',
                       '&.Mui-disabled': {
-                        backgroundColor: 'rgba(58, 134, 255, 0.1)',
-                        color: '#3a86ff',
-                        borderColor: 'primary.main',
+                        backgroundColor: 'rgba(0, 229, 255, 0.1) !important',
+                        background: 'rgba(0, 229, 255, 0.1) !important',
+                        color: '#00E5FF',
+                        borderColor: '#00E5FF',
                       }
                     })
                   }}
@@ -313,22 +361,60 @@ export default function PricingPage() {
 
 
 
-      {/* FAQ Alert */}
-      <Alert 
-        severity="info" 
-        sx={{ 
-          mt: 4,
-          backgroundColor: 'rgba(58, 134, 255, 0.1)',
-          border: '1px solid rgba(58, 134, 255, 0.3)',
-          '& .MuiAlert-icon': {
-            color: '#3a86ff'
-          }
-        }}
-      >
-        <Typography variant="body2" sx={{ color: 'rgba(255, 255, 255, 0.9)' }}>
-          <strong>Questions?</strong> Check out our FAQ or contact our sales team at sales@wattcanvas.com
+      {/* CTA Section */}
+      <Box sx={{ 
+        textAlign: "center", 
+        mt: 8,
+        p: 5,
+        borderRadius: 3,
+        background: "rgba(0, 229, 255, 0.05)",
+        border: "1px solid rgba(0, 229, 255, 0.2)"
+      }}>
+        <Typography variant="h4" sx={{ fontWeight: 600, color: "white", mb: 4 }}>
+          Not Sure Which Plan Works for You?
         </Typography>
-      </Alert>
-    </Container>
+        <Box sx={{ display: "flex", gap: 2, justifyContent: "center", flexWrap: "wrap" }}>
+          <Button
+            variant="contained"
+            size="large"
+            onClick={() => setDemoModalOpen(true)}
+            sx={{
+              background: "linear-gradient(45deg, #00E5FF 30%, #0090EA 90%) !important",
+              color: "#0a0a0a !important",
+              px: 4,
+              py: 1.5,
+              fontWeight: 600,
+              "&:hover": {
+                backgroundColor: "#00B8D4",
+                transform: "translateY(-2px)",
+                boxShadow: "0 6px 20px rgba(0, 229, 255, 0.3)"
+              }
+            }}
+          >
+            Schedule a Demo
+          </Button>
+          <Button
+            variant="outlined"
+            size="large"
+            href="/support"
+            sx={{
+              borderColor: "white",
+              color: "white",
+              px: 4,
+              py: 1.5,
+              fontWeight: 600,
+              "&:hover": {
+                borderColor: "#00E5FF",
+                backgroundColor: "rgba(255,255,255,0.1)"
+              }
+            }}
+          >
+            Contact Us
+          </Button>
+        </Box>
+      </Box>
+      </Container>
+      <DemoModal open={demoModalOpen} onClose={() => setDemoModalOpen(false)} />
+    </Box>
   );
 }

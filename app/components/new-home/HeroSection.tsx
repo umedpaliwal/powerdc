@@ -3,6 +3,7 @@
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import CalendarMonth from "@mui/icons-material/CalendarMonth";
 import { Box, Button, Container, Grid, Typography } from "@mui/material";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import DemoModal from "../demo/DemoModal";
 
@@ -79,7 +80,7 @@ export default function HeroSection() {
       {/* Content overlay */}
       <Container
         maxWidth="lg"
-        sx={{ position: "relative", zIndex: 1, pt: 15, pb: 8 }}
+        sx={{ position: "relative", zIndex: 1, pt: 10, pb: 8 }}
       >
         <Grid container spacing={4} alignItems="center">
           {/* Hero Text and CTA */}
@@ -101,17 +102,13 @@ export default function HeroSection() {
               }}
             >
               <Box sx={{ display: "flex", alignItems: "center", mb: 2, justifyContent: { xs: "center", md: "flex-start" } }}>
-                <Typography
-                  variant="h4"
-                  sx={{
-                    fontSize: "2rem",
-                    fontWeight: 700,
-                    color: "#00E5FF",
-                    letterSpacing: "1px",
-                  }}
-                >
-                  WattCanvas
-                </Typography>
+                <Image
+                  src="/logo.svg"
+                  alt="PowerDC Logo"
+                  width={216}
+                  height={72}
+                  style={{ objectFit: "contain" }}
+                />
               </Box>
               <Typography
                 variant="h1"
@@ -321,26 +318,6 @@ export default function HeroSection() {
           </Grid>
         </Grid>
 
-        {/* Trust Signals */}
-        <Box
-          sx={{
-            textAlign: "center",
-            mt: 6,
-            animation: mounted ? "fadeIn 1.6s ease-out" : "none",
-          }}
-        >
-          <Typography
-            sx={{
-              fontSize: "0.95rem",
-              fontWeight: 500,
-              color: "rgba(255,255,255,0.6)",
-              letterSpacing: "1px",
-              textTransform: "uppercase",
-            }}
-          >
-            A Unique Opportunity for Deploying Data Centers with FERC Order 845
-          </Typography>
-        </Box>
 
         {/* Scroll indicator */}
         <Box

@@ -42,26 +42,17 @@ export default function Footer() {
           <Grid item xs={12} md={4}>
             <Box sx={{ mb: 3 }}>
               <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-                <ElectricBoltIcon sx={{ color: '#00E5FF', mr: 1, fontSize: 32 }} />
-                <Typography variant="h5" sx={{ fontWeight: 700 }}>
-                  WattCanvas
-                </Typography>
+                <Image 
+                  src="/logo.svg" 
+                  alt="PowerDC Logo" 
+                  width={150}
+                  height={45}
+                  style={{ objectFit: 'contain' }}
+                />
               </Box>
               <Typography variant="body2" sx={{ color: 'rgba(255, 255, 255, 0.7)', mb: 3 }}>
                 Exploring innovative solutions for renewable energy deployment and data center sustainability through advanced analytics and optimization.
               </Typography>
-              
-              {/* Company Logo */}
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
-                <Box sx={{ position: 'relative', width: 100, height: 35 }}>
-                  <Image 
-                    src="/logo.png" 
-                    alt="Company Logo" 
-                    fill
-                    style={{ objectFit: 'contain' }}
-                  />
-                </Box>
-              </Box>
             </Box>
           </Grid>
 
@@ -150,7 +141,7 @@ export default function Footer() {
           }}
         >
           <Typography variant="body2" sx={{ color: 'rgba(255, 255, 255, 0.5)' }}>
-            © {currentYear} WattCanvas. All rights reserved.
+            © {currentYear} PowerDC. All rights reserved.
           </Typography>
         </Box>
       </Container>

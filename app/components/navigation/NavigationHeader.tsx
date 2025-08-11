@@ -80,17 +80,13 @@ export default function NavigationHeader() {
                 }}
                 onClick={() => handleNavigate('/')}
               >
-                <Typography
-                  variant="h5"
-                  sx={{
-                    fontWeight: 700,
-                    color: 'white',
-                    textDecoration: 'none',
-                    letterSpacing: '1px',
-                  }}
-                >
-                  WattCanvas
-                </Typography>
+                <Image
+                  src="/logo.svg"
+                  alt="PowerDC Logo"
+                  width={120}
+                  height={35}
+                  style={{ marginRight: '12px' }}
+                />
               </Box>
 
               {/* Navigation Links */}
