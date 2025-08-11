@@ -5,6 +5,16 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(request: NextRequest) {
   try {
+    // Check if API key is configured
+    if (!process.env.RESEND_API_KEY) {
+      console.error("RESEND_API_KEY is not configured");
+      return NextResponse.json(
+        { error: "Email service not configured" },
+        { status: 500 }
+      );
+    }
+
+    console.log("Processing demo request with API key:", process.env.RESEND_API_KEY?.substring(0, 10) + "...");
     const data = await request.json();
     
     const { fullName, company, email, role, timeline, projectDetails } = data;
@@ -17,10 +27,33 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // IMPORTANT: Email Configuration Explanation
+    // ===========================================
+    // Currently using Resend's test domain (onboarding@resend.dev) because:
+    // 1. wattcanvas.com is NOT verified with Resend yet
+    // 2. To verify wattcanvas.com, you need to add DNS records (SPF and DKIM) 
+    // 3. Until verified, we can ONLY send from onboarding@resend.dev
+    // 4. Test domain can ONLY send to verified email addresses
+    // 
+    // TO FIX THIS:
+    // 1. Go to https://resend.com/domains
+    // 2. Add wattcanvas.com domain
+    // 3. Add the DNS records Resend provides to your domain registrar
+    // 4. Wait for verification (up to 72 hours)
+    // 5. Once verified, update the fromEmail below to use contact@wattcanvas.com
+    
+    const isDomainVerified = process.env.RESEND_DOMAIN_VERIFIED === 'true';
+    const fromEmail = isDomainVerified && process.env.RESEND_FROM_EMAIL 
+      ? process.env.RESEND_FROM_EMAIL 
+      : "WattCanvas <onboarding@resend.dev>";
+    
+    // Team email - where notifications go
+    const teamEmail = "contact@wattcanvas.com";
+    
     // Send notification email to team
-    const teamEmail = await resend.emails.send({
-      from: "WattCanvas <contact@wattcanvas.com>",
-      to: ["contact@wattcanvas.com"], // This goes to your team
+    const { data: teamData, error: teamError } = await resend.emails.send({
+      from: fromEmail,
+      to: [teamEmail], // This should be your verified email
       subject: `New Demo Request from ${fullName} at ${company}`,
       html: `
         <!DOCTYPE html>
@@ -89,11 +122,28 @@ export async function POST(request: NextRequest) {
       `,
     });
 
+    if (teamError) {
+      console.error("Failed to send team notification email:", teamError);
+      return NextResponse.json(
+        { error: "Failed to send notification email", details: teamError },
+        { status: 500 }
+      );
+    }
+
+    console.log("Team email sent successfully:", teamData);
+
     // Send confirmation email to user
-    const userEmail = await resend.emails.send({
-      from: "WattCanvas <contact@wattcanvas.com>",
-      to: [email],
-      subject: "Your WattCanvas Demo Request Has Been Received",
+    // LIMITATION: With test domain, we CANNOT send to arbitrary user emails
+    // The user won't receive their confirmation until wattcanvas.com is verified
+    // For now, both emails go to contact@wattcanvas.com
+    const userEmailRecipient = isDomainVerified ? email : teamEmail;
+    
+    const { data: userData, error: userError } = await resend.emails.send({
+      from: fromEmail,
+      to: [userEmailRecipient],
+      subject: isDomainVerified 
+        ? "Your WattCanvas Demo Request Has Been Received"
+        : `Demo Confirmation for ${fullName} (${email})`,
       html: `
         <!DOCTYPE html>
         <html>
@@ -150,14 +200,31 @@ export async function POST(request: NextRequest) {
       `,
     });
 
+    if (userError) {
+      console.error("Failed to send user confirmation email:", userError);
+      return NextResponse.json(
+        { error: "Failed to send confirmation email", details: userError },
+        { status: 500 }
+      );
+    }
+
+    console.log("User email sent successfully:", userData);
+
     return NextResponse.json(
-      { success: true, message: "Demo request submitted successfully" },
+      { 
+        success: true, 
+        message: "Demo request submitted successfully",
+        emailIds: {
+          team: teamData?.id,
+          user: userData?.id
+        }
+      },
       { status: 200 }
     );
   } catch (error) {
     console.error("Error processing demo request:", error);
     return NextResponse.json(
-      { error: "Failed to process demo request" },
+      { error: "Failed to process demo request", details: error },
       { status: 500 }
     );
   }
