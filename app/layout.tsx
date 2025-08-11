@@ -16,11 +16,11 @@ import { Box } from "@mui/material";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Surplus Interconnection",
+  title: "WattCanvas",
   description: "Exploring innovative solutions for renewable energy deployment",
   icons: {
-    icon: "/surplus_logo_wo_text.svg",
-    apple: "/surplus_logo_wo_text.svg",
+    icon: "/logo_header.svg",
+    apple: "/logo_header.svg",
   },
 };
 
