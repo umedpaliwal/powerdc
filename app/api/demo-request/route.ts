@@ -27,27 +27,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // IMPORTANT: Email Configuration Explanation
-    // ===========================================
-    // Currently using Resend's test domain (onboarding@resend.dev) because:
-    // 1. wattcanvas.com is NOT verified with Resend yet
-    // 2. To verify wattcanvas.com, you need to add DNS records (SPF and DKIM) 
-    // 3. Until verified, we can ONLY send from onboarding@resend.dev
-    // 4. Test domain can ONLY send to verified email addresses
-    // 
-    // TO FIX THIS:
-    // 1. Go to https://resend.com/domains
-    // 2. Add wattcanvas.com domain
-    // 3. Add the DNS records Resend provides to your domain registrar
-    // 4. Wait for verification (up to 72 hours)
-    // 5. Once verified, update the fromEmail below to use contact@wattcanvas.com
-    
-    const isDomainVerified = process.env.RESEND_DOMAIN_VERIFIED === 'true';
-    const fromEmail = isDomainVerified && process.env.RESEND_FROM_EMAIL 
-      ? process.env.RESEND_FROM_EMAIL 
-      : "WattCanvas <onboarding@resend.dev>";
-    
-    // Team email - where notifications go
+    // Hardcoded for production - domain is verified
+    const fromEmail = "WattCanvas <contact@wattcanvas.com>";
     const teamEmail = "contact@wattcanvas.com";
     
     // Send notification email to team
@@ -133,17 +114,10 @@ export async function POST(request: NextRequest) {
     console.log("Team email sent successfully:", teamData);
 
     // Send confirmation email to user
-    // LIMITATION: With test domain, we CANNOT send to arbitrary user emails
-    // The user won't receive their confirmation until wattcanvas.com is verified
-    // For now, both emails go to contact@wattcanvas.com
-    const userEmailRecipient = isDomainVerified ? email : teamEmail;
-    
     const { data: userData, error: userError } = await resend.emails.send({
       from: fromEmail,
-      to: [userEmailRecipient],
-      subject: isDomainVerified 
-        ? "Your WattCanvas Demo Request Has Been Received"
-        : `Demo Confirmation for ${fullName} (${email})`,
+      to: [email], // Send directly to user's email
+      subject: "Your WattCanvas Demo Request Has Been Received",
       html: `
         <!DOCTYPE html>
         <html>
